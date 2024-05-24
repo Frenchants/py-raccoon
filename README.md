@@ -7,6 +7,8 @@
 [![Package version on PyPI](https://img.shields.io/pypi/v/py-raccoon?logo=pypi&logoColor=ffd242)](https://pypi.org/project/py-raccoon/)
 
 PyRaCCooN (**Ra**ndom **C**ell **Co**mplexes **o**n **N**etworks) randomly generates cell complexes and and provides an approximation for the number of simple cycles (by length) on a graph.
+To see how to use PyRaCCooN, check out the Jupyter [examples](https://github.com/josefhoppe/py-raccoon/tree/main/examples) or the short examples below.
+
 For more on the inner workings, see our paper on arXiv.
 The [Evaluation Code](https://github.com/josefhoppe/random-abstract-cell-complexes) is also available on Github.
 
@@ -82,7 +84,7 @@ G = ... # nx.Graph
 log_counts, is_zero, sampled = pr.estimate_cycle_count(G, samples=1000)
 
 # Assuming all cycle counts are in the range of 64-bit floats
-cycle_counts = np.exp(log_counts)
+cycle_counts = np.exp2(log_counts)
 cycle_counts[is_zero] = 0
 for l in range(3, len(G.nodes) + 1):
     print(f'G has approx. {cycle_counts[l]} simple cycles of length {l} ({sampled[l]} samples).')
