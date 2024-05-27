@@ -40,9 +40,9 @@ NP_OCCURENCE_PROB = np.dtype([
     ('p_c', np.float64),
 ])
 
-def uniform_cc(n: int, p: float, N: float | NDArray[np.float64], samples: int, G:nx.Graph | None = None, seed:int|np.random.Generator|None=None, fast_sampling: bool = True) -> tuple[nx.Graph, set[tuple], dict[tuple,float], dict[tuple,float]]:
+def uniform_cc(n: int, p: float, N: float | NDArray[np.float64] | None = None, P: NDArray | None = None, samples: int = 100, G:nx.Graph | None = None, seed:int|np.random.Generator|None=None, fast_sampling: bool = True) -> tuple[nx.Graph, set[tuple], dict[tuple,float], dict[tuple,float]]:
     """
-    Generates a uniform cell complex adhering to the given parameters.
+    Generates a uniform cell complex adhering to the given parameters, as introduced in [1]
 
     Parameters:
     - n: Number of nodes.
@@ -50,10 +50,13 @@ def uniform_cc(n: int, p: float, N: float | NDArray[np.float64], samples: int, G
     - N: Number of 2-cells (in expectation). Behavior depends on whether N is a single number or an array:
         - For a single number, the sampled CC contains – in expectation – N 2-cells sampled from all available lengths
         - For an array, the sampled CC contains – in expectation – N[l] 2-cells of length l if such cells are found. **The array must have length n + 1**
+    - P: Logarithmic (base 2) sampling probability, based on length; must have length `n + 1`. $P_l$ in the paper is equivalent to `exp2(P[l])`.
+        - Samples from the model according to its theoretical definition, leading to possibly large variations in the number of cells, even with the same configuration (see [1] for more information). To avoid this, use `N` instead. If `N` is used, `P` must be `None` and vice versa.
+        - For $P_l = 0$, set `P[l] = -np.inf`; otherwise `P[l] = log2($P_l$)`.
     - samples: Random spanning trees to sample. Larger is more accurate. Should be greater than `N` (or `np.sum(N)`).
     - seed: Random seed or generator to use. Will generate a new `numpy.random.default_rng` if number or no seed is specified.
     - G: Underlying graph to generate 2-cells for. If `None`, a G(n,p) random graph will be sampled instead. If specified, `p` will still be used for the sampling process.
-    - fast_sampling: Uniform CCs can be sampled using a more accurate (slow) or a more inaccurate (fast) algorithm. Roughly, the slow algorithm takes 10s to sample for n²p=500, the fast algorithm takes 10s for n²p=500,000.
+    - fast_sampling: Uniform CCs can be sampled using a more accurate (slow) or a more inaccurate (fast) algorithm. Roughly, the slow algorithm takes 10s to sample for n²p=500, the fast algorithm takes 10s for n²p=500,000. See the package README or [1] for more details
 
     Returns: G, cells, undersampled, overcorrelated
 
@@ -61,11 +64,16 @@ def uniform_cc(n: int, p: float, N: float | NDArray[np.float64], samples: int, G
     - cells: set[tuple[int]], representing 2-cells as normalized tuples
     - undersampled: int, number of 2-cells where $\\rho'_c > 1$
     - overcorrelated: int, number of 2-cells where $\\rho'_c$ is large enough that, in expectation, multiple cells would be sampled from the same ST.
+
+    References
+    [1] Hoppe, Josef and Schaub, Michael T. "Random Abstract Cell Complexes." arXiv preprint arXiv:0000.00000 (2024).
     """
+    if (N is None) == (P is None):
+        raise ValueError("P xor N must be None")
     if fast_sampling:
-        return uniform_cc_fast(n, p, N, samples, seed, G)
+        return uniform_cc_fast(n, p, N, P, samples, seed, G)
     else:
-        return uniform_cc_slow(n, p, N, samples, seed, G)
+        return uniform_cc_slow(n, p, N, P, samples, seed, G)
 
 def estimate_cycle_count(G: nx.Graph, samples: int, p: float | None = None, seed:int|np.random.Generator|None=None) -> tuple[NDArray[np.float64], NDArray[bool], NDArray[np.int32]]:
     """
@@ -196,7 +204,7 @@ cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, dou
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def uniform_cc_fast(n: int, p: float, N: float | NDArray[np.float64], samples: int, seed:int|np.random.Generator|None=None, G:nx.Graph | None = None) -> tuple[nx.Graph, set[tuple], int, int]:
+def uniform_cc_fast(n: int, p: float, N: float | NDArray[np.float64] | None, np_P: NDArray[np.float64] | None = None, samples: int = 100, seed:int|np.random.Generator|None=None, G:nx.Graph | None = None) -> tuple[nx.Graph, set[tuple], int, int]:
     """
     Samples from the cellular ER according to parameters. More accurate, but slower than `cellular_er_estimate_approx`.
 
@@ -229,22 +237,30 @@ def uniform_cc_fast(n: int, p: float, N: float | NDArray[np.float64], samples: i
     cdef int** neighbors = graph_to_neighbors(n, degree, G)
 
     cdef int c_samples = samples
-    # Use significantly fewer samples for estimation to save time
-    cdef int est_samples = c_samples // 10 if c_samples > 100 else c_samples
-    np_len_counts, np_len_count_is_zero, sample_counts = estimate_len_count_fast(G, edges, p, est_samples, seed)
-    np_len_count_is_zero[np_len_counts < 1] = True #small values make calculation weird; log_2(2) = 1
-    np_len_count_is_zero[sample_counts < min(est_samples, 10)] = True #not actually occuring cells are also weird
-    cdef int occuring_lengths = np.size(np_len_count_is_zero) - np.count_nonzero(np_len_count_is_zero)
-    cdef double log_occuring_lengths = clog2(occuring_lengths)
-    cdef double[:] len_counts = np_len_counts
-    log_N = np.log2(N) # works for both scalars and arrays
-    if np.isscalar(N):
-        # approx sample count is distributed evenly among all lengths that occur
-        np_P = log_N - np_len_counts - log_occuring_lengths # numpy auto broadcasts to arrays where necessary.
+    cdef char[:] len_count_is_zero
+    cdef int est_samples, occuring_lengths
+    cdef double log_occuring_lengths
+    cdef double[:] len_counts
+    if np_P is None and N is not None:
+        # Use significantly fewer samples for estimation to save time
+        est_samples = c_samples // 10 if c_samples > 100 else c_samples
+        np_len_counts, np_len_count_is_zero, sample_counts = estimate_len_count_fast(G, edges, p, est_samples, seed)
+        np_len_count_is_zero[np_len_counts < 1] = True #small values make calculation weird; log_2(2) = 1
+        np_len_count_is_zero[sample_counts < min(est_samples, 10)] = True #not actually occuring cells are also weird
+        occuring_lengths = np.size(np_len_count_is_zero) - np.count_nonzero(np_len_count_is_zero)
+        log_occuring_lengths = clog2(occuring_lengths)
+        len_counts = np_len_counts
+        log_N = np.log2(N) # works for both scalars and arrays
+        if np.isscalar(N):
+            # approx sample count is distributed evenly among all lengths that occur
+            np_P = log_N - np_len_counts - log_occuring_lengths # numpy auto broadcasts to arrays where necessary.
+        else:
+            np_P = log_N - np_len_counts
+        len_count_is_zero = np_len_count_is_zero
     else:
-        np_P = log_N - np_len_counts
+        # treat all lengths as existing, the np_P parameter takes precedence (and may be `log2(0)`).
+        len_count_is_zero = np.zeros(n, dtype=np.int8)
     cdef double[:] P = np_P
-    cdef char[:] len_count_is_zero = np_len_count_is_zero
 
     cells = set()
     undersample = 0
@@ -378,7 +394,7 @@ cdef inline double calc_sampling_probability(float P, int samples, float p_c, ch
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def uniform_cc_slow(n: int, p: float, N: float, samples: int, seed:int|np.random.Generator|None=None, G:nx.Graph | None = None) -> tuple[nx.Graph, set[tuple], int, int]:
+def uniform_cc_slow(n: int, p: float, N: float | NDArray[float] | None, np_P: NDArray[np.float64] | None = None, samples: int = 100, seed:int|np.random.Generator|None=None, G:nx.Graph | None = None) -> tuple[nx.Graph, set[tuple], int, int]:
     """
     Samples from the cellular ER according to parameters. More accurate, but slower than `cellular_er_estimate_approx`.
 
@@ -402,25 +418,29 @@ def uniform_cc_slow(n: int, p: float, N: float, samples: int, seed:int|np.random
     edges = np.array([(u,v) for (u,v) in G.edges], dtype=NP_EDGE)
     cdef Edge[:] c_edges = edges
 
-    # Use significantly fewer samples for estimation to save time
-    est_samples = samples // 10 if samples > 100 else samples
-    log_len_counts, len_counts_is_zero, sample_counts = estimate_len_count_fast(G, edges, p, est_samples, seed)
-    len_counts = np.exp2(log_len_counts)
-    len_counts[len_counts_is_zero] = 0
-    len_counts[len_counts < 2] = 0 #small values make calculation weird
-    len_counts[sample_counts < est_samples] = 0 #not actually occuring cells are also weird
-    occuring_lengths = np.count_nonzero(len_counts)
+    if np_P is None and N is not None:
+        # Use significantly fewer samples for estimation to save time
+        est_samples = samples // 10 if samples > 100 else samples
+        log_len_counts, len_counts_is_zero, sample_counts = estimate_len_count_fast(G, edges, p, est_samples, seed)
+        len_counts = np.exp2(log_len_counts)
+        len_counts[len_counts_is_zero] = 0
+        len_counts[len_counts < 2] = 0 #small values make calculation weird
+        len_counts[sample_counts < est_samples] = 0 #not actually occuring cells are also weird
+        occuring_lengths = np.count_nonzero(len_counts)
 
-    np_P = np.zeros_like(log_len_counts)
-    # divide by 0 will occur, but is fixed afterwards. invalid occurs on 0/0, which will occur in the second case.
-    with np.errstate(divide='ignore', invalid='ignore'):
-        if np.isscalar(N):
-            # approx sample count is distributed evenly among all lengths that occur
-            np_P = N / len_counts / occuring_lengths # numpy auto broadcasts to arrays where necessary.
-            np_P[len_counts == 0] = 0
-        else:
-            np_P = N - len_counts
-            np_P[len_counts == 0] = 0
+        np_P = np.zeros_like(log_len_counts)
+        # divide by 0 will occur, but is fixed afterwards. invalid occurs on 0/0, which will occur in the second case.
+        with np.errstate(divide='ignore', invalid='ignore'):
+            if np.isscalar(N):
+                # approx sample count is distributed evenly among all lengths that occur
+                np_P = N / len_counts / occuring_lengths # numpy auto broadcasts to arrays where necessary.
+                np_P[len_counts == 0] = 0
+            else:
+                np_P = N - len_counts
+                np_P[len_counts == 0] = 0
+    else:
+        # np_P is logarithmic for compatibility
+        np_P = np.exp2(np_P)
     cdef double[:] P = np_P
 
     cells = set()

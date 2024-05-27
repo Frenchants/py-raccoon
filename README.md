@@ -32,7 +32,7 @@ If you use PyRaCCooN, please cite the following paper:
 pip install py-raccoon
 ```
 
-## Generating Random Cell Complexes
+## Generating Random Cell Complexes (by expected number of 2-cells)
 
 PyRaCCooN uses `NetworkX` to represent the underlying graph of the resulting cell complex.
 The 2-cells are represented as a list of tuples of nodes representing the boundary.
@@ -43,7 +43,7 @@ For example, `(3,2,1,4)` would be normalized to `(1,2,3,4)`.
 import py_raccoon as pr
 
 # Generates CC based on G(20,0.5) with (in expectation) 50 cells, sampled using 100 spanning trees.
-G, cells, _, _ = pr.uniform_cc(20, 0.5, 50, 100)
+G, cells, _, _ = pr.uniform_cc(20, 0.5, 50, samples=100)
 ```
 
 You may also specify an expected number of 2-cells for each length. Note that longer cells may be impossible to sample. In that case, the supplied expected number is ignored.
@@ -58,7 +58,7 @@ N[9] = 10
 N[19] = 10 # Cells of length 19 will be impossible to sample, so the result will not contain any. See our paper for more information.
 
 # Generates CC based on G(20,0.5) with (in expectation) N[l] cells of length l, sampled using 100 spanning trees.
-G, cells, _, _ = pr.uniform_cc(n, 0.5, N, 100)
+G, cells, _, _ = pr.uniform_cc(n, 0.5, N, samples=100)
 ```
 
 If you have a graph you'd like to add random 2-cells to, you can also supply the graph:
@@ -69,10 +69,32 @@ import py_raccoon as pr
 G = ... # nx.Graph
 n, p = pr.utils.estimate_er_params(G)
 
-_, cells, _, _ = pr.uniform_cc(n, p, 50, 100, G=G)
+_, cells, _, _ = pr.uniform_cc(n, p, 50, samples=100, G=G)
 ```
 
 Since `cells` is a list of tuples, the result can easily be imported into any library of your choosing.
+
+## Generating Random Cell Complexes with given probability $P_l$
+
+The previous examples all used the integrated functionality to sample an expected number of cells.
+While this is more useful in many practical contexts, PyRaCCooN also supports sampling from the 'vanilla' model with a fixed probability $P_l$ for all cells of length $l$:
+
+```py
+import py_raccoon as pr
+import numpy as np
+
+n = 20
+P = np.zeros(n + 1)
+P[3] = .5
+P[4] = .1
+P[19] = 1.0 # Cells of length 19 will be impossible to sample, so the result will not contain any. See our paper for more information.
+
+with np.errstate(divide='ignore'):
+    log_P = np.log2(P) # Practical probabilities for greater $l$ are very small, thus represented logarithmically.
+
+# Generates CC based on G(20,0.5) with (in expectation) N[l] cells of length l, sampled using 100 spanning trees.
+G, cells, _, _ = pr.uniform_cc(n, 0.5, P=log_P, samples=100)
+```
 
 ## Estimating the number of simple cycles
 
