@@ -92,7 +92,7 @@ P[19] = 1.0 # Cells of length 19 will be impossible to sample, so the result wil
 with np.errstate(divide='ignore'):
     log_P = np.log2(P) # Practical probabilities for greater $l$ are very small, thus represented logarithmically.
 
-# Generates CC based on G(20,0.5) with (in expectation) N[l] cells of length l, sampled using 100 spanning trees.
+# Generates CC based on G(20,0.5). Each possible cell of length l is selected with probability P[l], sampled using 100 spanning trees.
 G, cells, _, _ = pr.uniform_cc(n, 0.5, P=log_P, samples=100)
 ```
 

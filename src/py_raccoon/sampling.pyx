@@ -250,7 +250,8 @@ def uniform_cc_fast(n: int, p: float, N: float | NDArray[np.float64] | None, np_
         occuring_lengths = np.size(np_len_count_is_zero) - np.count_nonzero(np_len_count_is_zero)
         log_occuring_lengths = clog2(occuring_lengths)
         len_counts = np_len_counts
-        log_N = np.log2(N) # works for both scalars and arrays
+        with np.errstate(divide='ignore'):
+            log_N = np.log2(N) # works for both scalars and arrays
         if np.isscalar(N):
             # approx sample count is distributed evenly among all lengths that occur
             np_P = log_N - np_len_counts - log_occuring_lengths # numpy auto broadcasts to arrays where necessary.
