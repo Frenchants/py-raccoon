@@ -3158,7 +3158,7 @@ static PyObject *__pyx_memoryviewslice__get_base(struct __pyx_memoryviewslice_ob
 /* Module declarations from "py_raccoon.spanning_trees" */
 static struct __pyx_t_10py_raccoon_14spanning_trees_LcaResult *(*__pyx_f_10py_raccoon_14spanning_trees_lowest_common_ancestor)(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void (*__pyx_f_10py_raccoon_14spanning_trees_calc_property_fast)(__Pyx_memviewslice, __Pyx_memviewslice, double, __Pyx_memviewslice, double (*)(int, int, double, __Pyx_memviewslice)); /*proto*/
-static int (*__pyx_f_10py_raccoon_14spanning_trees_random_spanning_tree_c)(int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *); /*proto*/
+static int (*__pyx_f_10py_raccoon_14spanning_trees_uniform_spanning_tree_c)(int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *); /*proto*/
 static int **(*__pyx_f_10py_raccoon_14spanning_trees_graph_to_neighbors)(int, __Pyx_memviewslice, PyObject *); /*proto*/
 static void (*__pyx_f_10py_raccoon_14spanning_trees_free_graph_neighbors)(int, int **); /*proto*/
 
@@ -3458,10 +3458,10 @@ static const char __pyx_k_estimate_cycle_count[] = "estimate_cycle_count";
 static const char __pyx_k_log_occuring_lengths[] = "log_occuring_lengths";
 static const char __pyx_k_np_len_count_is_zero[] = "np_len_count_is_zero";
 static const char __pyx_k_overcorrelate_thresh[] = "overcorrelate_thresh";
-static const char __pyx_k_random_spanning_tree[] = "random_spanning_tree";
 static const char __pyx_k_strided_and_indirect[] = "<strided and indirect>";
 static const char __pyx_k_Invalid_shape_in_axis[] = "Invalid shape in axis ";
 static const char __pyx_k_contiguous_and_direct[] = "<contiguous and direct>";
+static const char __pyx_k_uniform_spanning_tree[] = "uniform_spanning_tree";
 static const char __pyx_k_Cannot_index_with_type[] = "Cannot index with type '";
 static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>";
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
@@ -3809,7 +3809,6 @@ typedef struct {
   PyObject *__pyx_n_s_pyx_unpickle_Enum;
   PyObject *__pyx_n_s_pyx_vtable;
   PyObject *__pyx_n_s_random;
-  PyObject *__pyx_n_s_random_spanning_tree;
   PyObject *__pyx_n_s_range;
   PyObject *__pyx_n_s_reduce;
   PyObject *__pyx_n_s_reduce_cython;
@@ -3848,6 +3847,7 @@ typedef struct {
   PyObject *__pyx_n_s_uniform_cc;
   PyObject *__pyx_n_s_uniform_cc_fast;
   PyObject *__pyx_n_s_uniform_cc_slow;
+  PyObject *__pyx_n_s_uniform_spanning_tree;
   PyObject *__pyx_n_s_unpack;
   PyObject *__pyx_n_s_update;
   PyObject *__pyx_n_s_utils;
@@ -4167,7 +4167,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_unpickle_Enum);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_vtable);
   Py_CLEAR(clear_module_state->__pyx_n_s_random);
-  Py_CLEAR(clear_module_state->__pyx_n_s_random_spanning_tree);
   Py_CLEAR(clear_module_state->__pyx_n_s_range);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_cython);
@@ -4206,6 +4205,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_uniform_cc);
   Py_CLEAR(clear_module_state->__pyx_n_s_uniform_cc_fast);
   Py_CLEAR(clear_module_state->__pyx_n_s_uniform_cc_slow);
+  Py_CLEAR(clear_module_state->__pyx_n_s_uniform_spanning_tree);
   Py_CLEAR(clear_module_state->__pyx_n_s_unpack);
   Py_CLEAR(clear_module_state->__pyx_n_s_update);
   Py_CLEAR(clear_module_state->__pyx_n_s_utils);
@@ -4503,7 +4503,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_unpickle_Enum);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_vtable);
   Py_VISIT(traverse_module_state->__pyx_n_s_random);
-  Py_VISIT(traverse_module_state->__pyx_n_s_random_spanning_tree);
   Py_VISIT(traverse_module_state->__pyx_n_s_range);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_cython);
@@ -4542,6 +4541,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_uniform_cc);
   Py_VISIT(traverse_module_state->__pyx_n_s_uniform_cc_fast);
   Py_VISIT(traverse_module_state->__pyx_n_s_uniform_cc_slow);
+  Py_VISIT(traverse_module_state->__pyx_n_s_uniform_spanning_tree);
   Py_VISIT(traverse_module_state->__pyx_n_s_unpack);
   Py_VISIT(traverse_module_state->__pyx_n_s_update);
   Py_VISIT(traverse_module_state->__pyx_n_s_utils);
@@ -4863,7 +4863,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_pyx_unpickle_Enum __pyx_mstate_global->__pyx_n_s_pyx_unpickle_Enum
 #define __pyx_n_s_pyx_vtable __pyx_mstate_global->__pyx_n_s_pyx_vtable
 #define __pyx_n_s_random __pyx_mstate_global->__pyx_n_s_random
-#define __pyx_n_s_random_spanning_tree __pyx_mstate_global->__pyx_n_s_random_spanning_tree
 #define __pyx_n_s_range __pyx_mstate_global->__pyx_n_s_range
 #define __pyx_n_s_reduce __pyx_mstate_global->__pyx_n_s_reduce
 #define __pyx_n_s_reduce_cython __pyx_mstate_global->__pyx_n_s_reduce_cython
@@ -4902,6 +4901,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_uniform_cc __pyx_mstate_global->__pyx_n_s_uniform_cc
 #define __pyx_n_s_uniform_cc_fast __pyx_mstate_global->__pyx_n_s_uniform_cc_fast
 #define __pyx_n_s_uniform_cc_slow __pyx_mstate_global->__pyx_n_s_uniform_cc_slow
+#define __pyx_n_s_uniform_spanning_tree __pyx_mstate_global->__pyx_n_s_uniform_spanning_tree
 #define __pyx_n_s_unpack __pyx_mstate_global->__pyx_n_s_unpack
 #define __pyx_n_s_update __pyx_mstate_global->__pyx_n_s_update
 #define __pyx_n_s_utils __pyx_mstate_global->__pyx_n_s_utils
@@ -22592,7 +22592,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_4uniform_cc_fast(CYTHON_UNUSED 
  *     cdef double overcorrelate_thresh = 1.0 / (m - n + 1)
  *     for i in range(c_samples):             # <<<<<<<<<<<<<<
  *         parent = np.ndarray(n, dtype=np.int32)
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  */
   __pyx_t_5 = __pyx_v_c_samples;
   __pyx_t_22 = __pyx_t_5;
@@ -22603,7 +22603,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_4uniform_cc_fast(CYTHON_UNUSED 
  *     cdef double overcorrelate_thresh = 1.0 / (m - n + 1)
  *     for i in range(c_samples):
  *         parent = np.ndarray(n, dtype=np.int32)             # <<<<<<<<<<<<<<
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)
  */
     __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 261, __pyx_L1_error)
@@ -22636,20 +22636,20 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_4uniform_cc_fast(CYTHON_UNUSED 
     /* "py_raccoon/sampling.pyx":262
  *     for i in range(c_samples):
  *         parent = np.ndarray(n, dtype=np.int32)
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)             # <<<<<<<<<<<<<<
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)             # <<<<<<<<<<<<<<
  *         np_depth = calc_depth(parent)
  *         depth = np_depth
  */
     __pyx_t_24 = __Pyx_PyInt_As_int(__pyx_v_n); if (unlikely((__pyx_t_24 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L1_error)
     __pyx_t_15 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_15.memview)) __PYX_ERR(0, 262, __pyx_L1_error)
-    __pyx_t_25 = __pyx_f_10py_raccoon_14spanning_trees_random_spanning_tree_c(__pyx_t_24, __pyx_v_degree, __pyx_v_neighbors, __pyx_t_15, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L1_error)
+    __pyx_t_25 = __pyx_f_10py_raccoon_14spanning_trees_uniform_spanning_tree_c(__pyx_t_24, __pyx_v_degree, __pyx_v_neighbors, __pyx_t_15, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_t_15, 1);
     __pyx_t_15.memview = NULL; __pyx_t_15.data = NULL;
     __pyx_v_tree_root = __pyx_t_25;
 
     /* "py_raccoon/sampling.pyx":263
  *         parent = np.ndarray(n, dtype=np.int32)
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)             # <<<<<<<<<<<<<<
  *         depth = np_depth
  * 
@@ -22682,7 +22682,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_4uniform_cc_fast(CYTHON_UNUSED 
     __pyx_t_3 = 0;
 
     /* "py_raccoon/sampling.pyx":264
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)
  *         depth = np_depth             # <<<<<<<<<<<<<<
  * 
@@ -23601,7 +23601,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_6estimate_len_count_fast(CYTHON
  *     for i in range(samples):
  *         np_parent = np.ndarray(n, np.int32)             # <<<<<<<<<<<<<<
  *         parent = np_parent
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  */
     __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 324, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
@@ -23646,7 +23646,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_6estimate_len_count_fast(CYTHON
  *     for i in range(samples):
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent             # <<<<<<<<<<<<<<
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)
  */
     __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 325, __pyx_L1_error)
@@ -23658,16 +23658,16 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_6estimate_len_count_fast(CYTHON
     /* "py_raccoon/sampling.pyx":326
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)             # <<<<<<<<<<<<<<
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)             # <<<<<<<<<<<<<<
  *         np_depth = calc_depth(parent)
  *         depth = np_depth
  */
-    __pyx_t_15 = __pyx_f_10py_raccoon_14spanning_trees_random_spanning_tree_c(__pyx_v_n, __pyx_v_degree, __pyx_v_neighbors, __pyx_v_parent, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_15 = __pyx_f_10py_raccoon_14spanning_trees_uniform_spanning_tree_c(__pyx_v_n, __pyx_v_degree, __pyx_v_neighbors, __pyx_v_parent, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 326, __pyx_L1_error)
     __pyx_v_tree_root = __pyx_t_15;
 
     /* "py_raccoon/sampling.pyx":327
  *         parent = np_parent
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)             # <<<<<<<<<<<<<<
  *         depth = np_depth
  * 
@@ -23703,7 +23703,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_6estimate_len_count_fast(CYTHON
     __pyx_t_3 = 0;
 
     /* "py_raccoon/sampling.pyx":328
- *         tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+ *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
  *         np_depth = calc_depth(parent)
  *         depth = np_depth             # <<<<<<<<<<<<<<
  * 
@@ -25682,7 +25682,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_10uniform_cc_slow(CYTHON_UNUSED
  *     cdef int[:] parent, depth
  *     cdef double p_c, p_c_prime
  *     for i in range(samples):             # <<<<<<<<<<<<<<
- *         np_parent = random_spanning_tree(G, seed)
+ *         np_parent = uniform_spanning_tree(G, seed)
  *         parent = np_parent
  */
   __pyx_t_22 = __Pyx_PyInt_As_long(__pyx_v_samples); if (unlikely((__pyx_t_22 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 433, __pyx_L1_error)
@@ -25693,11 +25693,11 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_10uniform_cc_slow(CYTHON_UNUSED
     /* "py_raccoon/sampling.pyx":434
  *     cdef double p_c, p_c_prime
  *     for i in range(samples):
- *         np_parent = random_spanning_tree(G, seed)             # <<<<<<<<<<<<<<
+ *         np_parent = uniform_spanning_tree(G, seed)             # <<<<<<<<<<<<<<
  *         parent = np_parent
  *         np_depth = calc_depth(parent)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_random_spanning_tree); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 434, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_uniform_spanning_tree); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 434, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __pyx_t_6 = NULL;
     __pyx_t_5 = 0;
@@ -25726,7 +25726,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_10uniform_cc_slow(CYTHON_UNUSED
 
     /* "py_raccoon/sampling.pyx":435
  *     for i in range(samples):
- *         np_parent = random_spanning_tree(G, seed)
+ *         np_parent = uniform_spanning_tree(G, seed)
  *         parent = np_parent             # <<<<<<<<<<<<<<
  *         np_depth = calc_depth(parent)
  *         depth = np_depth
@@ -25738,7 +25738,7 @@ static PyObject *__pyx_pf_10py_raccoon_8sampling_10uniform_cc_slow(CYTHON_UNUSED
     __pyx_t_24.data = NULL;
 
     /* "py_raccoon/sampling.pyx":436
- *         np_parent = random_spanning_tree(G, seed)
+ *         np_parent = uniform_spanning_tree(G, seed)
  *         parent = np_parent
  *         np_depth = calc_depth(parent)             # <<<<<<<<<<<<<<
  *         depth = np_depth
@@ -27737,7 +27737,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_pyx_unpickle_Enum, __pyx_k_pyx_unpickle_Enum, sizeof(__pyx_k_pyx_unpickle_Enum), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_vtable, __pyx_k_pyx_vtable, sizeof(__pyx_k_pyx_vtable), 0, 0, 1, 1},
     {&__pyx_n_s_random, __pyx_k_random, sizeof(__pyx_k_random), 0, 0, 1, 1},
-    {&__pyx_n_s_random_spanning_tree, __pyx_k_random_spanning_tree, sizeof(__pyx_k_random_spanning_tree), 0, 0, 1, 1},
     {&__pyx_n_s_range, __pyx_k_range, sizeof(__pyx_k_range), 0, 0, 1, 1},
     {&__pyx_n_s_reduce, __pyx_k_reduce, sizeof(__pyx_k_reduce), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
@@ -27776,6 +27775,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_uniform_cc, __pyx_k_uniform_cc, sizeof(__pyx_k_uniform_cc), 0, 0, 1, 1},
     {&__pyx_n_s_uniform_cc_fast, __pyx_k_uniform_cc_fast, sizeof(__pyx_k_uniform_cc_fast), 0, 0, 1, 1},
     {&__pyx_n_s_uniform_cc_slow, __pyx_k_uniform_cc_slow, sizeof(__pyx_k_uniform_cc_slow), 0, 0, 1, 1},
+    {&__pyx_n_s_uniform_spanning_tree, __pyx_k_uniform_spanning_tree, sizeof(__pyx_k_uniform_spanning_tree), 0, 0, 1, 1},
     {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
     {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
     {&__pyx_n_s_utils, __pyx_k_utils, sizeof(__pyx_k_utils), 0, 0, 1, 1},
@@ -28423,7 +28423,7 @@ static int __Pyx_modinit_function_import_code(void) {
   __Pyx_GOTREF(__pyx_t_1);
   if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "lowest_common_ancestor", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_lowest_common_ancestor, "struct __pyx_t_10py_raccoon_14spanning_trees_LcaResult *(__Pyx_memviewslice, __Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "calc_property_fast", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_calc_property_fast, "void (__Pyx_memviewslice, __Pyx_memviewslice, double, __Pyx_memviewslice, double (*)(int, int, double, __Pyx_memviewslice))") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "random_spanning_tree_c", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_random_spanning_tree_c, "int (int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "uniform_spanning_tree_c", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_uniform_spanning_tree_c, "int (int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "graph_to_neighbors", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_graph_to_neighbors, "int **(int, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ImportFunction_3_0_8(__pyx_t_1, "free_graph_neighbors", (void (**)(void))&__pyx_f_10py_raccoon_14spanning_trees_free_graph_neighbors, "void (int, int **)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
@@ -29333,8 +29333,8 @@ if (!__Pyx_RefNanny) {
 
   /* "py_raccoon/sampling.pyx":15
  * 
- * from .spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, calc_property_fast, graph_to_neighbors, free_graph_neighbors, random_spanning_tree_c, Edge
- * from .spanning_trees import NP_EDGE, calc_depth, random_spanning_tree, get_induced_cycle             # <<<<<<<<<<<<<<
+ * from .spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, calc_property_fast, graph_to_neighbors, free_graph_neighbors, uniform_spanning_tree_c, Edge
+ * from .spanning_trees import NP_EDGE, calc_depth, uniform_spanning_tree, get_induced_cycle             # <<<<<<<<<<<<<<
  * 
  * cdef extern from "<random>" namespace "std":
  */
@@ -29346,9 +29346,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_INCREF(__pyx_n_s_calc_depth);
   __Pyx_GIVEREF(__pyx_n_s_calc_depth);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 1, __pyx_n_s_calc_depth)) __PYX_ERR(0, 15, __pyx_L1_error);
-  __Pyx_INCREF(__pyx_n_s_random_spanning_tree);
-  __Pyx_GIVEREF(__pyx_n_s_random_spanning_tree);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 2, __pyx_n_s_random_spanning_tree)) __PYX_ERR(0, 15, __pyx_L1_error);
+  __Pyx_INCREF(__pyx_n_s_uniform_spanning_tree);
+  __Pyx_GIVEREF(__pyx_n_s_uniform_spanning_tree);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 2, __pyx_n_s_uniform_spanning_tree)) __PYX_ERR(0, 15, __pyx_L1_error);
   __Pyx_INCREF(__pyx_n_s_get_induced_cycle);
   __Pyx_GIVEREF(__pyx_n_s_get_induced_cycle);
   if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 3, __pyx_n_s_get_induced_cycle)) __PYX_ERR(0, 15, __pyx_L1_error);
@@ -29363,9 +29363,9 @@ if (!__Pyx_RefNanny) {
   __Pyx_GOTREF(__pyx_t_4);
   if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_depth, __pyx_t_4) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_7, __pyx_n_s_random_spanning_tree); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_7, __pyx_n_s_uniform_spanning_tree); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_random_spanning_tree, __pyx_t_4) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_uniform_spanning_tree, __pyx_t_4) < 0) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_4 = __Pyx_ImportFrom(__pyx_t_7, __pyx_n_s_get_induced_cycle); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 15, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);

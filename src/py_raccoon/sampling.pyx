@@ -11,8 +11,8 @@ from .utils import estimate_er_params
 
 import cython
 
-from .spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, calc_property_fast, graph_to_neighbors, free_graph_neighbors, random_spanning_tree_c, Edge
-from .spanning_trees import NP_EDGE, calc_depth, random_spanning_tree, get_induced_cycle
+from .spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, calc_property_fast, graph_to_neighbors, free_graph_neighbors, uniform_spanning_tree_c, Edge
+from .spanning_trees import NP_EDGE, calc_depth, uniform_spanning_tree, get_induced_cycle
 
 cdef extern from "<random>" namespace "std":
     cdef cppclass mt19937:
@@ -259,7 +259,7 @@ def uniform_cc_fast(n: int, p: float, N: float | NDArray[np.float64], samples: i
     cdef double overcorrelate_thresh = 1.0 / (m - n + 1)
     for i in range(c_samples):
         parent = np.ndarray(n, dtype=np.int32)
-        tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+        tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
         np_depth = calc_depth(parent)
         depth = np_depth
         
@@ -323,7 +323,7 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     for i in range(samples):
         np_parent = np.ndarray(n, np.int32)
         parent = np_parent
-        tree_root = random_spanning_tree_c(n, degree, neighbors, parent, seed)
+        tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
         np_depth = calc_depth(parent)
         depth = np_depth
         
@@ -431,7 +431,7 @@ def uniform_cc_slow(n: int, p: float, N: float, samples: int, seed:int|np.random
     cdef int[:] parent, depth
     cdef double p_c, p_c_prime
     for i in range(samples):
-        np_parent = random_spanning_tree(G, seed)
+        np_parent = uniform_spanning_tree(G, seed)
         parent = np_parent
         np_depth = calc_depth(parent)
         depth = np_depth

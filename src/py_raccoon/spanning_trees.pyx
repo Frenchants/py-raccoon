@@ -244,7 +244,7 @@ def calc_depth(parent: np.ndarray) -> np.ndarray:
     return depth
 
 @cython.wraparound(False)
-cdef int random_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
+cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size
@@ -289,7 +289,7 @@ cdef void free_graph_neighbors(int size, int** neighbors):
         free(neighbors[i])
     free(neighbors)
 
-def random_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:
+def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:
     """
     Implements Wilson's Algorithm for random spanning trees [1].
     Assumes G to be undirected and connected.
@@ -304,7 +304,7 @@ def random_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np
 
     try:
         #srand(rnd.choice(100) + 5)
-        random_spanning_tree_c(size, degree, neighbors, parent, rnd)
+        uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
     finally:
         free_graph_neighbors(size, neighbors)
     
