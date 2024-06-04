@@ -1,4 +1,7 @@
 .venv
+.coverage
 dist
+build
 src/cell_sprouter.egg-info
 src/py_raccoon.egg-info
+__pycache__
