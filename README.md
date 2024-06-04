@@ -121,7 +121,7 @@ Also note that eventually, longer cycles won't occur at all, leading to an incor
 PyRaCCooN is both algorithmically optimized and efficiently implemented using Cython.
 The runtime figure below is from our paper; it shows the average runtime for one run of `pr.uniform_cc(n, p, N=10*n, samples=1000)` for both fast and slow sampling.
 
-![Runtime Behavior](readme_src/https://raw.githubusercontent.com/josefhoppe/py-raccoon/main/readme_src/runtime.svg)
+![Runtime Behavior](https://raw.githubusercontent.com/josefhoppe/py-raccoon/main/readme_src/runtime.svg)
 
 ## Acknowledgements
 
