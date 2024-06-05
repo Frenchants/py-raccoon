@@ -36,5 +36,7 @@ jobs:
         pip install build
     - name: Build package
       run: python -m build
+    - name: Remove binary wheel
+      run: rm dist/*linux_x86_64.whl
     - name: Publish package
       uses: pypa/gh-action-pypi-publish@release/v1
