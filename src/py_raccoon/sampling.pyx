@@ -61,7 +61,7 @@ def uniform_cc(n: int, p: float, N: float | NDArray[np.float64] | None = None, P
         - For $P_l = 0$, set `P[l] = -np.inf`; otherwise `P[l] = log2($P_l$)`.
     - samples: Random spanning trees to sample. Larger is more accurate. Should be greater than `N` (or `np.sum(N)`).
     - seed: Random seed or generator to use. Will generate a new `numpy.random.default_rng` if number or no seed is specified.
-    - G: Underlying graph to generate 2-cells for. If `None`, a G(n,p) random graph will be sampled instead. If specified, `p` will still be used for the sampling process.
+    - G: Underlying graph to generate 2-cells for. If `None`, a G(n,p) random graph will be sampled instead. If specified, `p` will still be used for the sampling process. Nodes must be integers `0, ..., n-1`.
     - fast_sampling: Uniform CCs can be sampled using a more accurate (slow) or a more inaccurate (fast) algorithm. Roughly, the slow algorithm takes 10s to sample for n²p=500, the fast algorithm takes 10s for n²p=500,000. See the package README or [1] for more details
 
     Returns: G, cells, undersampled, overcorrelated
@@ -72,8 +72,15 @@ def uniform_cc(n: int, p: float, N: float | NDArray[np.float64] | None = None, P
     - overcorrelated: int, number of 2-cells where $\\rho'_c$ is large enough that, in expectation, multiple cells would be sampled from the same ST.
 
     References
-    [1] Hoppe, Josef and Schaub, Michael T. "Random Abstract Cell Complexes." arXiv preprint arXiv:0000.00000 (2024).
+    [1] Hoppe, Josef and Schaub, Michael T. "Random Abstract Cell Complexes." arXiv preprint arXiv:2406.01999 (2024).
     """
+    if G is not None:
+        if len(G.nodes) != n:
+            raise ValueError(f"Argument inconsistency: G has {len(G.nodes)} nodes, but n={n}.")
+        nodes = set(G.nodes)
+        for i in range(n):
+            if i not in nodes:
+                raise ValueError("G must have the nodes `0, ..., n-1` (as integers). Hint: Use `nx.convert_node_labels_to_integers()`.")
     if (N is None) == (P is None):
         raise ValueError("P xor N must be None")
     if fast_sampling:
