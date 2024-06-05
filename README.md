@@ -4,6 +4,7 @@
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/josefhoppe/py-raccoon/blob/main/LICENSE)
 [![arXiv:2406.01999](https://img.shields.io/badge/arXiv-2406.01999-b31b1b.svg?logo=arxiv)](https://arxiv.org/abs/2406.01999)
+![Python version](https://img.shields.io/python/required-version-toml?tomlFilePath=https%3A%2F%2Fraw.githubusercontent.com%2Fjosefhoppe%2Fpy-raccoon%2Fmain%2Fpyproject.toml&logo=python&logoColor=ffd242)
 [![Package version on PyPI](https://img.shields.io/pypi/v/py-raccoon?logo=pypi&logoColor=ffd242)](https://pypi.org/project/py-raccoon/)
 
 PyRaCCooN (**Ra**ndom **C**ell **Co**mplexes **o**n **N**etworks) randomly generates cell complexes and and provides an approximation for the number of simple cycles (by length) on a graph.
