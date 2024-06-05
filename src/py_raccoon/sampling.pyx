@@ -5,9 +5,15 @@ from libc.stdlib cimport malloc, free
 import networkx as nx
 import numpy as np
 from numpy.typing import NDArray
-from math import log2, exp2
-from libc.math cimport exp2 as cexp2, log2 as clog2
+from math import log2
+from libc.math cimport log2 as clog2
 from .utils import estimate_er_params
+
+# Backport since exp2 was introduced in python 3.11
+# Note: The improved accuracy of exp2 will not be noticeable since the 
+#       accuracy of 2**x is greater than that of our approximation.
+cdef inline double cexp2(double x) nogil:
+    return 2**x
 
 import cython
 

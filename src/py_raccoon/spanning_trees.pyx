@@ -4,7 +4,7 @@
 Functions to 
 """
 
-from libc.stdlib cimport malloc, free, srand, rand
+from libc.stdlib cimport malloc, free
 from libcpp.vector cimport vector
 #cimport numpy as np
 import networkx as nx
