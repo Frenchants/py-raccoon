@@ -368,9 +368,9 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     free_graph_neighbors(n, neighbors)
 
     zeros = np_expected_counts == 0
-    np_expected_counts[zeros] = 1
 
-    np_est_counts = np.log2(np_expected_counts) - np_P
+    with np.errstate(divide='ignore'):
+        np_est_counts = np.log2(np_expected_counts) - np_P
     return np_est_counts, zeros, np_occured
 
 def last_step(d, n, l):
