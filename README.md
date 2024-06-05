@@ -3,13 +3,13 @@
 <img align="right" width="200" style="margin-top:-5px" src="https://raw.githubusercontent.com/josefhoppe/py-raccoon/main/readme_src/LOGO_ERC-FLAG_FP.png">
 
 [![MIT license](https://img.shields.io/badge/License-MIT-blue.svg)](https://github.com/josefhoppe/py-raccoon/blob/main/LICENSE)
-[![arXiv:0000.00000](https://img.shields.io/badge/arXiv-0000.00000-b31b1b.svg?logo=arxiv)](https://arxiv.org/abs/000.00000)
+[![arXiv:2406.01999](https://img.shields.io/badge/arXiv-2406.01999-b31b1b.svg?logo=arxiv)](https://arxiv.org/abs/2406.01999)
 [![Package version on PyPI](https://img.shields.io/pypi/v/py-raccoon?logo=pypi&logoColor=ffd242)](https://pypi.org/project/py-raccoon/)
 
 PyRaCCooN (**Ra**ndom **C**ell **Co**mplexes **o**n **N**etworks) randomly generates cell complexes and and provides an approximation for the number of simple cycles (by length) on a graph.
 To see how to use PyRaCCooN, check out the Jupyter [examples](https://github.com/josefhoppe/py-raccoon/tree/main/examples) or the short examples below.
 
-For more on the inner workings, see our paper on arXiv.
+For more information on the theory and algorithmics, see our paper [*Random Abstract Cell Complexes*](https://arxiv.org/abs/2406.01999) on arXiv.
 The [Evaluation Code](https://github.com/josefhoppe/random-abstract-cell-complexes) is also available on Github.
 
 More specifically, it
@@ -23,7 +23,14 @@ Our aforementioned paper contains some analysis of the accuracy on non-ER graphs
 If you use PyRaCCooN, please cite the following paper:
 
 ```
-(TBD)
+@misc{hoppe2024random,
+      title={Random Abstract Cell Complexes}, 
+      author={Josef Hoppe and Michael T. Schaub},
+      year={2024},
+      eprint={2406.01999},
+      archivePrefix={arXiv},
+      primaryClass={cs.DS}
+}
 ```
 
 ## Installation
