@@ -28,8 +28,8 @@ test = [
 ]
 
 [project.urls]
-"Homepage" = "https://github.com/josefhoppe/py-racoon"
-"Bug Tracker" = "https://github.com/josefhoppe/py-racoon/issues"
+"Homepage" = "https://github.com/josefhoppe/py-raccoon"
+"Bug Tracker" = "https://github.com/josefhoppe/py-raccoon/issues"
 
 [tool.setuptools.packages.find]
 where = ["src"]
