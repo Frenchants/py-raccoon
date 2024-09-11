@@ -10,6 +10,10 @@ extensions = [
         ["src/py_raccoon/sampling.pyx"],
         include_dirs=['src/']
     ),
+    Extension(
+        "py_raccoon.balance",
+        ["src/py_raccoon/balance.pyx"],
+        include_dirs=['src/'])
 ]
 
 # This is the function that is executed

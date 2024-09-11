@@ -341,7 +341,7 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     for l in range(3,n + 1):
         # log to avoid floating point limitations
         P[l] = clog2(samples) + clog2(l) + clog2(n-2)*(l-2) - clog2(n)*(2*l - 4) - clog2(p)*(l-3)
-    #P[:] = 0
+    P[:] = 0
 
     undersample = 0
     cdef int i, j
@@ -363,6 +363,7 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
             l = depth[op.u] + depth[op.v] - 2*depth[op.lca] + 1
             
             p_c_prime = cexp2(P[l] - op.p_c) / samples
+            # DAS HIER IST 2^(log(Pl) - log(op.p_c)) / samples = 2^(log(Pl/op.p_c)) / samples = Pl/op.p_c/samples = Pl / (op.p_c * samples) Also ist p_c_prime = p'_c
 
             #if not type(p_c_prime) == float:
             #    print(p_c_prime, l, P[l], samples, p_c)
@@ -377,7 +378,7 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     zeros = np_expected_counts == 0
 
     with np.errstate(divide='ignore'):
-        np_est_counts = np.log2(np_expected_counts) - np_P
+        np_est_counts = np.log2(np_expected_counts) # - np_P
     return np_est_counts, zeros, np_occured
 
 def last_step(d, n, l):

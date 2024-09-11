@@ -49,11 +49,12 @@ cdef struct LcaLookup:
     int a
     int b
 
-cdef inline int* uf_init(int size) nogil:
+# initializes ancestor array, where ancestor of each node is the node itself
+cdef inline int* uf_init(int size) nogil: 
     """
     Initializes union-find datastructure with size many elements, each in their own partition
     """
-    cdef int* ancestor = <int*> malloc(size * sizeof(int))
+    cdef int* ancestor = <int*> malloc(size * sizeof(int)) 
     cdef int i
     for i in range(size):
         ancestor[i] = i
@@ -84,7 +85,7 @@ cdef inline void uf_union(int* parent, int a, int b) noexcept nogil:
     parent[uf_find(parent, a)] = uf_find(parent, b)
 
 
-cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil:
+cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
     for child in children[node][0]:
         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
         uf_union(partition, node, child)
@@ -127,18 +128,19 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
     Since the Ackermann function grows so fast, α is almost constant.
     It is especially faster than the sorting we perform afterward.
     """
-    cdef int p_size = parent.shape[0]
-    cdef char* node_color = <char*> malloc(p_size * sizeof(char))
-    cdef int* ancestor = <int*> malloc(p_size * sizeof(int))
+    cdef int p_size = parent.shape[0] # the number of nodes
+    cdef char* node_color = <char*> malloc(p_size * sizeof(char)) # pointer to array in memory with an entry of type char for every node (an array containing each node's color)
+    cdef int* ancestor = <int*> malloc(p_size * sizeof(int)) # pointer to array in memory with an entry of type int for every node (an array containing each node's ancestor)
     cdef int i, node, p # both for iterating
     cdef Edge edge
     cdef int* partition = uf_init(p_size)
 
-    cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))
-    cdef int result_count = 0
-    cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))
-    cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*))
+    cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults 
+    cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"
+    cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)
+    cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*)) # LcaLookup is a struct containing a, b und other. So this is a pointer to an array of pointers to vectors whose entries are of type LcaLookup. The vectors are from C++ (import via libcpp) and they do not have a fixed size. That is when called .push_back(elem) on them, elem will be added to them (like a list in python i guess). There is one vector for every node
     
+    # initializing stuff 
     for i in range(p_size):
         node_color[i] = 0
         ancestor[i] = i
@@ -152,9 +154,9 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
         for node in range(p_size):
             p = parent[node]
             if p != -1:
-                children[p][0].push_back(node)
+                children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. für alle nodes werden dessen children gefunden
             else:
-                root = node
+                root = node # root node ist die node, dessen parent -1 ist (also keinen parent hat.)
 
         # need to efficiently retrieve queries
         # node -> (other, edge[0], edge[1])
@@ -163,11 +165,18 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
 
         for i in range(node_pairs.shape[0]):
             edge = node_pairs[i]
-            a = edge.a
+            a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
             b = edge.b
-            queries[a][0].push_back(LcaLookup(b,a,b))
-            queries[b][0].push_back(LcaLookup(a,a,b))
+            queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)
+            queries[b][0].push_back(LcaLookup(a,a,b)) # b is the main node here and a is the other node
         
+        # we are passing:
+        # the root, the vector array called children which contains every node's children
+        # the queries
+        # the pointer result to the array of LcaResults
+        # the pointer partition to an array of every node's ancestors (which is used for the union-find datastructure)
+        # the ancestor array
+        # the node color array 
         __inner_lca(root, children, queries, result, &result_count, partition, ancestor, node_color)
 
     finally:
