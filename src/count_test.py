@@ -1,6 +1,6 @@
 import py_raccoon.sampling as smp
 import py_raccoon.spanning_trees as st
-import py_raccoon.balance
+import py_raccoon.balance_sampling
 import networkx as nx 
 from matplotlib import pyplot as plot
 import numpy as np
@@ -10,11 +10,8 @@ G = nx.gnp_random_graph(5, p)
 while not nx.is_connected(G):
     G  = nx.gnp_random_graph(10, p)
 
-nx.draw(G)
-plot.show()
 
-
-np_est_counts, zeros, np_occured = smp.estimate_cycle_count(G, 100000, p)
+np_est_counts, zeros, np_occured = smp.estimate_cycle_count(G, 1000)
 
 print(np_est_counts)
 
