@@ -1,4 +1,3 @@
-# cython: gdb_debug=True
 import py_raccoon.sampling as smp
 import py_raccoon.spanning_trees as st
 import py_raccoon.balance_sampling as bal
