@@ -17,7 +17,7 @@ cdef inline double cexp2(double x) nogil:
 
 import cython
 
-from .balance_spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, calc_property_fast, graph_to_neighbors, free_graph_neighbors, uniform_spanning_tree_c, Edge
+from .balance_spanning_trees cimport lowest_common_ancestor, Edge, LcaResult, Graph_c, calc_property_fast, to_Graph_c, free_neighbors_and_weights, uniform_spanning_tree_c, Edge
 from .balance_spanning_trees import NP_EDGE, calc_depth, uniform_spanning_tree, get_induced_cycle
 
 #from libcpp.vector cimport vector
@@ -27,15 +27,17 @@ cdef packed struct OccurenceProb:
     int v
     int lca
     double p_c
+    signed char bal
 
 NP_OCCURENCE_PROB = np.dtype([
     ('u', np.int32),
     ('v', np.int32),
     ('lca', np.int32),
     ('p_c', np.float64),
+    ('bal', np.int8)
 ])
 
-def estimate_cycle_count(G: nx.Graph, samples: int, p: float | None = None, seed:int|np.random.Generator|None=None) -> tuple[NDArray[np.float64], NDArray[bool], NDArray[np.int32]]:
+def estimate_balance(G: nx.Graph, samples: int, p: float | None = None, seed:int|np.random.Generator|None=None) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[bool], NDArray[bool], NDArray[bool], NDArray[np.int32], NDArray[np.int32], NDArray[np.int32]]:
     """
     Estimates the number of simple cycles in G using spanning-tree-based sampling.
 
@@ -61,13 +63,13 @@ def estimate_cycle_count(G: nx.Graph, samples: int, p: float | None = None, seed
     if p is None:
         _, p = estimate_er_params(G)
 
-    edges = np.array([(u,v) for (u,v) in G.edges], dtype=NP_EDGE)
+    edges = np.array([(u,v,w) for (u,v,w) in G.edges.data('weight')], dtype=NP_EDGE)
 
     return estimate_len_count_fast(G, edges, p, samples, seed)
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, samples: int, seed: np.random.Generator) -> tuple[NDArray[np.float64], NDArray[bool], NDArray[np.int32]]:
+def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, samples: int, seed: np.random.Generator) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[bool], NDArray[bool], NDArray[bool], NDArray[np.int32], NDArray[np.int32], NDArray[np.int32]]:
     """
     Estimates the number of cycles in `G` for each length.
 
@@ -85,11 +87,20 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     node_degree = np.array(G.degree, dtype=np.int32)
     degree_np = node_degree[:,1][node_degree[:,0].argsort()] # nx may not consider the nodes to be in ascending order by their id
     cdef int[:] degree = degree_np
-    cdef int** neighbors = graph_to_neighbors(n, degree, G)
-    np_expected_counts = np.zeros(n + 1, np.float64)
-    cdef double[:] expected_counts = np_expected_counts
-    np_occured = np.zeros(n + 1, np.int32)
-    cdef int[:] occured = np_occured
+    cdef Graph_c graph_c = to_Graph_c(n, degree, G)
+    cdef int** neighbors = graph_c.neighbors
+    cdef signed char** weights = graph_c.weights
+
+    np_positive_expected_counts = np.zeros(n + 1, np.float64)
+    cdef double[:] positive_expected_counts = np_positive_expected_counts
+    np_positive_occurred = np.zeros(n + 1, np.int32)
+    cdef int[:] positive_occurred = np_positive_occurred
+
+    np_negative_expected_counts = np.zeros(n + 1, np.float64)
+    cdef double[:] negative_expected_counts = np_negative_expected_counts
+    np_negative_occurred = np.zeros(n + 1, np.int32)
+    cdef int[:] negative_occurred = np_negative_occurred
+
     np_P = np.ndarray(n + 1, np.float64)
     cdef double[:] P = np_P
     
@@ -110,11 +121,13 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     for i in range(samples):
         np_parent = np.ndarray(n, np.int32)
         parent = np_parent
-        tree_root = uniform_spanning_tree_c(n, degree, neighbors, parent, seed)
+        np_parent_weight = np.ndarray(n, np.int8)
+        parent_weight = np_parent_weight
+        tree_root = uniform_spanning_tree_c(n, degree, neighbors, weights, parent, parent_weight, seed)
         np_depth = calc_depth(parent)
         depth = np_depth
         
-        occ_probs = occurence_probability_fast(G, edges, p, np_parent, tree_root, np_depth, degree_np)
+        occ_probs = occurence_probability_fast(G, edges, p, np_parent, np_parent_weight, tree_root, np_depth, degree_np)
         for j in range(occ_probs.shape[0]):
             op = occ_probs[j]
             l = depth[op.u] + depth[op.v] - 2*depth[op.lca] + 1
@@ -127,20 +140,35 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
 
             if p_c_prime > 1:
                 undersample += 1
-            expected_counts[l] += p_c_prime
-            occured[l] += 1
+            
+            if op.bal == 1: # positive balance
+                positive_expected_counts[l] += p_c_prime
+                positive_occurred[l] += 1
+            else: # negative balance
+                negative_expected_counts[l] += p_c_prime
+                negative_occurred[l] += 1         
+            
     
-    free_graph_neighbors(n, neighbors)
+    free_neighbors_and_weights(n, neighbors, weights)
 
-    zeros = np_expected_counts == 0
+    np_total_occurred = np_positive_occurred + np_negative_occurred
+    np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
+
+    total_zeros = np_total_expected_counts == 0
+    positive_zeros = np_positive_expected_counts == 0
+    negative_zeros = np_negative_expected_counts == 0
 
     with np.errstate(divide='ignore'):
-        np_est_counts = np.log2(np_expected_counts) - np_P
-    return np_est_counts, zeros, np_occured
+        # WAHRSCHEINLCIH IWIE FALSCH
+        np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
+        np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
+        np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)
+    
+    return np_total_est_counts, np_positive_est_counts, np_negative_est_counts, total_zeros, positive_zeros, negative_zeros, np_total_occurred, np_positive_occurred, np_negative_occurred
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, double p, int[:] parent, int tree_root, int[:] depth, int[:] degree):
+cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, double p, int[:] parent, signed char[:] parent_weight, int tree_root, int[:] depth, int[:] degree):
     """
     Estimates the probability with which each cycle induced by the given spanning tree appears in a uniformly sampled spanning tree.
 
@@ -180,7 +208,7 @@ cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, dou
 
     cdef int u, v, lca, l
     cdef double deg_sum, deg_prod, p_c
-    cdef LcaResult* lca_result = lowest_common_ancestor(parent, candidate_edges)
+    cdef LcaResult* lca_result = lowest_common_ancestor(parent, parent_weight, candidate_edges)
     cdef int res_count = candidate_edges.shape[0]
     cdef OccurenceProb[:] result
     try:
@@ -191,6 +219,7 @@ cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, dou
             u = lca_res.a
             v = lca_res.b
             lca = lca_res.lca
+            bal = lca_res.bal
 
             l = depth[u] + depth[v] - 2*depth[lca] + 1
 
@@ -212,7 +241,7 @@ cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, dou
             if p_c > 0: #logarithmic -> actual p_c > 1
                 p_c = 0
 
-            result[i] = OccurenceProb(u, v, lca, p_c)
+            result[i] = OccurenceProb(u, v, lca, p_c, bal)
     finally:
         free(lca_result)
 

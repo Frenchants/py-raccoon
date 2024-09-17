@@ -1668,6 +1668,7 @@ struct __pyx_memoryview_obj;
 struct __pyx_memoryviewslice_obj;
 struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge;
 struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult;
+struct __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c;
 struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup;
 
 /* "py_raccoon/balance_spanning_trees.pxd":3
@@ -1685,6 +1686,7 @@ struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup;
 struct __Pyx_PACKED __pyx_t_10py_raccoon_22balance_spanning_trees_Edge {
   int a;
   int b;
+  signed char weight;
 };
 #if defined(__SUNPRO_C)
   #pragma pack()
@@ -1692,8 +1694,8 @@ struct __Pyx_PACKED __pyx_t_10py_raccoon_22balance_spanning_trees_Edge {
   #pragma pack(pop)
 #endif
 
-/* "py_raccoon/balance_spanning_trees.pxd":7
- *     int b
+/* "py_raccoon/balance_spanning_trees.pxd":8
+ *     signed char weight
  * 
  * cdef packed struct LcaResult:             # <<<<<<<<<<<<<<
  *     int a
@@ -1708,6 +1710,7 @@ struct __Pyx_PACKED __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult {
   int a;
   int b;
   int lca;
+  signed char bal;
 };
 #if defined(__SUNPRO_C)
   #pragma pack()
@@ -1715,7 +1718,29 @@ struct __Pyx_PACKED __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult {
   #pragma pack(pop)
 #endif
 
-/* "py_raccoon/balance_spanning_trees.pyx":47
+/* "py_raccoon/balance_spanning_trees.pxd":14
+ *     signed char bal
+ * 
+ * cdef packed struct Graph_c:             # <<<<<<<<<<<<<<
+ *     int** neighbors
+ *     signed char** weights
+ */
+#if defined(__SUNPRO_C)
+  #pragma pack(1)
+#elif !defined(__GNUC__)
+  #pragma pack(push, 1)
+#endif
+struct __Pyx_PACKED __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c {
+  int **neighbors;
+  signed char **weights;
+};
+#if defined(__SUNPRO_C)
+  #pragma pack()
+#elif !defined(__GNUC__)
+  #pragma pack(pop)
+#endif
+
+/* "py_raccoon/balance_spanning_trees.pyx":54
  * ])
  * 
  * cdef struct LcaLookup:             # <<<<<<<<<<<<<<
@@ -1726,6 +1751,7 @@ struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup {
   int other;
   int a;
   int b;
+  signed char weight;
 };
 
 /* "View.MemoryView":114
@@ -2684,26 +2710,11 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
                                   int lineno, const char *filename,
                                   int full_traceback, int nogil);
 
-/* ListAppend.proto */
-#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
-static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
-    PyListObject* L = (PyListObject*) list;
-    Py_ssize_t len = Py_SIZE(list);
-    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
-        Py_INCREF(x);
-        #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000
-        L->ob_item[len] = x;
-        #else
-        PyList_SET_ITEM(list, len, x);
-        #endif
-        __Pyx_SET_SIZE(list, len + 1);
-        return 0;
-    }
-    return PyList_Append(list, x);
-}
-#else
-#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
-#endif
+/* BufferIndexError.proto */
+static void __Pyx_RaiseBufferIndexError(int axis);
+
+/* BufferIndexErrorNogil.proto */
+static void __Pyx_RaiseBufferIndexErrorNogil(int axis);
 
 /* PyIntBinop.proto */
 #if !CYTHON_COMPILING_IN_PYPY
@@ -2713,8 +2724,16 @@ static PyObject* __Pyx_PyInt_MultiplyCObj(PyObject *op1, PyObject *op2, long int
     (inplace ? PyNumber_InPlaceMultiply(op1, op2) : PyNumber_Multiply(op1, op2))
 #endif
 
-/* BufferIndexError.proto */
-static void __Pyx_RaiseBufferIndexError(int axis);
+/* DictGetItem.proto */
+#if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
+static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key);
+#define __Pyx_PyObject_Dict_GetItem(obj, name)\
+    (likely(PyDict_CheckExact(obj)) ?\
+     __Pyx_PyDict_GetItem(obj, name) : PyObject_GetItem(obj, name))
+#else
+#define __Pyx_PyDict_GetItem(d, key) PyObject_GetItem(d, key)
+#define __Pyx_PyObject_Dict_GetItem(obj, name)  PyObject_GetItem(obj, name)
+#endif
 
 /* UnpackUnboundCMethod.proto */
 typedef struct {
@@ -2740,6 +2759,27 @@ static CYTHON_INLINE PyObject* __Pyx_PyTuple_GetSlice(PyObject* src, Py_ssize_t 
 #else
 #define __Pyx_PyList_GetSlice(seq, start, stop)   PySequence_GetSlice(seq, start, stop)
 #define __Pyx_PyTuple_GetSlice(seq, start, stop)  PySequence_GetSlice(seq, start, stop)
+#endif
+
+/* ListAppend.proto */
+#if CYTHON_USE_PYLIST_INTERNALS && CYTHON_ASSUME_SAFE_MACROS
+static CYTHON_INLINE int __Pyx_PyList_Append(PyObject* list, PyObject* x) {
+    PyListObject* L = (PyListObject*) list;
+    Py_ssize_t len = Py_SIZE(list);
+    if (likely(L->allocated > len) & likely(len > (L->allocated >> 1))) {
+        Py_INCREF(x);
+        #if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX >= 0x030d0000
+        L->ob_item[len] = x;
+        #else
+        PyList_SET_ITEM(list, len, x);
+        #endif
+        __Pyx_SET_SIZE(list, len + 1);
+        return 0;
+    }
+    return PyList_Append(list, x);
+}
+#else
+#define __Pyx_PyList_Append(L,x) PyList_Append(L,x)
 #endif
 
 /* PyObject_GenericGetAttrNoDict.proto */
@@ -2996,35 +3036,6 @@ static int __pyx_slices_overlap(__Pyx_memviewslice *slice1,
                                 __Pyx_memviewslice *slice2,
                                 int ndim, size_t itemsize);
 
-/* IsLittleEndian.proto */
-static CYTHON_INLINE int __Pyx_Is_Little_Endian(void);
-
-/* BufferFormatCheck.proto */
-static const char* __Pyx_BufFmt_CheckString(__Pyx_BufFmt_Context* ctx, const char* ts);
-static void __Pyx_BufFmt_Init(__Pyx_BufFmt_Context* ctx,
-                              __Pyx_BufFmt_StackElem* stack,
-                              __Pyx_TypeInfo* type);
-
-/* TypeInfoCompare.proto */
-static int __pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b);
-
-/* MemviewSliceValidateAndInit.proto */
-static int __Pyx_ValidateAndInit_memviewslice(
-                int *axes_specs,
-                int c_or_f_flag,
-                int buf_flags,
-                int ndim,
-                __Pyx_TypeInfo *dtype,
-                __Pyx_BufFmt_StackElem stack[],
-                __Pyx_memviewslice *memviewslice,
-                PyObject *original_obj);
-
-/* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_int(PyObject *, int writable_flag);
-
-/* ObjectToMemviewSlice.proto */
-static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(PyObject *, int writable_flag);
-
 /* CppExceptionConversion.proto */
 #ifndef __Pyx_CppExn2PyErr
 #include <new>
@@ -3066,6 +3077,32 @@ static void __Pyx_CppExn2PyErr() {
   }
 }
 #endif
+
+/* IsLittleEndian.proto */
+static CYTHON_INLINE int __Pyx_Is_Little_Endian(void);
+
+/* BufferFormatCheck.proto */
+static const char* __Pyx_BufFmt_CheckString(__Pyx_BufFmt_Context* ctx, const char* ts);
+static void __Pyx_BufFmt_Init(__Pyx_BufFmt_Context* ctx,
+                              __Pyx_BufFmt_StackElem* stack,
+                              __Pyx_TypeInfo* type);
+
+/* TypeInfoCompare.proto */
+static int __pyx_typeinfo_cmp(__Pyx_TypeInfo *a, __Pyx_TypeInfo *b);
+
+/* MemviewSliceValidateAndInit.proto */
+static int __Pyx_ValidateAndInit_memviewslice(
+                int *axes_specs,
+                int c_or_f_flag,
+                int buf_flags,
+                int ndim,
+                __Pyx_TypeInfo *dtype,
+                __Pyx_BufFmt_StackElem stack[],
+                __Pyx_memviewslice *memviewslice,
+                PyObject *original_obj);
+
+/* ObjectToMemviewSlice.proto */
+static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_int(PyObject *, int writable_flag);
 
 /* MemviewDtypeToObject.proto */
 static CYTHON_INLINE PyObject *__pyx_memview_get_int(const char *itemp);
@@ -3112,8 +3149,14 @@ static CYTHON_INLINE PyObject* __Pyx_PyInt_From_int(int value);
 /* CIntFromPy.proto */
 static CYTHON_INLINE int __Pyx_PyInt_As_int(PyObject *);
 
+/* CIntToPy.proto */
+static CYTHON_INLINE PyObject* __Pyx_PyInt_From_signed_char(signed char value);
+
 /* CIntFromPy.proto */
 static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *);
+
+/* CIntFromPy.proto */
+static CYTHON_INLINE signed char __Pyx_PyInt_As_signed_char(PyObject *);
 
 /* CIntToPy.proto */
 static CYTHON_INLINE PyObject* __Pyx_PyInt_From_long(long value);
@@ -3185,14 +3228,12 @@ static PyObject *contiguous = 0;
 static PyObject *indirect_contiguous = 0;
 static int __pyx_memoryview_thread_locks_used;
 static PyThread_type_lock __pyx_memoryview_thread_locks[8];
-static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
-static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *); /*proto*/
 static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(int, __Pyx_memviewslice, PyObject *); /*proto*/
 static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(int, int **); /*proto*/
 static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(int); /*proto*/
 static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(int *, int); /*proto*/
 static CYTHON_INLINE void __pyx_f_10py_raccoon_22balance_spanning_trees_uf_union(int *, int, int); /*proto*/
-static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int, std::vector<int>  **, std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup>  **, struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *, int *, int *, int *, char *); /*proto*/
+static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__Pyx_memviewslice, signed char *, int, std::vector<int>  **, std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup>  **, struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *, int *, int *, int *, char *); /*proto*/
 static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int, __Pyx_memviewslice, __Pyx_memviewslice); /*proto*/
 static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(int, __Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice, double, __Pyx_memviewslice, double (*)(int, int, double, __Pyx_memviewslice)); /*proto*/
 static int __pyx_array_allocate_buffer(struct __pyx_array_obj *); /*proto*/
@@ -3231,12 +3272,6 @@ static void __pyx_memoryview__slice_assign_scalar(char *, Py_ssize_t *, Py_ssize
 static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *, PyObject *); /*proto*/
 /* #### Code section: typeinfo ### */
 static __Pyx_TypeInfo __Pyx_TypeInfo_int = { "int", NULL, sizeof(int), { 0 }, 0, __PYX_IS_UNSIGNED(int) ? 'U' : 'I', __PYX_IS_UNSIGNED(int), 0 };
-static __Pyx_StructField __Pyx_StructFields_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge[] = {
-  {&__Pyx_TypeInfo_int, "a", offsetof(struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge, a)},
-  {&__Pyx_TypeInfo_int, "b", offsetof(struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge, b)},
-  {NULL, NULL, 0}
-};
-static __Pyx_TypeInfo __Pyx_TypeInfo_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge = { "Edge", __Pyx_StructFields_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge, sizeof(struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge), { 0 }, 0, 'S', 0, __PYX_BUF_FLAGS_PACKED_STRUCT };
 static __Pyx_TypeInfo __Pyx_TypeInfo_char = { "char", NULL, sizeof(char), { 0 }, 0, 'H', __PYX_IS_UNSIGNED(char), 0 };
 /* #### Code section: before_global_var ### */
 #define __Pyx_MODULE_NAME "py_raccoon.balance_spanning_trees"
@@ -3272,9 +3307,10 @@ static const char __pyx_k_gc[] = "gc";
 static const char __pyx_k_id[] = "id";
 static const char __pyx_k_np[] = "np";
 static const char __pyx_k_nx[] = "nx";
-static const char __pyx_k__33[] = "?";
+static const char __pyx_k__31[] = "?";
 static const char __pyx_k_abc[] = "abc";
 static const char __pyx_k_and[] = " and ";
+static const char __pyx_k_bal[] = "bal";
 static const char __pyx_k_got[] = " (got ";
 static const char __pyx_k_lca[] = "lca";
 static const char __pyx_k_min[] = "min";
@@ -3288,7 +3324,6 @@ static const char __pyx_k_dict[] = "__dict__";
 static const char __pyx_k_edge[] = "edge";
 static const char __pyx_k_int8[] = "int8";
 static const char __pyx_k_left[] = "left";
-static const char __pyx_k_list[] = "list";
 static const char __pyx_k_main[] = "__main__";
 static const char __pyx_k_mode[] = "mode";
 static const char __pyx_k_name[] = "name";
@@ -3302,7 +3337,6 @@ static const char __pyx_k_test[] = "__test__";
 static const char __pyx_k_ASCII[] = "ASCII";
 static const char __pyx_k_Tuple[] = "Tuple";
 static const char __pyx_k_array[] = "array";
-static const char __pyx_k_c_res[] = "c_res";
 static const char __pyx_k_class[] = "__class__";
 static const char __pyx_k_count[] = "count";
 static const char __pyx_k_depth[] = "depth";
@@ -3330,22 +3364,21 @@ static const char __pyx_k_name_2[] = "__name__";
 static const char __pyx_k_parent[] = "parent";
 static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_reduce[] = "__reduce__";
-static const char __pyx_k_result[] = "result";
 static const char __pyx_k_return[] = "return";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_typing[] = "typing";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
+static const char __pyx_k_weight[] = "weight";
 static const char __pyx_k_NP_EDGE[] = "NP_EDGE";
 static const char __pyx_k_cparent[] = "cparent";
 static const char __pyx_k_disable[] = "disable";
 static const char __pyx_k_fortran[] = "fortran";
-static const char __pyx_k_lca_res[] = "lca_res";
 static const char __pyx_k_memview[] = "memview";
 static const char __pyx_k_shifted[] = "shifted";
+static const char __pyx_k_weights[] = "weights";
 static const char __pyx_k_Ellipsis[] = "Ellipsis";
 static const char __pyx_k_Sequence[] = "Sequence";
-static const char __pyx_k_c_parent[] = "c_parent";
 static const char __pyx_k_getstate[] = "__getstate__";
 static const char __pyx_k_integers[] = "integers";
 static const char __pyx_k_itemsize[] = "itemsize";
@@ -3366,8 +3399,6 @@ static const char __pyx_k_reduce_ex[] = "__reduce_ex__";
 static const char __pyx_k_IndexError[] = "IndexError";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_calc_depth[] = "calc_depth";
-static const char __pyx_k_list_tuple[] = "list[tuple]";
-static const char __pyx_k_node_pairs[] = "node_pairs";
 static const char __pyx_k_np_ndarray[] = "np.ndarray";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
@@ -3375,7 +3406,6 @@ static const char __pyx_k_MemoryError[] = "MemoryError";
 static const char __pyx_k_PickleError[] = "PickleError";
 static const char __pyx_k_collections[] = "collections";
 static const char __pyx_k_Functions_to[] = "\nFunctions to \n";
-static const char __pyx_k_c_node_pairs[] = "c_node_pairs";
 static const char __pyx_k_initializing[] = "_initializing";
 static const char __pyx_k_is_coroutine[] = "_is_coroutine";
 static const char __pyx_k_pyx_checksum[] = "__pyx_checksum";
@@ -3409,7 +3439,6 @@ static const char __pyx_k_MemoryView_of_r_object[] = "<MemoryView of %r object>"
 static const char __pyx_k_MemoryView_of_r_at_0x_x[] = "<MemoryView of %r at 0x%x>";
 static const char __pyx_k_contiguous_and_indirect[] = "<contiguous and indirect>";
 static const char __pyx_k_Dimension_d_is_not_direct[] = "Dimension %d is not direct";
-static const char __pyx_k_lowest_common_ancestor_py[] = "lowest_common_ancestor_py";
 static const char __pyx_k_Index_out_of_bounds_axis_d[] = "Index out of bounds (axis %d)";
 static const char __pyx_k_Step_may_not_be_zero_axis_d[] = "Step may not be zero (axis %d)";
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
@@ -3474,11 +3503,10 @@ static void __pyx_memoryviewslice___pyx_pf_15View_dot_MemoryView_16_memoryviewsl
 static PyObject *__pyx_pf___pyx_memoryviewslice___reduce_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self); /* proto */
 static PyObject *__pyx_pf___pyx_memoryviewslice_2__setstate_cython__(CYTHON_UNUSED struct __pyx_memoryviewslice_obj *__pyx_v_self, CYTHON_UNUSED PyObject *__pyx_v___pyx_state); /* proto */
 static PyObject *__pyx_pf_15View_dot_MemoryView___pyx_unpickle_Enum(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v___pyx_type, long __pyx_v___pyx_checksum, PyObject *__pyx_v___pyx_state); /* proto */
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor_py(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_node_pairs); /* proto */
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent); /* proto */
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spanning_tree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_G, PyObject *__pyx_v_rnd); /* proto */
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cell); /* proto */
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cycle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_edge, PyObject *__pyx_v_parent, PyObject *__pyx_v_depth); /* proto */
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_calc_depth(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent); /* proto */
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2uniform_spanning_tree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_G, CYTHON_UNUSED PyObject *__pyx_v_rnd); /* proto */
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4normalize_cell(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cell); /* proto */
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6get_induced_cycle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_edge, PyObject *__pyx_v_parent, PyObject *__pyx_v_depth); /* proto */
 static PyObject *__pyx_tp_new_array(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_Enum(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
 static PyObject *__pyx_tp_new_memoryview(PyTypeObject *t, PyObject *a, PyObject *k); /*proto*/
@@ -3571,7 +3599,7 @@ typedef struct {
   PyObject *__pyx_n_s_View_MemoryView;
   PyObject *__pyx_kp_u__2;
   PyObject *__pyx_n_s__3;
-  PyObject *__pyx_n_s__33;
+  PyObject *__pyx_n_s__31;
   PyObject *__pyx_kp_u__6;
   PyObject *__pyx_kp_u__7;
   PyObject *__pyx_n_s_a;
@@ -3581,12 +3609,10 @@ typedef struct {
   PyObject *__pyx_n_s_array;
   PyObject *__pyx_n_s_asyncio_coroutines;
   PyObject *__pyx_n_s_b;
+  PyObject *__pyx_n_s_bal;
   PyObject *__pyx_n_s_base;
   PyObject *__pyx_n_s_c;
   PyObject *__pyx_n_u_c;
-  PyObject *__pyx_n_s_c_node_pairs;
-  PyObject *__pyx_n_s_c_parent;
-  PyObject *__pyx_n_s_c_res;
   PyObject *__pyx_n_s_calc_depth;
   PyObject *__pyx_n_s_cdepth;
   PyObject *__pyx_n_s_cell;
@@ -3632,11 +3658,7 @@ typedef struct {
   PyObject *__pyx_n_s_itemsize;
   PyObject *__pyx_kp_s_itemsize_0_for_cython_array;
   PyObject *__pyx_n_s_lca;
-  PyObject *__pyx_n_s_lca_res;
   PyObject *__pyx_n_s_left;
-  PyObject *__pyx_n_s_list;
-  PyObject *__pyx_kp_s_list_tuple;
-  PyObject *__pyx_n_s_lowest_common_ancestor_py;
   PyObject *__pyx_n_s_main;
   PyObject *__pyx_n_s_memview;
   PyObject *__pyx_n_s_min;
@@ -3649,7 +3671,6 @@ typedef struct {
   PyObject *__pyx_n_s_networkx;
   PyObject *__pyx_n_s_new;
   PyObject *__pyx_kp_s_no_default___reduce___due_to_non;
-  PyObject *__pyx_n_s_node_pairs;
   PyObject *__pyx_n_s_nodes;
   PyObject *__pyx_n_s_normalize_cell;
   PyObject *__pyx_n_s_np;
@@ -3679,7 +3700,6 @@ typedef struct {
   PyObject *__pyx_n_s_reduce_cython;
   PyObject *__pyx_n_s_reduce_ex;
   PyObject *__pyx_n_s_register;
-  PyObject *__pyx_n_s_result;
   PyObject *__pyx_n_s_return;
   PyObject *__pyx_n_s_right;
   PyObject *__pyx_n_s_rnd;
@@ -3708,6 +3728,8 @@ typedef struct {
   PyObject *__pyx_n_s_unpack;
   PyObject *__pyx_n_s_update;
   PyObject *__pyx_n_s_version_info;
+  PyObject *__pyx_n_s_weight;
+  PyObject *__pyx_n_s_weights;
   PyObject *__pyx_n_s_zeros;
   PyObject *__pyx_int_0;
   PyObject *__pyx_int_1;
@@ -3720,9 +3742,10 @@ typedef struct {
   PyObject *__pyx_slice__5;
   PyObject *__pyx_tuple__4;
   PyObject *__pyx_tuple__8;
-  PyObject *__pyx_slice__15;
-  PyObject *__pyx_tuple__11;
-  PyObject *__pyx_tuple__13;
+  PyObject *__pyx_slice__14;
+  PyObject *__pyx_tuple__10;
+  PyObject *__pyx_tuple__12;
+  PyObject *__pyx_tuple__16;
   PyObject *__pyx_tuple__17;
   PyObject *__pyx_tuple__18;
   PyObject *__pyx_tuple__19;
@@ -3732,18 +3755,15 @@ typedef struct {
   PyObject *__pyx_tuple__23;
   PyObject *__pyx_tuple__24;
   PyObject *__pyx_tuple__25;
-  PyObject *__pyx_tuple__26;
+  PyObject *__pyx_tuple__27;
   PyObject *__pyx_tuple__28;
   PyObject *__pyx_tuple__29;
   PyObject *__pyx_tuple__30;
-  PyObject *__pyx_tuple__31;
-  PyObject *__pyx_tuple__32;
   PyObject *__pyx_codeobj__9;
-  PyObject *__pyx_codeobj__10;
-  PyObject *__pyx_codeobj__12;
-  PyObject *__pyx_codeobj__14;
-  PyObject *__pyx_codeobj__16;
-  PyObject *__pyx_codeobj__27;
+  PyObject *__pyx_codeobj__11;
+  PyObject *__pyx_codeobj__13;
+  PyObject *__pyx_codeobj__15;
+  PyObject *__pyx_codeobj__26;
 } __pyx_mstate;
 
 #if CYTHON_USE_MODULE_STATE
@@ -3832,7 +3852,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_View_MemoryView);
   Py_CLEAR(clear_module_state->__pyx_kp_u__2);
   Py_CLEAR(clear_module_state->__pyx_n_s__3);
-  Py_CLEAR(clear_module_state->__pyx_n_s__33);
+  Py_CLEAR(clear_module_state->__pyx_n_s__31);
   Py_CLEAR(clear_module_state->__pyx_kp_u__6);
   Py_CLEAR(clear_module_state->__pyx_kp_u__7);
   Py_CLEAR(clear_module_state->__pyx_n_s_a);
@@ -3842,12 +3862,10 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_array);
   Py_CLEAR(clear_module_state->__pyx_n_s_asyncio_coroutines);
   Py_CLEAR(clear_module_state->__pyx_n_s_b);
+  Py_CLEAR(clear_module_state->__pyx_n_s_bal);
   Py_CLEAR(clear_module_state->__pyx_n_s_base);
   Py_CLEAR(clear_module_state->__pyx_n_s_c);
   Py_CLEAR(clear_module_state->__pyx_n_u_c);
-  Py_CLEAR(clear_module_state->__pyx_n_s_c_node_pairs);
-  Py_CLEAR(clear_module_state->__pyx_n_s_c_parent);
-  Py_CLEAR(clear_module_state->__pyx_n_s_c_res);
   Py_CLEAR(clear_module_state->__pyx_n_s_calc_depth);
   Py_CLEAR(clear_module_state->__pyx_n_s_cdepth);
   Py_CLEAR(clear_module_state->__pyx_n_s_cell);
@@ -3893,11 +3911,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_itemsize);
   Py_CLEAR(clear_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
   Py_CLEAR(clear_module_state->__pyx_n_s_lca);
-  Py_CLEAR(clear_module_state->__pyx_n_s_lca_res);
   Py_CLEAR(clear_module_state->__pyx_n_s_left);
-  Py_CLEAR(clear_module_state->__pyx_n_s_list);
-  Py_CLEAR(clear_module_state->__pyx_kp_s_list_tuple);
-  Py_CLEAR(clear_module_state->__pyx_n_s_lowest_common_ancestor_py);
   Py_CLEAR(clear_module_state->__pyx_n_s_main);
   Py_CLEAR(clear_module_state->__pyx_n_s_memview);
   Py_CLEAR(clear_module_state->__pyx_n_s_min);
@@ -3910,7 +3924,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_networkx);
   Py_CLEAR(clear_module_state->__pyx_n_s_new);
   Py_CLEAR(clear_module_state->__pyx_kp_s_no_default___reduce___due_to_non);
-  Py_CLEAR(clear_module_state->__pyx_n_s_node_pairs);
   Py_CLEAR(clear_module_state->__pyx_n_s_nodes);
   Py_CLEAR(clear_module_state->__pyx_n_s_normalize_cell);
   Py_CLEAR(clear_module_state->__pyx_n_s_np);
@@ -3940,7 +3953,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_cython);
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_ex);
   Py_CLEAR(clear_module_state->__pyx_n_s_register);
-  Py_CLEAR(clear_module_state->__pyx_n_s_result);
   Py_CLEAR(clear_module_state->__pyx_n_s_return);
   Py_CLEAR(clear_module_state->__pyx_n_s_right);
   Py_CLEAR(clear_module_state->__pyx_n_s_rnd);
@@ -3969,6 +3981,8 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_unpack);
   Py_CLEAR(clear_module_state->__pyx_n_s_update);
   Py_CLEAR(clear_module_state->__pyx_n_s_version_info);
+  Py_CLEAR(clear_module_state->__pyx_n_s_weight);
+  Py_CLEAR(clear_module_state->__pyx_n_s_weights);
   Py_CLEAR(clear_module_state->__pyx_n_s_zeros);
   Py_CLEAR(clear_module_state->__pyx_int_0);
   Py_CLEAR(clear_module_state->__pyx_int_1);
@@ -3981,9 +3995,10 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_slice__5);
   Py_CLEAR(clear_module_state->__pyx_tuple__4);
   Py_CLEAR(clear_module_state->__pyx_tuple__8);
-  Py_CLEAR(clear_module_state->__pyx_slice__15);
-  Py_CLEAR(clear_module_state->__pyx_tuple__11);
-  Py_CLEAR(clear_module_state->__pyx_tuple__13);
+  Py_CLEAR(clear_module_state->__pyx_slice__14);
+  Py_CLEAR(clear_module_state->__pyx_tuple__10);
+  Py_CLEAR(clear_module_state->__pyx_tuple__12);
+  Py_CLEAR(clear_module_state->__pyx_tuple__16);
   Py_CLEAR(clear_module_state->__pyx_tuple__17);
   Py_CLEAR(clear_module_state->__pyx_tuple__18);
   Py_CLEAR(clear_module_state->__pyx_tuple__19);
@@ -3993,18 +4008,15 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_tuple__23);
   Py_CLEAR(clear_module_state->__pyx_tuple__24);
   Py_CLEAR(clear_module_state->__pyx_tuple__25);
-  Py_CLEAR(clear_module_state->__pyx_tuple__26);
+  Py_CLEAR(clear_module_state->__pyx_tuple__27);
   Py_CLEAR(clear_module_state->__pyx_tuple__28);
   Py_CLEAR(clear_module_state->__pyx_tuple__29);
   Py_CLEAR(clear_module_state->__pyx_tuple__30);
-  Py_CLEAR(clear_module_state->__pyx_tuple__31);
-  Py_CLEAR(clear_module_state->__pyx_tuple__32);
   Py_CLEAR(clear_module_state->__pyx_codeobj__9);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__10);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__12);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__14);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__16);
-  Py_CLEAR(clear_module_state->__pyx_codeobj__27);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__11);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__13);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__15);
+  Py_CLEAR(clear_module_state->__pyx_codeobj__26);
   return 0;
 }
 #endif
@@ -4071,7 +4083,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_View_MemoryView);
   Py_VISIT(traverse_module_state->__pyx_kp_u__2);
   Py_VISIT(traverse_module_state->__pyx_n_s__3);
-  Py_VISIT(traverse_module_state->__pyx_n_s__33);
+  Py_VISIT(traverse_module_state->__pyx_n_s__31);
   Py_VISIT(traverse_module_state->__pyx_kp_u__6);
   Py_VISIT(traverse_module_state->__pyx_kp_u__7);
   Py_VISIT(traverse_module_state->__pyx_n_s_a);
@@ -4081,12 +4093,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_array);
   Py_VISIT(traverse_module_state->__pyx_n_s_asyncio_coroutines);
   Py_VISIT(traverse_module_state->__pyx_n_s_b);
+  Py_VISIT(traverse_module_state->__pyx_n_s_bal);
   Py_VISIT(traverse_module_state->__pyx_n_s_base);
   Py_VISIT(traverse_module_state->__pyx_n_s_c);
   Py_VISIT(traverse_module_state->__pyx_n_u_c);
-  Py_VISIT(traverse_module_state->__pyx_n_s_c_node_pairs);
-  Py_VISIT(traverse_module_state->__pyx_n_s_c_parent);
-  Py_VISIT(traverse_module_state->__pyx_n_s_c_res);
   Py_VISIT(traverse_module_state->__pyx_n_s_calc_depth);
   Py_VISIT(traverse_module_state->__pyx_n_s_cdepth);
   Py_VISIT(traverse_module_state->__pyx_n_s_cell);
@@ -4132,11 +4142,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_itemsize);
   Py_VISIT(traverse_module_state->__pyx_kp_s_itemsize_0_for_cython_array);
   Py_VISIT(traverse_module_state->__pyx_n_s_lca);
-  Py_VISIT(traverse_module_state->__pyx_n_s_lca_res);
   Py_VISIT(traverse_module_state->__pyx_n_s_left);
-  Py_VISIT(traverse_module_state->__pyx_n_s_list);
-  Py_VISIT(traverse_module_state->__pyx_kp_s_list_tuple);
-  Py_VISIT(traverse_module_state->__pyx_n_s_lowest_common_ancestor_py);
   Py_VISIT(traverse_module_state->__pyx_n_s_main);
   Py_VISIT(traverse_module_state->__pyx_n_s_memview);
   Py_VISIT(traverse_module_state->__pyx_n_s_min);
@@ -4149,7 +4155,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_networkx);
   Py_VISIT(traverse_module_state->__pyx_n_s_new);
   Py_VISIT(traverse_module_state->__pyx_kp_s_no_default___reduce___due_to_non);
-  Py_VISIT(traverse_module_state->__pyx_n_s_node_pairs);
   Py_VISIT(traverse_module_state->__pyx_n_s_nodes);
   Py_VISIT(traverse_module_state->__pyx_n_s_normalize_cell);
   Py_VISIT(traverse_module_state->__pyx_n_s_np);
@@ -4179,7 +4184,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_cython);
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_ex);
   Py_VISIT(traverse_module_state->__pyx_n_s_register);
-  Py_VISIT(traverse_module_state->__pyx_n_s_result);
   Py_VISIT(traverse_module_state->__pyx_n_s_return);
   Py_VISIT(traverse_module_state->__pyx_n_s_right);
   Py_VISIT(traverse_module_state->__pyx_n_s_rnd);
@@ -4208,6 +4212,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_unpack);
   Py_VISIT(traverse_module_state->__pyx_n_s_update);
   Py_VISIT(traverse_module_state->__pyx_n_s_version_info);
+  Py_VISIT(traverse_module_state->__pyx_n_s_weight);
+  Py_VISIT(traverse_module_state->__pyx_n_s_weights);
   Py_VISIT(traverse_module_state->__pyx_n_s_zeros);
   Py_VISIT(traverse_module_state->__pyx_int_0);
   Py_VISIT(traverse_module_state->__pyx_int_1);
@@ -4220,9 +4226,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_slice__5);
   Py_VISIT(traverse_module_state->__pyx_tuple__4);
   Py_VISIT(traverse_module_state->__pyx_tuple__8);
-  Py_VISIT(traverse_module_state->__pyx_slice__15);
-  Py_VISIT(traverse_module_state->__pyx_tuple__11);
-  Py_VISIT(traverse_module_state->__pyx_tuple__13);
+  Py_VISIT(traverse_module_state->__pyx_slice__14);
+  Py_VISIT(traverse_module_state->__pyx_tuple__10);
+  Py_VISIT(traverse_module_state->__pyx_tuple__12);
+  Py_VISIT(traverse_module_state->__pyx_tuple__16);
   Py_VISIT(traverse_module_state->__pyx_tuple__17);
   Py_VISIT(traverse_module_state->__pyx_tuple__18);
   Py_VISIT(traverse_module_state->__pyx_tuple__19);
@@ -4232,18 +4239,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_tuple__23);
   Py_VISIT(traverse_module_state->__pyx_tuple__24);
   Py_VISIT(traverse_module_state->__pyx_tuple__25);
-  Py_VISIT(traverse_module_state->__pyx_tuple__26);
+  Py_VISIT(traverse_module_state->__pyx_tuple__27);
   Py_VISIT(traverse_module_state->__pyx_tuple__28);
   Py_VISIT(traverse_module_state->__pyx_tuple__29);
   Py_VISIT(traverse_module_state->__pyx_tuple__30);
-  Py_VISIT(traverse_module_state->__pyx_tuple__31);
-  Py_VISIT(traverse_module_state->__pyx_tuple__32);
   Py_VISIT(traverse_module_state->__pyx_codeobj__9);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__10);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__12);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__14);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__16);
-  Py_VISIT(traverse_module_state->__pyx_codeobj__27);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__11);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__13);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__15);
+  Py_VISIT(traverse_module_state->__pyx_codeobj__26);
   return 0;
 }
 #endif
@@ -4332,7 +4336,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_View_MemoryView __pyx_mstate_global->__pyx_n_s_View_MemoryView
 #define __pyx_kp_u__2 __pyx_mstate_global->__pyx_kp_u__2
 #define __pyx_n_s__3 __pyx_mstate_global->__pyx_n_s__3
-#define __pyx_n_s__33 __pyx_mstate_global->__pyx_n_s__33
+#define __pyx_n_s__31 __pyx_mstate_global->__pyx_n_s__31
 #define __pyx_kp_u__6 __pyx_mstate_global->__pyx_kp_u__6
 #define __pyx_kp_u__7 __pyx_mstate_global->__pyx_kp_u__7
 #define __pyx_n_s_a __pyx_mstate_global->__pyx_n_s_a
@@ -4342,12 +4346,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_array __pyx_mstate_global->__pyx_n_s_array
 #define __pyx_n_s_asyncio_coroutines __pyx_mstate_global->__pyx_n_s_asyncio_coroutines
 #define __pyx_n_s_b __pyx_mstate_global->__pyx_n_s_b
+#define __pyx_n_s_bal __pyx_mstate_global->__pyx_n_s_bal
 #define __pyx_n_s_base __pyx_mstate_global->__pyx_n_s_base
 #define __pyx_n_s_c __pyx_mstate_global->__pyx_n_s_c
 #define __pyx_n_u_c __pyx_mstate_global->__pyx_n_u_c
-#define __pyx_n_s_c_node_pairs __pyx_mstate_global->__pyx_n_s_c_node_pairs
-#define __pyx_n_s_c_parent __pyx_mstate_global->__pyx_n_s_c_parent
-#define __pyx_n_s_c_res __pyx_mstate_global->__pyx_n_s_c_res
 #define __pyx_n_s_calc_depth __pyx_mstate_global->__pyx_n_s_calc_depth
 #define __pyx_n_s_cdepth __pyx_mstate_global->__pyx_n_s_cdepth
 #define __pyx_n_s_cell __pyx_mstate_global->__pyx_n_s_cell
@@ -4393,11 +4395,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_itemsize __pyx_mstate_global->__pyx_n_s_itemsize
 #define __pyx_kp_s_itemsize_0_for_cython_array __pyx_mstate_global->__pyx_kp_s_itemsize_0_for_cython_array
 #define __pyx_n_s_lca __pyx_mstate_global->__pyx_n_s_lca
-#define __pyx_n_s_lca_res __pyx_mstate_global->__pyx_n_s_lca_res
 #define __pyx_n_s_left __pyx_mstate_global->__pyx_n_s_left
-#define __pyx_n_s_list __pyx_mstate_global->__pyx_n_s_list
-#define __pyx_kp_s_list_tuple __pyx_mstate_global->__pyx_kp_s_list_tuple
-#define __pyx_n_s_lowest_common_ancestor_py __pyx_mstate_global->__pyx_n_s_lowest_common_ancestor_py
 #define __pyx_n_s_main __pyx_mstate_global->__pyx_n_s_main
 #define __pyx_n_s_memview __pyx_mstate_global->__pyx_n_s_memview
 #define __pyx_n_s_min __pyx_mstate_global->__pyx_n_s_min
@@ -4410,7 +4408,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_networkx __pyx_mstate_global->__pyx_n_s_networkx
 #define __pyx_n_s_new __pyx_mstate_global->__pyx_n_s_new
 #define __pyx_kp_s_no_default___reduce___due_to_non __pyx_mstate_global->__pyx_kp_s_no_default___reduce___due_to_non
-#define __pyx_n_s_node_pairs __pyx_mstate_global->__pyx_n_s_node_pairs
 #define __pyx_n_s_nodes __pyx_mstate_global->__pyx_n_s_nodes
 #define __pyx_n_s_normalize_cell __pyx_mstate_global->__pyx_n_s_normalize_cell
 #define __pyx_n_s_np __pyx_mstate_global->__pyx_n_s_np
@@ -4440,7 +4437,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_reduce_cython __pyx_mstate_global->__pyx_n_s_reduce_cython
 #define __pyx_n_s_reduce_ex __pyx_mstate_global->__pyx_n_s_reduce_ex
 #define __pyx_n_s_register __pyx_mstate_global->__pyx_n_s_register
-#define __pyx_n_s_result __pyx_mstate_global->__pyx_n_s_result
 #define __pyx_n_s_return __pyx_mstate_global->__pyx_n_s_return
 #define __pyx_n_s_right __pyx_mstate_global->__pyx_n_s_right
 #define __pyx_n_s_rnd __pyx_mstate_global->__pyx_n_s_rnd
@@ -4469,6 +4465,8 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_unpack __pyx_mstate_global->__pyx_n_s_unpack
 #define __pyx_n_s_update __pyx_mstate_global->__pyx_n_s_update
 #define __pyx_n_s_version_info __pyx_mstate_global->__pyx_n_s_version_info
+#define __pyx_n_s_weight __pyx_mstate_global->__pyx_n_s_weight
+#define __pyx_n_s_weights __pyx_mstate_global->__pyx_n_s_weights
 #define __pyx_n_s_zeros __pyx_mstate_global->__pyx_n_s_zeros
 #define __pyx_int_0 __pyx_mstate_global->__pyx_int_0
 #define __pyx_int_1 __pyx_mstate_global->__pyx_int_1
@@ -4481,9 +4479,10 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_slice__5 __pyx_mstate_global->__pyx_slice__5
 #define __pyx_tuple__4 __pyx_mstate_global->__pyx_tuple__4
 #define __pyx_tuple__8 __pyx_mstate_global->__pyx_tuple__8
-#define __pyx_slice__15 __pyx_mstate_global->__pyx_slice__15
-#define __pyx_tuple__11 __pyx_mstate_global->__pyx_tuple__11
-#define __pyx_tuple__13 __pyx_mstate_global->__pyx_tuple__13
+#define __pyx_slice__14 __pyx_mstate_global->__pyx_slice__14
+#define __pyx_tuple__10 __pyx_mstate_global->__pyx_tuple__10
+#define __pyx_tuple__12 __pyx_mstate_global->__pyx_tuple__12
+#define __pyx_tuple__16 __pyx_mstate_global->__pyx_tuple__16
 #define __pyx_tuple__17 __pyx_mstate_global->__pyx_tuple__17
 #define __pyx_tuple__18 __pyx_mstate_global->__pyx_tuple__18
 #define __pyx_tuple__19 __pyx_mstate_global->__pyx_tuple__19
@@ -4493,18 +4492,15 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_tuple__23 __pyx_mstate_global->__pyx_tuple__23
 #define __pyx_tuple__24 __pyx_mstate_global->__pyx_tuple__24
 #define __pyx_tuple__25 __pyx_mstate_global->__pyx_tuple__25
-#define __pyx_tuple__26 __pyx_mstate_global->__pyx_tuple__26
+#define __pyx_tuple__27 __pyx_mstate_global->__pyx_tuple__27
 #define __pyx_tuple__28 __pyx_mstate_global->__pyx_tuple__28
 #define __pyx_tuple__29 __pyx_mstate_global->__pyx_tuple__29
 #define __pyx_tuple__30 __pyx_mstate_global->__pyx_tuple__30
-#define __pyx_tuple__31 __pyx_mstate_global->__pyx_tuple__31
-#define __pyx_tuple__32 __pyx_mstate_global->__pyx_tuple__32
 #define __pyx_codeobj__9 __pyx_mstate_global->__pyx_codeobj__9
-#define __pyx_codeobj__10 __pyx_mstate_global->__pyx_codeobj__10
-#define __pyx_codeobj__12 __pyx_mstate_global->__pyx_codeobj__12
-#define __pyx_codeobj__14 __pyx_mstate_global->__pyx_codeobj__14
-#define __pyx_codeobj__16 __pyx_mstate_global->__pyx_codeobj__16
-#define __pyx_codeobj__27 __pyx_mstate_global->__pyx_codeobj__27
+#define __pyx_codeobj__11 __pyx_mstate_global->__pyx_codeobj__11
+#define __pyx_codeobj__13 __pyx_mstate_global->__pyx_codeobj__13
+#define __pyx_codeobj__15 __pyx_mstate_global->__pyx_codeobj__15
+#define __pyx_codeobj__26 __pyx_mstate_global->__pyx_codeobj__26
 /* #### Code section: module_code ### */
 
 /* "View.MemoryView":131
@@ -18135,7 +18131,7 @@ static PyObject *__pyx_unpickle_Enum__set_state(struct __pyx_MemviewEnum_obj *__
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":53
+/* "py_raccoon/balance_spanning_trees.pyx":61
  * 
  * # initializes ancestor array, where ancestor of each node is the node itself
  * cdef inline int* uf_init(int size) nogil:             # <<<<<<<<<<<<<<
@@ -18157,9 +18153,9 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_TraceCall("uf_init", __pyx_f[0], 53, 1, __PYX_ERR(0, 53, __pyx_L1_error));
+  __Pyx_TraceCall("uf_init", __pyx_f[0], 61, 1, __PYX_ERR(0, 61, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":57
+  /* "py_raccoon/balance_spanning_trees.pyx":65
  *     Initializes union-find datastructure with size many elements, each in their own partition
  *     """
  *     cdef int* ancestor = <int*> malloc(size * sizeof(int))             # <<<<<<<<<<<<<<
@@ -18168,7 +18164,7 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
  */
   __pyx_v_ancestor = ((int *)malloc((__pyx_v_size * (sizeof(int)))));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":59
+  /* "py_raccoon/balance_spanning_trees.pyx":67
  *     cdef int* ancestor = <int*> malloc(size * sizeof(int))
  *     cdef int i
  *     for i in range(size):             # <<<<<<<<<<<<<<
@@ -18180,7 +18176,7 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":60
+    /* "py_raccoon/balance_spanning_trees.pyx":68
  *     cdef int i
  *     for i in range(size):
  *         ancestor[i] = i             # <<<<<<<<<<<<<<
@@ -18190,7 +18186,7 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
     (__pyx_v_ancestor[__pyx_v_i]) = __pyx_v_i;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":61
+  /* "py_raccoon/balance_spanning_trees.pyx":69
  *     for i in range(size):
  *         ancestor[i] = i
  *     return ancestor             # <<<<<<<<<<<<<<
@@ -18200,7 +18196,7 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
   __pyx_r = __pyx_v_ancestor;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":53
+  /* "py_raccoon/balance_spanning_trees.pyx":61
  * 
  * # initializes ancestor array, where ancestor of each node is the node itself
  * cdef inline int* uf_init(int size) nogil:             # <<<<<<<<<<<<<<
@@ -18223,7 +18219,7 @@ static CYTHON_INLINE int *__pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":63
+/* "py_raccoon/balance_spanning_trees.pyx":71
  *     return ancestor
  * 
  * cdef inline int uf_find(int* parent, int item) nogil:             # <<<<<<<<<<<<<<
@@ -18244,9 +18240,9 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_TraceCall("uf_find", __pyx_f[0], 63, 1, __PYX_ERR(0, 63, __pyx_L1_error));
+  __Pyx_TraceCall("uf_find", __pyx_f[0], 71, 1, __PYX_ERR(0, 71, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":69
+  /* "py_raccoon/balance_spanning_trees.pyx":77
  *     with a valid initialized array (e.g. uf_init)
  *     """
  *     cdef int partition = item             # <<<<<<<<<<<<<<
@@ -18255,7 +18251,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
  */
   __pyx_v_partition = __pyx_v_item;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":71
+  /* "py_raccoon/balance_spanning_trees.pyx":79
  *     cdef int partition = item
  *     # find correct root ancestor
  *     while parent[partition] != partition:             # <<<<<<<<<<<<<<
@@ -18266,7 +18262,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
     __pyx_t_1 = ((__pyx_v_parent[__pyx_v_partition]) != __pyx_v_partition);
     if (!__pyx_t_1) break;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":72
+    /* "py_raccoon/balance_spanning_trees.pyx":80
  *     # find correct root ancestor
  *     while parent[partition] != partition:
  *         partition = parent[partition]             # <<<<<<<<<<<<<<
@@ -18276,7 +18272,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
     __pyx_v_partition = (__pyx_v_parent[__pyx_v_partition]);
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":74
+  /* "py_raccoon/balance_spanning_trees.pyx":82
  *         partition = parent[partition]
  *     # update all ancestors to point to root
  *     p = item             # <<<<<<<<<<<<<<
@@ -18285,7 +18281,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
  */
   __pyx_v_p = __pyx_v_item;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":75
+  /* "py_raccoon/balance_spanning_trees.pyx":83
  *     # update all ancestors to point to root
  *     p = item
  *     while p != partition:             # <<<<<<<<<<<<<<
@@ -18296,7 +18292,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
     __pyx_t_1 = (__pyx_v_p != __pyx_v_partition);
     if (!__pyx_t_1) break;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":76
+    /* "py_raccoon/balance_spanning_trees.pyx":84
  *     p = item
  *     while p != partition:
  *         next_p = parent[p]             # <<<<<<<<<<<<<<
@@ -18305,7 +18301,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
  */
     __pyx_v_next_p = (__pyx_v_parent[__pyx_v_p]);
 
-    /* "py_raccoon/balance_spanning_trees.pyx":77
+    /* "py_raccoon/balance_spanning_trees.pyx":85
  *     while p != partition:
  *         next_p = parent[p]
  *         parent[p] = partition             # <<<<<<<<<<<<<<
@@ -18314,7 +18310,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
  */
     (__pyx_v_parent[__pyx_v_p]) = __pyx_v_partition;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":78
+    /* "py_raccoon/balance_spanning_trees.pyx":86
  *         next_p = parent[p]
  *         parent[p] = partition
  *         p = next_p             # <<<<<<<<<<<<<<
@@ -18324,7 +18320,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
     __pyx_v_p = __pyx_v_next_p;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":79
+  /* "py_raccoon/balance_spanning_trees.pyx":87
  *         parent[p] = partition
  *         p = next_p
  *     return partition             # <<<<<<<<<<<<<<
@@ -18334,7 +18330,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
   __pyx_r = __pyx_v_partition;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":63
+  /* "py_raccoon/balance_spanning_trees.pyx":71
  *     return ancestor
  * 
  * cdef inline int uf_find(int* parent, int item) nogil:             # <<<<<<<<<<<<<<
@@ -18357,7 +18353,7 @@ static CYTHON_INLINE int __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(i
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":81
+/* "py_raccoon/balance_spanning_trees.pyx":89
  *     return partition
  * 
  * cdef inline void uf_union(int* parent, int a, int b) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -18375,20 +18371,20 @@ static CYTHON_INLINE void __pyx_f_10py_raccoon_22balance_spanning_trees_uf_union
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_TraceCall("uf_union", __pyx_f[0], 81, 1, __PYX_ERR(0, 81, __pyx_L1_error));
+  __Pyx_TraceCall("uf_union", __pyx_f[0], 89, 1, __PYX_ERR(0, 89, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":85
+  /* "py_raccoon/balance_spanning_trees.pyx":93
  *     unites the set containing a with the set containing b
  *     """
  *     parent[uf_find(parent, a)] = uf_find(parent, b)             # <<<<<<<<<<<<<<
  * 
  * 
  */
-  __pyx_t_1 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_parent, __pyx_v_b); if (unlikely(__pyx_t_1 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 85, __pyx_L1_error)
-  __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_parent, __pyx_v_a); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 85, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_parent, __pyx_v_b); if (unlikely(__pyx_t_1 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 93, __pyx_L1_error)
+  __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_parent, __pyx_v_a); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 93, __pyx_L1_error)
   (__pyx_v_parent[__pyx_t_2]) = __pyx_t_1;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":81
+  /* "py_raccoon/balance_spanning_trees.pyx":89
  *     return partition
  * 
  * cdef inline void uf_union(int* parent, int a, int b) noexcept nogil:             # <<<<<<<<<<<<<<
@@ -18410,43 +18406,46 @@ static CYTHON_INLINE void __pyx_f_10py_raccoon_22balance_spanning_trees_uf_union
   __Pyx_TraceReturn(Py_None, 1);
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":88
+/* "py_raccoon/balance_spanning_trees.pyx":96
  * 
  * 
- * cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)             # <<<<<<<<<<<<<<
+ * cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)             # <<<<<<<<<<<<<<
  *     for child in children[node][0]:
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
+ *         balance[child] = balance[node] * parent_weight[child]
  */
 
-static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v_node, std::vector<int>  **__pyx_v_children, std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup>  **__pyx_v_queries, struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_v_result, int *__pyx_v_result_count, int *__pyx_v_partition, int *__pyx_v_ancestor, char *__pyx_v_node_color) {
+static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__Pyx_memviewslice __pyx_v_parent_weight, signed char *__pyx_v_balance, int __pyx_v_node, std::vector<int>  **__pyx_v_children, std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup>  **__pyx_v_queries, struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_v_result, int *__pyx_v_result_count, int *__pyx_v_partition, int *__pyx_v_ancestor, char *__pyx_v_node_color) {
   int __pyx_v_child;
   struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup __pyx_v_lookup;
   int __pyx_v_other;
   int __pyx_v_a;
   int __pyx_v_b;
+  int __pyx_v_lca;
+  int __pyx_v_bal;
   int __pyx_r;
   __Pyx_TraceDeclarations
   std::vector<int> ::iterator __pyx_t_1;
   int __pyx_t_2;
-  std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup> ::iterator __pyx_t_3;
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup __pyx_t_4;
-  int __pyx_t_5;
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult __pyx_t_6;
-  long __pyx_t_7;
+  Py_ssize_t __pyx_t_3;
+  std::vector<struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup> ::iterator __pyx_t_4;
+  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup __pyx_t_5;
+  int __pyx_t_6;
+  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult __pyx_t_7;
+  long __pyx_t_8;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   #ifdef WITH_THREAD
   PyGILState_STATE __pyx_gilstate_save;
   #endif
-  __Pyx_TraceCall("__inner_lca", __pyx_f[0], 88, 1, __PYX_ERR(0, 88, __pyx_L1_error));
+  __Pyx_TraceCall("__inner_lca", __pyx_f[0], 96, 1, __PYX_ERR(0, 96, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":89
+  /* "py_raccoon/balance_spanning_trees.pyx":97
  * 
- * cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
+ * cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
  *     for child in children[node][0]:             # <<<<<<<<<<<<<<
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
- *         uf_union(partition, node, child)
+ *         balance[child] = balance[node] * parent_weight[child]
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
  */
   __pyx_t_1 = ((__pyx_v_children[__pyx_v_node])[0]).begin();
   for (;;) {
@@ -18455,44 +18454,63 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
     ++__pyx_t_1;
     __pyx_v_child = __pyx_t_2;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":90
- * cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
+    /* "py_raccoon/balance_spanning_trees.pyx":98
+ * cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
  *     for child in children[node][0]:
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)             # <<<<<<<<<<<<<<
+ *         balance[child] = balance[node] * parent_weight[child]             # <<<<<<<<<<<<<<
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
+ *         uf_union(partition, node, child)
+ */
+    __pyx_t_3 = __pyx_v_child;
+    __pyx_t_2 = -1;
+    if (__pyx_t_3 < 0) {
+      __pyx_t_3 += __pyx_v_parent_weight.shape[0];
+      if (unlikely(__pyx_t_3 < 0)) __pyx_t_2 = 0;
+    } else if (unlikely(__pyx_t_3 >= __pyx_v_parent_weight.shape[0])) __pyx_t_2 = 0;
+    if (unlikely(__pyx_t_2 != -1)) {
+      __Pyx_RaiseBufferIndexErrorNogil(__pyx_t_2);
+      __PYX_ERR(0, 98, __pyx_L1_error)
+    }
+    (__pyx_v_balance[__pyx_v_child]) = ((__pyx_v_balance[__pyx_v_node]) * (*((signed char *) ( /* dim=0 */ (__pyx_v_parent_weight.data + __pyx_t_3 * __pyx_v_parent_weight.strides[0]) ))));
+
+    /* "py_raccoon/balance_spanning_trees.pyx":99
+ *     for child in children[node][0]:
+ *         balance[child] = balance[node] * parent_weight[child]
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)             # <<<<<<<<<<<<<<
  *         uf_union(partition, node, child)
  *         ancestor[uf_find(partition, node)] = node
  */
-    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__pyx_v_child, __pyx_v_children, __pyx_v_queries, __pyx_v_result, __pyx_v_result_count, __pyx_v_partition, __pyx_v_ancestor, __pyx_v_node_color); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 90, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__pyx_v_parent_weight, __pyx_v_balance, __pyx_v_child, __pyx_v_children, __pyx_v_queries, __pyx_v_result, __pyx_v_result_count, __pyx_v_partition, __pyx_v_ancestor, __pyx_v_node_color); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 99, __pyx_L1_error)
 
-    /* "py_raccoon/balance_spanning_trees.pyx":91
- *     for child in children[node][0]:
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
+    /* "py_raccoon/balance_spanning_trees.pyx":100
+ *         balance[child] = balance[node] * parent_weight[child]
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
  *         uf_union(partition, node, child)             # <<<<<<<<<<<<<<
  *         ancestor[uf_find(partition, node)] = node
  *     node_color[node] = 1
  */
     __pyx_f_10py_raccoon_22balance_spanning_trees_uf_union(__pyx_v_partition, __pyx_v_node, __pyx_v_child);
 
-    /* "py_raccoon/balance_spanning_trees.pyx":92
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
+    /* "py_raccoon/balance_spanning_trees.pyx":101
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
  *         uf_union(partition, node, child)
  *         ancestor[uf_find(partition, node)] = node             # <<<<<<<<<<<<<<
  *     node_color[node] = 1
  *     for lookup in queries[node][0]:
  */
-    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_partition, __pyx_v_node); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 92, __pyx_L1_error)
+    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_partition, __pyx_v_node); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 101, __pyx_L1_error)
     (__pyx_v_ancestor[__pyx_t_2]) = __pyx_v_node;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":89
+    /* "py_raccoon/balance_spanning_trees.pyx":97
  * 
- * cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
+ * cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
  *     for child in children[node][0]:             # <<<<<<<<<<<<<<
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
- *         uf_union(partition, node, child)
+ *         balance[child] = balance[node] * parent_weight[child]
+ *         __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":93
+  /* "py_raccoon/balance_spanning_trees.pyx":102
  *         uf_union(partition, node, child)
  *         ancestor[uf_find(partition, node)] = node
  *     node_color[node] = 1             # <<<<<<<<<<<<<<
@@ -18501,21 +18519,21 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
  */
   (__pyx_v_node_color[__pyx_v_node]) = 1;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":94
+  /* "py_raccoon/balance_spanning_trees.pyx":103
  *         ancestor[uf_find(partition, node)] = node
  *     node_color[node] = 1
  *     for lookup in queries[node][0]:             # <<<<<<<<<<<<<<
  *         other = lookup.other
  *         a = lookup.a
  */
-  __pyx_t_3 = ((__pyx_v_queries[__pyx_v_node])[0]).begin();
+  __pyx_t_4 = ((__pyx_v_queries[__pyx_v_node])[0]).begin();
   for (;;) {
-    if (!(__pyx_t_3 != ((__pyx_v_queries[__pyx_v_node])[0]).end())) break;
-    __pyx_t_4 = *__pyx_t_3;
-    ++__pyx_t_3;
-    __pyx_v_lookup = __pyx_t_4;
+    if (!(__pyx_t_4 != ((__pyx_v_queries[__pyx_v_node])[0]).end())) break;
+    __pyx_t_5 = *__pyx_t_4;
+    ++__pyx_t_4;
+    __pyx_v_lookup = __pyx_t_5;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":95
+    /* "py_raccoon/balance_spanning_trees.pyx":104
  *     node_color[node] = 1
  *     for lookup in queries[node][0]:
  *         other = lookup.other             # <<<<<<<<<<<<<<
@@ -18525,7 +18543,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
     __pyx_t_2 = __pyx_v_lookup.other;
     __pyx_v_other = __pyx_t_2;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":96
+    /* "py_raccoon/balance_spanning_trees.pyx":105
  *     for lookup in queries[node][0]:
  *         other = lookup.other
  *         a = lookup.a             # <<<<<<<<<<<<<<
@@ -18535,59 +18553,78 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
     __pyx_t_2 = __pyx_v_lookup.a;
     __pyx_v_a = __pyx_t_2;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":97
+    /* "py_raccoon/balance_spanning_trees.pyx":106
  *         other = lookup.other
  *         a = lookup.a
  *         b = lookup.b             # <<<<<<<<<<<<<<
  *         if node_color[other]:
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
+ *             lca = ancestor[uf_find(partition, other)]
  */
     __pyx_t_2 = __pyx_v_lookup.b;
     __pyx_v_b = __pyx_t_2;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":98
+    /* "py_raccoon/balance_spanning_trees.pyx":107
  *         a = lookup.a
  *         b = lookup.b
  *         if node_color[other]:             # <<<<<<<<<<<<<<
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
- *             result_count[0] += 1
+ *             lca = ancestor[uf_find(partition, other)]
+ *             bal = balance[a] * balance[b] * lookup.weight
  */
-    __pyx_t_5 = ((__pyx_v_node_color[__pyx_v_other]) != 0);
-    if (__pyx_t_5) {
+    __pyx_t_6 = ((__pyx_v_node_color[__pyx_v_other]) != 0);
+    if (__pyx_t_6) {
 
-      /* "py_raccoon/balance_spanning_trees.pyx":99
+      /* "py_raccoon/balance_spanning_trees.pyx":108
  *         b = lookup.b
  *         if node_color[other]:
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])             # <<<<<<<<<<<<<<
+ *             lca = ancestor[uf_find(partition, other)]             # <<<<<<<<<<<<<<
+ *             bal = balance[a] * balance[b] * lookup.weight
+ *             result[result_count[0]] = LcaResult(a, b, lca, bal)
+ */
+      __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_partition, __pyx_v_other); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 108, __pyx_L1_error)
+      __pyx_v_lca = (__pyx_v_ancestor[__pyx_t_2]);
+
+      /* "py_raccoon/balance_spanning_trees.pyx":109
+ *         if node_color[other]:
+ *             lca = ancestor[uf_find(partition, other)]
+ *             bal = balance[a] * balance[b] * lookup.weight             # <<<<<<<<<<<<<<
+ *             result[result_count[0]] = LcaResult(a, b, lca, bal)
+ *             result_count[0] += 1
+ */
+      __pyx_v_bal = (((__pyx_v_balance[__pyx_v_a]) * (__pyx_v_balance[__pyx_v_b])) * __pyx_v_lookup.weight);
+
+      /* "py_raccoon/balance_spanning_trees.pyx":110
+ *             lca = ancestor[uf_find(partition, other)]
+ *             bal = balance[a] * balance[b] * lookup.weight
+ *             result[result_count[0]] = LcaResult(a, b, lca, bal)             # <<<<<<<<<<<<<<
  *             result_count[0] += 1
  *     return 0
  */
-      __pyx_t_6.a = __pyx_v_a;
-      __pyx_t_6.b = __pyx_v_b;
-      __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_find(__pyx_v_partition, __pyx_v_other); if (unlikely(__pyx_t_2 == ((int)-1) && __Pyx_ErrOccurredWithGIL())) __PYX_ERR(0, 99, __pyx_L1_error)
-      __pyx_t_6.lca = (__pyx_v_ancestor[__pyx_t_2]);
-      (__pyx_v_result[(__pyx_v_result_count[0])]) = __pyx_t_6;
+      __pyx_t_7.a = __pyx_v_a;
+      __pyx_t_7.b = __pyx_v_b;
+      __pyx_t_7.lca = __pyx_v_lca;
+      __pyx_t_7.bal = __pyx_v_bal;
+      (__pyx_v_result[(__pyx_v_result_count[0])]) = __pyx_t_7;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":100
- *         if node_color[other]:
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
+      /* "py_raccoon/balance_spanning_trees.pyx":111
+ *             bal = balance[a] * balance[b] * lookup.weight
+ *             result[result_count[0]] = LcaResult(a, b, lca, bal)
  *             result_count[0] += 1             # <<<<<<<<<<<<<<
  *     return 0
  * 
  */
-      __pyx_t_7 = 0;
-      (__pyx_v_result_count[__pyx_t_7]) = ((__pyx_v_result_count[__pyx_t_7]) + 1);
+      __pyx_t_8 = 0;
+      (__pyx_v_result_count[__pyx_t_8]) = ((__pyx_v_result_count[__pyx_t_8]) + 1);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":98
+      /* "py_raccoon/balance_spanning_trees.pyx":107
  *         a = lookup.a
  *         b = lookup.b
  *         if node_color[other]:             # <<<<<<<<<<<<<<
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
- *             result_count[0] += 1
+ *             lca = ancestor[uf_find(partition, other)]
+ *             bal = balance[a] * balance[b] * lookup.weight
  */
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":94
+    /* "py_raccoon/balance_spanning_trees.pyx":103
  *         ancestor[uf_find(partition, node)] = node
  *     node_color[node] = 1
  *     for lookup in queries[node][0]:             # <<<<<<<<<<<<<<
@@ -18596,22 +18633,22 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":101
- *             result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
+  /* "py_raccoon/balance_spanning_trees.pyx":112
+ *             result[result_count[0]] = LcaResult(a, b, lca, bal)
  *             result_count[0] += 1
  *     return 0             # <<<<<<<<<<<<<<
  * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:
+ * @cython.boundscheck(False)
  */
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":88
+  /* "py_raccoon/balance_spanning_trees.pyx":96
  * 
  * 
- * cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)             # <<<<<<<<<<<<<<
+ * cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)             # <<<<<<<<<<<<<<
  *     for child in children[node][0]:
- *         __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
+ *         balance[child] = balance[node] * parent_weight[child]
  */
 
   /* function exit code */
@@ -18629,361 +18666,15 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(int __pyx_v
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":103
- *     return 0
- * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:             # <<<<<<<<<<<<<<
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- */
-
-/* Python wrapper */
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_1lowest_common_ancestor_py(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-); /*proto*/
-static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_1lowest_common_ancestor_py = {"lowest_common_ancestor_py", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_1lowest_common_ancestor_py, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_1lowest_common_ancestor_py(PyObject *__pyx_self, 
-#if CYTHON_METH_FASTCALL
-PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
-#else
-PyObject *__pyx_args, PyObject *__pyx_kwds
-#endif
-) {
-  PyObject *__pyx_v_parent = 0;
-  PyObject *__pyx_v_node_pairs = 0;
-  #if !CYTHON_METH_FASTCALL
-  CYTHON_UNUSED Py_ssize_t __pyx_nargs;
-  #endif
-  CYTHON_UNUSED PyObject *const *__pyx_kwvalues;
-  PyObject* values[2] = {0,0};
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  PyObject *__pyx_r = 0;
-  __Pyx_RefNannyDeclarations
-  __Pyx_RefNannySetupContext("lowest_common_ancestor_py (wrapper)", 0);
-  #if !CYTHON_METH_FASTCALL
-  #if CYTHON_ASSUME_SAFE_MACROS
-  __pyx_nargs = PyTuple_GET_SIZE(__pyx_args);
-  #else
-  __pyx_nargs = PyTuple_Size(__pyx_args); if (unlikely(__pyx_nargs < 0)) return NULL;
-  #endif
-  #endif
-  __pyx_kwvalues = __Pyx_KwValues_FASTCALL(__pyx_args, __pyx_nargs);
-  {
-    PyObject **__pyx_pyargnames[] = {&__pyx_n_s_parent,&__pyx_n_s_node_pairs,0};
-    if (__pyx_kwds) {
-      Py_ssize_t kw_args;
-      switch (__pyx_nargs) {
-        case  2: values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
-        CYTHON_FALLTHROUGH;
-        case  1: values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
-        CYTHON_FALLTHROUGH;
-        case  0: break;
-        default: goto __pyx_L5_argtuple_error;
-      }
-      kw_args = __Pyx_NumKwargs_FASTCALL(__pyx_kwds);
-      switch (__pyx_nargs) {
-        case  0:
-        if (likely((values[0] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_parent)) != 0)) {
-          (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
-          kw_args--;
-        }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 103, __pyx_L3_error)
-        else goto __pyx_L5_argtuple_error;
-        CYTHON_FALLTHROUGH;
-        case  1:
-        if (likely((values[1] = __Pyx_GetKwValue_FASTCALL(__pyx_kwds, __pyx_kwvalues, __pyx_n_s_node_pairs)) != 0)) {
-          (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
-          kw_args--;
-        }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 103, __pyx_L3_error)
-        else {
-          __Pyx_RaiseArgtupleInvalid("lowest_common_ancestor_py", 1, 2, 2, 1); __PYX_ERR(0, 103, __pyx_L3_error)
-        }
-      }
-      if (unlikely(kw_args > 0)) {
-        const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "lowest_common_ancestor_py") < 0)) __PYX_ERR(0, 103, __pyx_L3_error)
-      }
-    } else if (unlikely(__pyx_nargs != 2)) {
-      goto __pyx_L5_argtuple_error;
-    } else {
-      values[0] = __Pyx_Arg_FASTCALL(__pyx_args, 0);
-      values[1] = __Pyx_Arg_FASTCALL(__pyx_args, 1);
-    }
-    __pyx_v_parent = ((PyObject*)values[0]);
-    __pyx_v_node_pairs = ((PyObject*)values[1]);
-  }
-  goto __pyx_L6_skip;
-  __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("lowest_common_ancestor_py", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 103, __pyx_L3_error)
-  __pyx_L6_skip:;
-  goto __pyx_L4_argument_unpacking_done;
-  __pyx_L3_error:;
-  {
-    Py_ssize_t __pyx_temp;
-    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
-    }
-  }
-  __Pyx_AddTraceback("py_raccoon.balance_spanning_trees.lowest_common_ancestor_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __Pyx_RefNannyFinishContext();
-  return NULL;
-  __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_parent), (&PyList_Type), 0, "parent", 1))) __PYX_ERR(0, 103, __pyx_L1_error)
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_node_pairs), (&PyList_Type), 0, "node_pairs", 1))) __PYX_ERR(0, 103, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor_py(__pyx_self, __pyx_v_parent, __pyx_v_node_pairs);
-
-  /* function exit code */
-  goto __pyx_L0;
-  __pyx_L1_error:;
-  __pyx_r = NULL;
-  __pyx_L0:;
-  {
-    Py_ssize_t __pyx_temp;
-    for (__pyx_temp=0; __pyx_temp < (Py_ssize_t)(sizeof(values)/sizeof(values[0])); ++__pyx_temp) {
-      __Pyx_Arg_XDECREF_FASTCALL(values[__pyx_temp]);
-    }
-  }
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor_py(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent, PyObject *__pyx_v_node_pairs) {
-  PyObject *__pyx_v_c_parent = NULL;
-  PyObject *__pyx_v_c_node_pairs = NULL;
-  PyObject *__pyx_v_result = NULL;
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_v_c_res;
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult __pyx_v_lca_res;
-  Py_ssize_t __pyx_v_i;
-  PyObject *__pyx_r = NULL;
-  __Pyx_TraceDeclarations
-  __Pyx_RefNannyDeclarations
-  PyObject *__pyx_t_1 = NULL;
-  PyObject *__pyx_t_2 = NULL;
-  PyObject *__pyx_t_3 = NULL;
-  PyObject *__pyx_t_4 = NULL;
-  PyObject *__pyx_t_5 = NULL;
-  __Pyx_memviewslice __pyx_t_6 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_t_8;
-  Py_ssize_t __pyx_t_9;
-  Py_ssize_t __pyx_t_10;
-  Py_ssize_t __pyx_t_11;
-  int __pyx_t_12;
-  int __pyx_lineno = 0;
-  const char *__pyx_filename = NULL;
-  int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__9)
-  __Pyx_RefNannySetupContext("lowest_common_ancestor_py", 1);
-  __Pyx_TraceCall("lowest_common_ancestor_py", __pyx_f[0], 103, 0, __PYX_ERR(0, 103, __pyx_L1_error));
-
-  /* "py_raccoon/balance_spanning_trees.pyx":104
- * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:
- *     c_parent = np.array(parent, dtype=np.int32)             # <<<<<<<<<<<<<<
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- *     result = []
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = PyTuple_New(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_INCREF(__pyx_v_parent);
-  __Pyx_GIVEREF(__pyx_v_parent);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_1, 0, __pyx_v_parent)) __PYX_ERR(0, 104, __pyx_L1_error);
-  __pyx_t_3 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_t_3, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_1, __pyx_t_3); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 104, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_v_c_parent = __pyx_t_5;
-  __pyx_t_5 = 0;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":105
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)             # <<<<<<<<<<<<<<
- *     result = []
- *     c_res = lowest_common_ancestor(c_parent, c_node_pairs)
- */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __Pyx_INCREF(__pyx_v_node_pairs);
-  __Pyx_GIVEREF(__pyx_v_node_pairs);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_v_node_pairs)) __PYX_ERR(0, 105, __pyx_L1_error);
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_NP_EDGE); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_2) < 0) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 105, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_v_c_node_pairs = __pyx_t_2;
-  __pyx_t_2 = 0;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":106
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- *     result = []             # <<<<<<<<<<<<<<
- *     c_res = lowest_common_ancestor(c_parent, c_node_pairs)
- *     cdef LcaResult lca_res
- */
-  __pyx_t_2 = PyList_New(0); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 106, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_2);
-  __pyx_v_result = ((PyObject*)__pyx_t_2);
-  __pyx_t_2 = 0;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":107
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- *     result = []
- *     c_res = lowest_common_ancestor(c_parent, c_node_pairs)             # <<<<<<<<<<<<<<
- *     cdef LcaResult lca_res
- *     for i in range(len(node_pairs)):
- */
-  __pyx_t_6 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_c_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_6.memview)) __PYX_ERR(0, 107, __pyx_L1_error)
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(__pyx_v_c_node_pairs, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 107, __pyx_L1_error)
-  __pyx_t_8 = __pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__pyx_t_6, __pyx_t_7); if (unlikely(__pyx_t_8 == ((struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 107, __pyx_L1_error)
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_6, 1);
-  __pyx_t_6.memview = NULL; __pyx_t_6.data = NULL;
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_7, 1);
-  __pyx_t_7.memview = NULL; __pyx_t_7.data = NULL;
-  __pyx_v_c_res = __pyx_t_8;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":109
- *     c_res = lowest_common_ancestor(c_parent, c_node_pairs)
- *     cdef LcaResult lca_res
- *     for i in range(len(node_pairs)):             # <<<<<<<<<<<<<<
- *         lca_res = c_res[i]
- *         result.append((lca_res.a, lca_res.b, lca_res.lca))
- */
-  __pyx_t_9 = __Pyx_PyList_GET_SIZE(__pyx_v_node_pairs); if (unlikely(__pyx_t_9 == ((Py_ssize_t)-1))) __PYX_ERR(0, 109, __pyx_L1_error)
-  __pyx_t_10 = __pyx_t_9;
-  for (__pyx_t_11 = 0; __pyx_t_11 < __pyx_t_10; __pyx_t_11+=1) {
-    __pyx_v_i = __pyx_t_11;
-
-    /* "py_raccoon/balance_spanning_trees.pyx":110
- *     cdef LcaResult lca_res
- *     for i in range(len(node_pairs)):
- *         lca_res = c_res[i]             # <<<<<<<<<<<<<<
- *         result.append((lca_res.a, lca_res.b, lca_res.lca))
- *     free(c_res)
- */
-    __pyx_v_lca_res = (__pyx_v_c_res[__pyx_v_i]);
-
-    /* "py_raccoon/balance_spanning_trees.pyx":111
- *     for i in range(len(node_pairs)):
- *         lca_res = c_res[i]
- *         result.append((lca_res.a, lca_res.b, lca_res.lca))             # <<<<<<<<<<<<<<
- *     free(c_res)
- *     return result
- */
-    __pyx_t_2 = __Pyx_PyInt_From_int(__pyx_v_lca_res.a); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_lca_res.b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_lca_res.lca); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_3 = PyTuple_New(3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_GOTREF(__pyx_t_3);
-    __Pyx_GIVEREF(__pyx_t_2);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 0, __pyx_t_2)) __PYX_ERR(0, 111, __pyx_L1_error);
-    __Pyx_GIVEREF(__pyx_t_1);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 1, __pyx_t_1)) __PYX_ERR(0, 111, __pyx_L1_error);
-    __Pyx_GIVEREF(__pyx_t_5);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_3, 2, __pyx_t_5)) __PYX_ERR(0, 111, __pyx_L1_error);
-    __pyx_t_2 = 0;
-    __pyx_t_1 = 0;
-    __pyx_t_5 = 0;
-    __pyx_t_12 = __Pyx_PyList_Append(__pyx_v_result, __pyx_t_3); if (unlikely(__pyx_t_12 == ((int)-1))) __PYX_ERR(0, 111, __pyx_L1_error)
-    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  }
-
-  /* "py_raccoon/balance_spanning_trees.pyx":112
- *         lca_res = c_res[i]
- *         result.append((lca_res.a, lca_res.b, lca_res.lca))
- *     free(c_res)             # <<<<<<<<<<<<<<
- *     return result
- * 
- */
-  free(__pyx_v_c_res);
-
-  /* "py_raccoon/balance_spanning_trees.pyx":113
- *         result.append((lca_res.a, lca_res.b, lca_res.lca))
- *     free(c_res)
- *     return result             # <<<<<<<<<<<<<<
- * 
- * @cython.boundscheck(False)
- */
-  __Pyx_XDECREF(__pyx_r);
-  __Pyx_INCREF(__pyx_v_result);
-  __pyx_r = __pyx_v_result;
-  goto __pyx_L0;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":103
- *     return 0
- * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:             # <<<<<<<<<<<<<<
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- */
-
-  /* function exit code */
-  __pyx_L1_error:;
-  __Pyx_XDECREF(__pyx_t_1);
-  __Pyx_XDECREF(__pyx_t_2);
-  __Pyx_XDECREF(__pyx_t_3);
-  __Pyx_XDECREF(__pyx_t_4);
-  __Pyx_XDECREF(__pyx_t_5);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_6, 1);
-  __PYX_XCLEAR_MEMVIEW(&__pyx_t_7, 1);
-  __Pyx_AddTraceback("py_raccoon.balance_spanning_trees.lowest_common_ancestor_py", __pyx_clineno, __pyx_lineno, __pyx_filename);
-  __pyx_r = NULL;
-  __pyx_L0:;
-  __Pyx_XDECREF(__pyx_v_c_parent);
-  __Pyx_XDECREF(__pyx_v_c_node_pairs);
-  __Pyx_XDECREF(__pyx_v_result);
-  __Pyx_XGIVEREF(__pyx_r);
-  __Pyx_TraceReturn(__pyx_r, 0);
-  __Pyx_RefNannyFinishContext();
-  return __pyx_r;
-}
-
-/* "py_raccoon/balance_spanning_trees.pyx":117
+/* "py_raccoon/balance_spanning_trees.pyx":116
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
- * cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):             # <<<<<<<<<<<<<<
+ * cdef LcaResult* lowest_common_ancestor(int[:] parent, signed char[:] parent_weight, Edge[:] node_pairs):             # <<<<<<<<<<<<<<
  *     """
  *     Implementation of Tarjan's off-line lowest common ancestors algorithm
  */
 
-static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__Pyx_memviewslice __pyx_v_parent, __Pyx_memviewslice __pyx_v_node_pairs) {
+static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__Pyx_memviewslice __pyx_v_parent, __Pyx_memviewslice __pyx_v_parent_weight, __Pyx_memviewslice __pyx_v_node_pairs) {
   int __pyx_v_p_size;
   char *__pyx_v_node_color;
   int *__pyx_v_ancestor;
@@ -18992,6 +18683,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
   int __pyx_v_p;
   struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge __pyx_v_edge;
   int *__pyx_v_partition;
+  signed char *__pyx_v_balance;
   struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_v_result;
   int __pyx_v_result_count;
   std::vector<int>  **__pyx_v_children;
@@ -18999,6 +18691,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
   long __pyx_v_root;
   int __pyx_v_a;
   int __pyx_v_b;
+  signed char __pyx_v_weight;
   struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_r;
   __Pyx_TraceDeclarations
   __Pyx_RefNannyDeclarations
@@ -19012,90 +18705,100 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
   int __pyx_t_8;
   Py_ssize_t __pyx_t_9;
   Py_ssize_t __pyx_t_10;
-  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup __pyx_t_11;
-  char const *__pyx_t_12;
-  PyObject *__pyx_t_13 = NULL;
+  signed char __pyx_t_11;
+  struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaLookup __pyx_t_12;
+  char const *__pyx_t_13;
   PyObject *__pyx_t_14 = NULL;
   PyObject *__pyx_t_15 = NULL;
   PyObject *__pyx_t_16 = NULL;
   PyObject *__pyx_t_17 = NULL;
   PyObject *__pyx_t_18 = NULL;
-  int __pyx_t_19;
+  PyObject *__pyx_t_19 = NULL;
   int __pyx_t_20;
+  int __pyx_t_21;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("lowest_common_ancestor", 1);
-  __Pyx_TraceCall("lowest_common_ancestor", __pyx_f[0], 117, 0, __PYX_ERR(0, 117, __pyx_L1_error));
+  __Pyx_TraceCall("lowest_common_ancestor", __pyx_f[0], 116, 0, __PYX_ERR(0, 116, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":131
+  /* "py_raccoon/balance_spanning_trees.pyx":130
  *     It is especially faster than the sorting we perform afterward.
  *     """
  *     cdef int p_size = parent.shape[0] # the number of nodes             # <<<<<<<<<<<<<<
- *     cdef char* node_color = <char*> malloc(p_size * sizeof(char)) # pointer to array in memory with an entry of type char for every node (an array containing each node's color)
- *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int)) # pointer to array in memory with an entry of type int for every node (an array containing each node's ancestor)
+ *     cdef char* node_color = <char*> malloc(p_size * sizeof(char))
+ *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int))
  */
   __pyx_v_p_size = (__pyx_v_parent.shape[0]);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":132
+  /* "py_raccoon/balance_spanning_trees.pyx":131
  *     """
  *     cdef int p_size = parent.shape[0] # the number of nodes
- *     cdef char* node_color = <char*> malloc(p_size * sizeof(char)) # pointer to array in memory with an entry of type char for every node (an array containing each node's color)             # <<<<<<<<<<<<<<
- *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int)) # pointer to array in memory with an entry of type int for every node (an array containing each node's ancestor)
+ *     cdef char* node_color = <char*> malloc(p_size * sizeof(char))             # <<<<<<<<<<<<<<
+ *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int))
  *     cdef int i, node, p # both for iterating
  */
   __pyx_v_node_color = ((char *)malloc((__pyx_v_p_size * (sizeof(char)))));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":133
+  /* "py_raccoon/balance_spanning_trees.pyx":132
  *     cdef int p_size = parent.shape[0] # the number of nodes
- *     cdef char* node_color = <char*> malloc(p_size * sizeof(char)) # pointer to array in memory with an entry of type char for every node (an array containing each node's color)
- *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int)) # pointer to array in memory with an entry of type int for every node (an array containing each node's ancestor)             # <<<<<<<<<<<<<<
+ *     cdef char* node_color = <char*> malloc(p_size * sizeof(char))
+ *     cdef int* ancestor = <int*> malloc(p_size * sizeof(int))             # <<<<<<<<<<<<<<
  *     cdef int i, node, p # both for iterating
  *     cdef Edge edge
  */
   __pyx_v_ancestor = ((int *)malloc((__pyx_v_p_size * (sizeof(int)))));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":136
+  /* "py_raccoon/balance_spanning_trees.pyx":135
  *     cdef int i, node, p # both for iterating
  *     cdef Edge edge
  *     cdef int* partition = uf_init(p_size)             # <<<<<<<<<<<<<<
+ *     cdef signed char* balance = <signed char*> malloc(p_size * sizeof(signed char))
  * 
- *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults
  */
-  __pyx_t_1 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(__pyx_v_p_size); if (unlikely(__pyx_t_1 == ((int *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 136, __pyx_L1_error)
+  __pyx_t_1 = __pyx_f_10py_raccoon_22balance_spanning_trees_uf_init(__pyx_v_p_size); if (unlikely(__pyx_t_1 == ((int *)NULL) && PyErr_Occurred())) __PYX_ERR(0, 135, __pyx_L1_error)
   __pyx_v_partition = __pyx_t_1;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":138
+  /* "py_raccoon/balance_spanning_trees.pyx":136
+ *     cdef Edge edge
  *     cdef int* partition = uf_init(p_size)
+ *     cdef signed char* balance = <signed char*> malloc(p_size * sizeof(signed char))             # <<<<<<<<<<<<<<
  * 
- *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults             # <<<<<<<<<<<<<<
- *     cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"
- *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)
+ *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))
+ */
+  __pyx_v_balance = ((signed char *)malloc((__pyx_v_p_size * (sizeof(signed char)))));
+
+  /* "py_raccoon/balance_spanning_trees.pyx":138
+ *     cdef signed char* balance = <signed char*> malloc(p_size * sizeof(signed char))
+ * 
+ *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))             # <<<<<<<<<<<<<<
+ *     cdef int result_count = 0
+ *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))
  */
   __pyx_v_result = ((struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *)malloc(((__pyx_v_node_pairs.shape[0]) * (sizeof(struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult)))));
 
   /* "py_raccoon/balance_spanning_trees.pyx":139
  * 
- *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults
- *     cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"             # <<<<<<<<<<<<<<
- *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)
- *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*)) # LcaLookup is a struct containing a, b und other. So this is a pointer to an array of pointers to vectors whose entries are of type LcaLookup. The vectors are from C++ (import via libcpp) and they do not have a fixed size. That is when called .push_back(elem) on them, elem will be added to them (like a list in python i guess). There is one vector for every node
+ *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))
+ *     cdef int result_count = 0             # <<<<<<<<<<<<<<
+ *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))
+ *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*))
  */
   __pyx_v_result_count = 0;
 
   /* "py_raccoon/balance_spanning_trees.pyx":140
- *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults
- *     cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"
- *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)             # <<<<<<<<<<<<<<
- *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*)) # LcaLookup is a struct containing a, b und other. So this is a pointer to an array of pointers to vectors whose entries are of type LcaLookup. The vectors are from C++ (import via libcpp) and they do not have a fixed size. That is when called .push_back(elem) on them, elem will be added to them (like a list in python i guess). There is one vector for every node
+ *     cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))
+ *     cdef int result_count = 0
+ *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))             # <<<<<<<<<<<<<<
+ *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*))
  * 
  */
   __pyx_v_children = ((std::vector<int>  **)malloc((__pyx_v_p_size * (sizeof(void *)))));
 
   /* "py_raccoon/balance_spanning_trees.pyx":141
- *     cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"
- *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)
- *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*)) # LcaLookup is a struct containing a, b und other. So this is a pointer to an array of pointers to vectors whose entries are of type LcaLookup. The vectors are from C++ (import via libcpp) and they do not have a fixed size. That is when called .push_back(elem) on them, elem will be added to them (like a list in python i guess). There is one vector for every node             # <<<<<<<<<<<<<<
+ *     cdef int result_count = 0
+ *     cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))
+ *     cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*))             # <<<<<<<<<<<<<<
  * 
  *     # initializing stuff
  */
@@ -19197,7 +18900,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  *         for node in range(p_size):
  *             p = parent[node]             # <<<<<<<<<<<<<<
  *             if p != -1:
- *                 children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. fr alle nodes werden dessen children gefunden
+ *                 children[p][0].push_back(node)
  */
       __pyx_t_7 = __pyx_v_node;
       __pyx_v_p = (*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_7 * __pyx_v_parent.strides[0]) )));
@@ -19206,7 +18909,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  *         for node in range(p_size):
  *             p = parent[node]
  *             if p != -1:             # <<<<<<<<<<<<<<
- *                 children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. fr alle nodes werden dessen children gefunden
+ *                 children[p][0].push_back(node)
  *             else:
  */
       __pyx_t_8 = (__pyx_v_p != -1L);
@@ -19215,9 +18918,9 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
         /* "py_raccoon/balance_spanning_trees.pyx":157
  *             p = parent[node]
  *             if p != -1:
- *                 children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. fr alle nodes werden dessen children gefunden             # <<<<<<<<<<<<<<
+ *                 children[p][0].push_back(node)             # <<<<<<<<<<<<<<
  *             else:
- *                 root = node # root node ist die node, dessen parent -1 ist (also keinen parent hat.)
+ *                 root = node
  */
         try {
           ((__pyx_v_children[__pyx_v_p])[0]).push_back(__pyx_v_node);
@@ -19230,16 +18933,16 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  *         for node in range(p_size):
  *             p = parent[node]
  *             if p != -1:             # <<<<<<<<<<<<<<
- *                 children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. fr alle nodes werden dessen children gefunden
+ *                 children[p][0].push_back(node)
  *             else:
  */
         goto __pyx_L10;
       }
 
       /* "py_raccoon/balance_spanning_trees.pyx":159
- *                 children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. fr alle nodes werden dessen children gefunden
+ *                 children[p][0].push_back(node)
  *             else:
- *                 root = node # root node ist die node, dessen parent -1 ist (also keinen parent hat.)             # <<<<<<<<<<<<<<
+ *                 root = node             # <<<<<<<<<<<<<<
  * 
  *         # need to efficiently retrieve queries
  */
@@ -19254,7 +18957,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  * 
  *         for i in range(node_pairs.shape[0]):             # <<<<<<<<<<<<<<
  *             edge = node_pairs[i]
- *             a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
+ *             a = edge.a
  */
     __pyx_t_9 = (__pyx_v_node_pairs.shape[0]);
     __pyx_t_10 = __pyx_t_9;
@@ -19265,7 +18968,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  * 
  *         for i in range(node_pairs.shape[0]):
  *             edge = node_pairs[i]             # <<<<<<<<<<<<<<
- *             a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
+ *             a = edge.a
  *             b = edge.b
  */
       __pyx_t_7 = __pyx_v_i;
@@ -19274,69 +18977,90 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
       /* "py_raccoon/balance_spanning_trees.pyx":168
  *         for i in range(node_pairs.shape[0]):
  *             edge = node_pairs[i]
- *             a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)             # <<<<<<<<<<<<<<
+ *             a = edge.a             # <<<<<<<<<<<<<<
  *             b = edge.b
- *             queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)
+ *             weight = edge.weight
  */
       __pyx_t_3 = __pyx_v_edge.a;
       __pyx_v_a = __pyx_t_3;
 
       /* "py_raccoon/balance_spanning_trees.pyx":169
  *             edge = node_pairs[i]
- *             a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
+ *             a = edge.a
  *             b = edge.b             # <<<<<<<<<<<<<<
- *             queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)
- *             queries[b][0].push_back(LcaLookup(a,a,b)) # b is the main node here and a is the other node
+ *             weight = edge.weight
+ *             queries[a][0].push_back(LcaLookup(b,a,b,weight))
  */
       __pyx_t_3 = __pyx_v_edge.b;
       __pyx_v_b = __pyx_t_3;
 
       /* "py_raccoon/balance_spanning_trees.pyx":170
- *             a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
+ *             a = edge.a
  *             b = edge.b
- *             queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)             # <<<<<<<<<<<<<<
- *             queries[b][0].push_back(LcaLookup(a,a,b)) # b is the main node here and a is the other node
- * 
+ *             weight = edge.weight             # <<<<<<<<<<<<<<
+ *             queries[a][0].push_back(LcaLookup(b,a,b,weight))
+ *             queries[b][0].push_back(LcaLookup(a,a,b,weight))
  */
-      __pyx_t_11.other = __pyx_v_b;
-      __pyx_t_11.a = __pyx_v_a;
-      __pyx_t_11.b = __pyx_v_b;
-      try {
-        ((__pyx_v_queries[__pyx_v_a])[0]).push_back(__pyx_t_11);
-      } catch(...) {
-        __Pyx_CppExn2PyErr();
-        __PYX_ERR(0, 170, __pyx_L6_error)
-      }
+      __pyx_t_11 = __pyx_v_edge.weight;
+      __pyx_v_weight = __pyx_t_11;
 
       /* "py_raccoon/balance_spanning_trees.pyx":171
  *             b = edge.b
- *             queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)
- *             queries[b][0].push_back(LcaLookup(a,a,b)) # b is the main node here and a is the other node             # <<<<<<<<<<<<<<
+ *             weight = edge.weight
+ *             queries[a][0].push_back(LcaLookup(b,a,b,weight))             # <<<<<<<<<<<<<<
+ *             queries[b][0].push_back(LcaLookup(a,a,b,weight))
  * 
- *         # we are passing:
  */
-      __pyx_t_11.other = __pyx_v_a;
-      __pyx_t_11.a = __pyx_v_a;
-      __pyx_t_11.b = __pyx_v_b;
+      __pyx_t_12.other = __pyx_v_b;
+      __pyx_t_12.a = __pyx_v_a;
+      __pyx_t_12.b = __pyx_v_b;
+      __pyx_t_12.weight = __pyx_v_weight;
       try {
-        ((__pyx_v_queries[__pyx_v_b])[0]).push_back(__pyx_t_11);
+        ((__pyx_v_queries[__pyx_v_a])[0]).push_back(__pyx_t_12);
       } catch(...) {
         __Pyx_CppExn2PyErr();
         __PYX_ERR(0, 171, __pyx_L6_error)
       }
+
+      /* "py_raccoon/balance_spanning_trees.pyx":172
+ *             weight = edge.weight
+ *             queries[a][0].push_back(LcaLookup(b,a,b,weight))
+ *             queries[b][0].push_back(LcaLookup(a,a,b,weight))             # <<<<<<<<<<<<<<
+ * 
+ *         balance[root] = 1
+ */
+      __pyx_t_12.other = __pyx_v_a;
+      __pyx_t_12.a = __pyx_v_a;
+      __pyx_t_12.b = __pyx_v_b;
+      __pyx_t_12.weight = __pyx_v_weight;
+      try {
+        ((__pyx_v_queries[__pyx_v_b])[0]).push_back(__pyx_t_12);
+      } catch(...) {
+        __Pyx_CppExn2PyErr();
+        __PYX_ERR(0, 172, __pyx_L6_error)
+      }
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":180
- *         # the ancestor array
- *         # the node color array
- *         __inner_lca(root, children, queries, result, &result_count, partition, ancestor, node_color)             # <<<<<<<<<<<<<<
+    /* "py_raccoon/balance_spanning_trees.pyx":174
+ *             queries[b][0].push_back(LcaLookup(a,a,b,weight))
+ * 
+ *         balance[root] = 1             # <<<<<<<<<<<<<<
+ * 
+ *         __inner_lca(parent_weight, balance, root, children, queries, result, &result_count, partition, ancestor, node_color)
+ */
+    (__pyx_v_balance[__pyx_v_root]) = 1;
+
+    /* "py_raccoon/balance_spanning_trees.pyx":176
+ *         balance[root] = 1
+ * 
+ *         __inner_lca(parent_weight, balance, root, children, queries, result, &result_count, partition, ancestor, node_color)             # <<<<<<<<<<<<<<
  * 
  *     finally:
  */
-    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__pyx_v_root, __pyx_v_children, __pyx_v_queries, __pyx_v_result, (&__pyx_v_result_count), __pyx_v_partition, __pyx_v_ancestor, __pyx_v_node_color); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 180, __pyx_L6_error)
+    __pyx_t_2 = __pyx_f_10py_raccoon_22balance_spanning_trees___inner_lca(__pyx_v_parent_weight, __pyx_v_balance, __pyx_v_root, __pyx_v_children, __pyx_v_queries, __pyx_v_result, (&__pyx_v_result_count), __pyx_v_partition, __pyx_v_ancestor, __pyx_v_node_color); if (unlikely(__pyx_t_2 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 176, __pyx_L6_error)
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":183
+  /* "py_raccoon/balance_spanning_trees.pyx":179
  * 
  *     finally:
  *         free(ancestor)             # <<<<<<<<<<<<<<
@@ -19347,7 +19071,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
     /*normal exit:*/{
       free(__pyx_v_ancestor);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":184
+      /* "py_raccoon/balance_spanning_trees.pyx":180
  *     finally:
  *         free(ancestor)
  *         free(partition)             # <<<<<<<<<<<<<<
@@ -19356,7 +19080,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
       free(__pyx_v_partition);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":185
+      /* "py_raccoon/balance_spanning_trees.pyx":181
  *         free(ancestor)
  *         free(partition)
  *         free(node_color)             # <<<<<<<<<<<<<<
@@ -19365,7 +19089,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
       free(__pyx_v_node_color);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":186
+      /* "py_raccoon/balance_spanning_trees.pyx":182
  *         free(partition)
  *         free(node_color)
  *         for i in range(p_size):             # <<<<<<<<<<<<<<
@@ -19377,7 +19101,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
       for (__pyx_t_4 = 0; __pyx_t_4 < __pyx_t_3; __pyx_t_4+=1) {
         __pyx_v_i = __pyx_t_4;
 
-        /* "py_raccoon/balance_spanning_trees.pyx":187
+        /* "py_raccoon/balance_spanning_trees.pyx":183
  *         free(node_color)
  *         for i in range(p_size):
  *             del children[i]             # <<<<<<<<<<<<<<
@@ -19386,7 +19110,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
         delete (__pyx_v_children[__pyx_v_i]);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":188
+        /* "py_raccoon/balance_spanning_trees.pyx":184
  *         for i in range(p_size):
  *             del children[i]
  *             del queries[i]             # <<<<<<<<<<<<<<
@@ -19396,42 +19120,51 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
         delete (__pyx_v_queries[__pyx_v_i]);
       }
 
-      /* "py_raccoon/balance_spanning_trees.pyx":189
+      /* "py_raccoon/balance_spanning_trees.pyx":185
  *             del children[i]
  *             del queries[i]
  *         free(children)             # <<<<<<<<<<<<<<
  *         free(queries)
- * 
+ *         free(balance)
  */
       free(__pyx_v_children);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":190
+      /* "py_raccoon/balance_spanning_trees.pyx":186
  *             del queries[i]
  *         free(children)
  *         free(queries)             # <<<<<<<<<<<<<<
+ *         free(balance)
+ * 
+ */
+      free(__pyx_v_queries);
+
+      /* "py_raccoon/balance_spanning_trees.pyx":187
+ *         free(children)
+ *         free(queries)
+ *         free(balance)             # <<<<<<<<<<<<<<
  * 
  *     return result
  */
-      free(__pyx_v_queries);
+      free(__pyx_v_balance);
       goto __pyx_L7;
     }
     __pyx_L6_error:;
     /*exception exit:*/{
       __Pyx_PyThreadState_declare
       __Pyx_PyThreadState_assign
-      __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0;
-      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_16, &__pyx_t_17, &__pyx_t_18);
-      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15) < 0)) __Pyx_ErrFetch(&__pyx_t_13, &__pyx_t_14, &__pyx_t_15);
-      __Pyx_XGOTREF(__pyx_t_13);
+      __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0;
+      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_17, &__pyx_t_18, &__pyx_t_19);
+      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_14, &__pyx_t_15, &__pyx_t_16) < 0)) __Pyx_ErrFetch(&__pyx_t_14, &__pyx_t_15, &__pyx_t_16);
       __Pyx_XGOTREF(__pyx_t_14);
       __Pyx_XGOTREF(__pyx_t_15);
       __Pyx_XGOTREF(__pyx_t_16);
       __Pyx_XGOTREF(__pyx_t_17);
       __Pyx_XGOTREF(__pyx_t_18);
-      __pyx_t_2 = __pyx_lineno; __pyx_t_3 = __pyx_clineno; __pyx_t_12 = __pyx_filename;
+      __Pyx_XGOTREF(__pyx_t_19);
+      __pyx_t_2 = __pyx_lineno; __pyx_t_3 = __pyx_clineno; __pyx_t_13 = __pyx_filename;
       {
 
-        /* "py_raccoon/balance_spanning_trees.pyx":183
+        /* "py_raccoon/balance_spanning_trees.pyx":179
  * 
  *     finally:
  *         free(ancestor)             # <<<<<<<<<<<<<<
@@ -19440,7 +19173,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
         free(__pyx_v_ancestor);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":184
+        /* "py_raccoon/balance_spanning_trees.pyx":180
  *     finally:
  *         free(ancestor)
  *         free(partition)             # <<<<<<<<<<<<<<
@@ -19449,7 +19182,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
         free(__pyx_v_partition);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":185
+        /* "py_raccoon/balance_spanning_trees.pyx":181
  *         free(ancestor)
  *         free(partition)
  *         free(node_color)             # <<<<<<<<<<<<<<
@@ -19458,7 +19191,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
         free(__pyx_v_node_color);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":186
+        /* "py_raccoon/balance_spanning_trees.pyx":182
  *         free(partition)
  *         free(node_color)
  *         for i in range(p_size):             # <<<<<<<<<<<<<<
@@ -19466,11 +19199,11 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  *             del queries[i]
  */
         __pyx_t_4 = __pyx_v_p_size;
-        __pyx_t_19 = __pyx_t_4;
-        for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
-          __pyx_v_i = __pyx_t_20;
+        __pyx_t_20 = __pyx_t_4;
+        for (__pyx_t_21 = 0; __pyx_t_21 < __pyx_t_20; __pyx_t_21+=1) {
+          __pyx_v_i = __pyx_t_21;
 
-          /* "py_raccoon/balance_spanning_trees.pyx":187
+          /* "py_raccoon/balance_spanning_trees.pyx":183
  *         free(node_color)
  *         for i in range(p_size):
  *             del children[i]             # <<<<<<<<<<<<<<
@@ -19479,7 +19212,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
  */
           delete (__pyx_v_children[__pyx_v_i]);
 
-          /* "py_raccoon/balance_spanning_trees.pyx":188
+          /* "py_raccoon/balance_spanning_trees.pyx":184
  *         for i in range(p_size):
  *             del children[i]
  *             del queries[i]             # <<<<<<<<<<<<<<
@@ -19489,43 +19222,52 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
           delete (__pyx_v_queries[__pyx_v_i]);
         }
 
-        /* "py_raccoon/balance_spanning_trees.pyx":189
+        /* "py_raccoon/balance_spanning_trees.pyx":185
  *             del children[i]
  *             del queries[i]
  *         free(children)             # <<<<<<<<<<<<<<
  *         free(queries)
- * 
+ *         free(balance)
  */
         free(__pyx_v_children);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":190
+        /* "py_raccoon/balance_spanning_trees.pyx":186
  *             del queries[i]
  *         free(children)
  *         free(queries)             # <<<<<<<<<<<<<<
+ *         free(balance)
+ * 
+ */
+        free(__pyx_v_queries);
+
+        /* "py_raccoon/balance_spanning_trees.pyx":187
+ *         free(children)
+ *         free(queries)
+ *         free(balance)             # <<<<<<<<<<<<<<
  * 
  *     return result
  */
-        free(__pyx_v_queries);
+        free(__pyx_v_balance);
       }
       if (PY_MAJOR_VERSION >= 3) {
-        __Pyx_XGIVEREF(__pyx_t_16);
         __Pyx_XGIVEREF(__pyx_t_17);
         __Pyx_XGIVEREF(__pyx_t_18);
-        __Pyx_ExceptionReset(__pyx_t_16, __pyx_t_17, __pyx_t_18);
+        __Pyx_XGIVEREF(__pyx_t_19);
+        __Pyx_ExceptionReset(__pyx_t_17, __pyx_t_18, __pyx_t_19);
       }
-      __Pyx_XGIVEREF(__pyx_t_13);
       __Pyx_XGIVEREF(__pyx_t_14);
       __Pyx_XGIVEREF(__pyx_t_15);
-      __Pyx_ErrRestore(__pyx_t_13, __pyx_t_14, __pyx_t_15);
-      __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0;
-      __pyx_lineno = __pyx_t_2; __pyx_clineno = __pyx_t_3; __pyx_filename = __pyx_t_12;
+      __Pyx_XGIVEREF(__pyx_t_16);
+      __Pyx_ErrRestore(__pyx_t_14, __pyx_t_15, __pyx_t_16);
+      __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0; __pyx_t_18 = 0; __pyx_t_19 = 0;
+      __pyx_lineno = __pyx_t_2; __pyx_clineno = __pyx_t_3; __pyx_filename = __pyx_t_13;
       goto __pyx_L1_error;
     }
     __pyx_L7:;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":192
- *         free(queries)
+  /* "py_raccoon/balance_spanning_trees.pyx":189
+ *         free(balance)
  * 
  *     return result             # <<<<<<<<<<<<<<
  * 
@@ -19534,10 +19276,10 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":117
+  /* "py_raccoon/balance_spanning_trees.pyx":116
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
- * cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):             # <<<<<<<<<<<<<<
+ * cdef LcaResult* lowest_common_ancestor(int[:] parent, signed char[:] parent_weight, Edge[:] node_pairs):             # <<<<<<<<<<<<<<
  *     """
  *     Implementation of Tarjan's off-line lowest common ancestors algorithm
  */
@@ -19552,7 +19294,7 @@ static struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *__pyx_f_1
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":196
+/* "py_raccoon/balance_spanning_trees.pyx":193
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):             # <<<<<<<<<<<<<<
@@ -19572,9 +19314,9 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceCall("__calc_depth_check", __pyx_f[0], 196, 0, __PYX_ERR(0, 196, __pyx_L1_error));
+  __Pyx_TraceCall("__calc_depth_check", __pyx_f[0], 193, 0, __PYX_ERR(0, 193, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":197
+  /* "py_raccoon/balance_spanning_trees.pyx":194
  * @cython.wraparound(False)
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):
  *     if node != -1 and depth[node] == -1:             # <<<<<<<<<<<<<<
@@ -19593,7 +19335,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
   __pyx_L4_bool_binop_done:;
   if (__pyx_t_1) {
 
-    /* "py_raccoon/balance_spanning_trees.pyx":198
+    /* "py_raccoon/balance_spanning_trees.pyx":195
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):
  *     if node != -1 and depth[node] == -1:
  *         if parent[node] == -1:             # <<<<<<<<<<<<<<
@@ -19604,7 +19346,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
     __pyx_t_1 = ((*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_3 * __pyx_v_parent.strides[0]) ))) == -1L);
     if (__pyx_t_1) {
 
-      /* "py_raccoon/balance_spanning_trees.pyx":199
+      /* "py_raccoon/balance_spanning_trees.pyx":196
  *     if node != -1 and depth[node] == -1:
  *         if parent[node] == -1:
  *             depth[node] == 0             # <<<<<<<<<<<<<<
@@ -19614,7 +19356,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
       __pyx_t_3 = __pyx_v_node;
       (void)(((*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_3 * __pyx_v_depth.strides[0]) ))) == 0));
 
-      /* "py_raccoon/balance_spanning_trees.pyx":198
+      /* "py_raccoon/balance_spanning_trees.pyx":195
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):
  *     if node != -1 and depth[node] == -1:
  *         if parent[node] == -1:             # <<<<<<<<<<<<<<
@@ -19624,7 +19366,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
       goto __pyx_L6;
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":201
+    /* "py_raccoon/balance_spanning_trees.pyx":198
  *             depth[node] == 0
  *         else:
  *             __calc_depth_check(parent[node], parent, depth)             # <<<<<<<<<<<<<<
@@ -19633,9 +19375,9 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
  */
     /*else*/ {
       __pyx_t_3 = __pyx_v_node;
-      __pyx_t_4 = __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check((*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_3 * __pyx_v_parent.strides[0]) ))), __pyx_v_parent, __pyx_v_depth); if (unlikely(__pyx_t_4 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 201, __pyx_L1_error)
+      __pyx_t_4 = __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check((*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_3 * __pyx_v_parent.strides[0]) ))), __pyx_v_parent, __pyx_v_depth); if (unlikely(__pyx_t_4 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 198, __pyx_L1_error)
 
-      /* "py_raccoon/balance_spanning_trees.pyx":202
+      /* "py_raccoon/balance_spanning_trees.pyx":199
  *         else:
  *             __calc_depth_check(parent[node], parent, depth)
  *             depth[node] = depth[parent[node]] + 1             # <<<<<<<<<<<<<<
@@ -19649,7 +19391,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
     }
     __pyx_L6:;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":197
+    /* "py_raccoon/balance_spanning_trees.pyx":194
  * @cython.wraparound(False)
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):
  *     if node != -1 and depth[node] == -1:             # <<<<<<<<<<<<<<
@@ -19658,7 +19400,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":203
+  /* "py_raccoon/balance_spanning_trees.pyx":200
  *             __calc_depth_check(parent[node], parent, depth)
  *             depth[node] = depth[parent[node]] + 1
  *     return 0             # <<<<<<<<<<<<<<
@@ -19668,7 +19410,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
   __pyx_r = 0;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":196
+  /* "py_raccoon/balance_spanning_trees.pyx":193
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef int __calc_depth_check(int node, int[:] parent, int[:] depth):             # <<<<<<<<<<<<<<
@@ -19685,7 +19427,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":205
+/* "py_raccoon/balance_spanning_trees.pyx":202
  *     return 0
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
@@ -19694,15 +19436,15 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(int 
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_3calc_depth(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_1calc_depth(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_3calc_depth = {"calc_depth", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_3calc_depth, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_3calc_depth(PyObject *__pyx_self, 
+static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_1calc_depth = {"calc_depth", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_1calc_depth, __Pyx_METH_FASTCALL|METH_KEYWORDS, 0};
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_1calc_depth(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -19746,12 +19488,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 205, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 202, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "calc_depth") < 0)) __PYX_ERR(0, 205, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "calc_depth") < 0)) __PYX_ERR(0, 202, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -19762,7 +19504,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("calc_depth", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 205, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("calc_depth", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 202, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -19776,7 +19518,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(__pyx_self, __pyx_v_parent);
+  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_calc_depth(__pyx_self, __pyx_v_parent);
 
   /* function exit code */
   {
@@ -19789,7 +19531,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent) {
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_calc_depth(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_parent) {
   PyObject *__pyx_v_depth = NULL;
   __Pyx_memviewslice __pyx_v_cdepth = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_cparent = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -19809,20 +19551,20 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTH
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__10)
+  __Pyx_TraceFrameInit(__pyx_codeobj__9)
   __Pyx_RefNannySetupContext("calc_depth", 1);
-  __Pyx_TraceCall("calc_depth", __pyx_f[0], 205, 0, __PYX_ERR(0, 205, __pyx_L1_error));
+  __Pyx_TraceCall("calc_depth", __pyx_f[0], 202, 0, __PYX_ERR(0, 202, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":208
+  /* "py_raccoon/balance_spanning_trees.pyx":205
  * @cython.wraparound(False)
  * def calc_depth(parent: np.ndarray) -> np.ndarray:
  *     depth = -1 * np.ones_like(parent)             # <<<<<<<<<<<<<<
  *     cdef int[:] cdepth = depth
  *     cdef int[:] cparent = parent
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_np); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ones_like); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_2, __pyx_n_s_ones_like); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_t_2 = NULL;
@@ -19843,63 +19585,63 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTH
     PyObject *__pyx_callargs[2] = {__pyx_t_2, __pyx_v_parent};
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_4, 1+__pyx_t_4);
     __Pyx_XDECREF(__pyx_t_2); __pyx_t_2 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 208, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 205, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   }
-  __pyx_t_3 = __Pyx_PyInt_MultiplyCObj(__pyx_int_neg_1, __pyx_t_1, -1L, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 208, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_MultiplyCObj(__pyx_int_neg_1, __pyx_t_1, -1L, 0, 0); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 205, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_depth = __pyx_t_3;
   __pyx_t_3 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":209
+  /* "py_raccoon/balance_spanning_trees.pyx":206
  * def calc_depth(parent: np.ndarray) -> np.ndarray:
  *     depth = -1 * np.ones_like(parent)
  *     cdef int[:] cdepth = depth             # <<<<<<<<<<<<<<
  *     cdef int[:] cparent = parent
  * 
  */
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 209, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 206, __pyx_L1_error)
   __pyx_v_cdepth = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":210
+  /* "py_raccoon/balance_spanning_trees.pyx":207
  *     depth = -1 * np.ones_like(parent)
  *     cdef int[:] cdepth = depth
  *     cdef int[:] cparent = parent             # <<<<<<<<<<<<<<
  * 
  *     for i in range(len(parent)):
  */
-  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 210, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_5.memview)) __PYX_ERR(0, 207, __pyx_L1_error)
   __pyx_v_cparent = __pyx_t_5;
   __pyx_t_5.memview = NULL;
   __pyx_t_5.data = NULL;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":212
+  /* "py_raccoon/balance_spanning_trees.pyx":209
  *     cdef int[:] cparent = parent
  * 
  *     for i in range(len(parent)):             # <<<<<<<<<<<<<<
  *         __calc_depth_check(i, cparent, cdepth)
  *     return depth
  */
-  __pyx_t_6 = PyObject_Length(__pyx_v_parent); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 212, __pyx_L1_error)
+  __pyx_t_6 = PyObject_Length(__pyx_v_parent); if (unlikely(__pyx_t_6 == ((Py_ssize_t)-1))) __PYX_ERR(0, 209, __pyx_L1_error)
   __pyx_t_7 = __pyx_t_6;
   for (__pyx_t_8 = 0; __pyx_t_8 < __pyx_t_7; __pyx_t_8+=1) {
     __pyx_v_i = __pyx_t_8;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":213
+    /* "py_raccoon/balance_spanning_trees.pyx":210
  * 
  *     for i in range(len(parent)):
  *         __calc_depth_check(i, cparent, cdepth)             # <<<<<<<<<<<<<<
  *     return depth
  * 
  */
-    __pyx_t_9 = __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(__pyx_v_i, __pyx_v_cparent, __pyx_v_cdepth); if (unlikely(__pyx_t_9 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 213, __pyx_L1_error)
+    __pyx_t_9 = __pyx_f_10py_raccoon_22balance_spanning_trees___calc_depth_check(__pyx_v_i, __pyx_v_cparent, __pyx_v_cdepth); if (unlikely(__pyx_t_9 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 210, __pyx_L1_error)
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":214
+  /* "py_raccoon/balance_spanning_trees.pyx":211
  *     for i in range(len(parent)):
  *         __calc_depth_check(i, cparent, cdepth)
  *     return depth             # <<<<<<<<<<<<<<
@@ -19911,7 +19653,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTH
   __pyx_r = __pyx_v_depth;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":205
+  /* "py_raccoon/balance_spanning_trees.pyx":202
  *     return 0
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
@@ -19937,15 +19679,15 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2calc_depth(CYTH
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":217
+/* "py_raccoon/balance_spanning_trees.pyx":214
  * 
  * @cython.wraparound(False)
- * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):             # <<<<<<<<<<<<<<
+ * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):             # <<<<<<<<<<<<<<
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
  */
 
-static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(int __pyx_v_size, __Pyx_memviewslice __pyx_v_degree, int **__pyx_v_neighbors, __Pyx_memviewslice __pyx_v_parent, PyObject *__pyx_v_rnd) {
+static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(int __pyx_v_size, __Pyx_memviewslice __pyx_v_degree, int **__pyx_v_neighbors, signed char **__pyx_v_weights, __Pyx_memviewslice __pyx_v_parent, __Pyx_memviewslice __pyx_v_parent_weight, PyObject *__pyx_v_rnd) {
   std::mt19937 __pyx_v_c_rnd;
   std::uniform_int_distribution<int>  __pyx_v_dist;
   int __pyx_v_root;
@@ -19976,26 +19718,26 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("uniform_spanning_tree_c", 1);
-  __Pyx_TraceCall("uniform_spanning_tree_c", __pyx_f[0], 217, 0, __PYX_ERR(0, 217, __pyx_L1_error));
+  __Pyx_TraceCall("uniform_spanning_tree_c", __pyx_f[0], 214, 0, __PYX_ERR(0, 214, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":218
+  /* "py_raccoon/balance_spanning_trees.pyx":215
  * @cython.wraparound(False)
- * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
+ * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))             # <<<<<<<<<<<<<<
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
  *     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_rnd, __pyx_n_s_integers); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_rnd, __pyx_n_s_integers); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__11, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_tuple__10, NULL); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_3 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 218, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyInt_As_unsigned_int(__pyx_t_2); if (unlikely((__pyx_t_3 == (unsigned int)-1) && PyErr_Occurred())) __PYX_ERR(0, 215, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __pyx_v_c_rnd = std::mt19937(__pyx_t_3);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":219
- * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
+  /* "py_raccoon/balance_spanning_trees.pyx":216
+ * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)             # <<<<<<<<<<<<<<
  *     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size
@@ -20003,7 +19745,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
   __pyx_v_dist = std::uniform_int_distribution<int> (0, (__pyx_v_size - 1));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":220
+  /* "py_raccoon/balance_spanning_trees.pyx":217
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
  *     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size             # <<<<<<<<<<<<<<
@@ -20012,7 +19754,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
   __pyx_v_root = __pyx_v_dist(__pyx_v_c_rnd);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":223
+  /* "py_raccoon/balance_spanning_trees.pyx":220
  *     cdef int i, u, choice
  * 
  *     cdef bint* in_tree = <bint*> malloc(size * sizeof(bint))             # <<<<<<<<<<<<<<
@@ -20021,7 +19763,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
   __pyx_v_in_tree = ((int *)malloc((__pyx_v_size * (sizeof(int)))));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":224
+  /* "py_raccoon/balance_spanning_trees.pyx":221
  * 
  *     cdef bint* in_tree = <bint*> malloc(size * sizeof(bint))
  *     try:             # <<<<<<<<<<<<<<
@@ -20030,7 +19772,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
   /*try:*/ {
 
-    /* "py_raccoon/balance_spanning_trees.pyx":225
+    /* "py_raccoon/balance_spanning_trees.pyx":222
  *     cdef bint* in_tree = <bint*> malloc(size * sizeof(bint))
  *     try:
  *         for i in range(size):             # <<<<<<<<<<<<<<
@@ -20042,7 +19784,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":226
+      /* "py_raccoon/balance_spanning_trees.pyx":223
  *     try:
  *         for i in range(size):
  *             in_tree[i] = 0             # <<<<<<<<<<<<<<
@@ -20052,7 +19794,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
       (__pyx_v_in_tree[__pyx_v_i]) = 0;
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":228
+    /* "py_raccoon/balance_spanning_trees.pyx":225
  *             in_tree[i] = 0
  * 
  *         in_tree[root] = 1             # <<<<<<<<<<<<<<
@@ -20061,7 +19803,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
     (__pyx_v_in_tree[__pyx_v_root]) = 1;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":229
+    /* "py_raccoon/balance_spanning_trees.pyx":226
  * 
  *         in_tree[root] = 1
  *         parent[root] = -1             # <<<<<<<<<<<<<<
@@ -20075,11 +19817,11 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
     } else if (unlikely(__pyx_t_7 >= __pyx_v_parent.shape[0])) __pyx_t_4 = 0;
     if (unlikely(__pyx_t_4 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_4);
-      __PYX_ERR(0, 229, __pyx_L4_error)
+      __PYX_ERR(0, 226, __pyx_L4_error)
     }
     *((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_7 * __pyx_v_parent.strides[0]) )) = -1;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":231
+    /* "py_raccoon/balance_spanning_trees.pyx":228
  *         parent[root] = -1
  * 
  *         for i in range(size):             # <<<<<<<<<<<<<<
@@ -20091,7 +19833,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
     for (__pyx_t_6 = 0; __pyx_t_6 < __pyx_t_5; __pyx_t_6+=1) {
       __pyx_v_i = __pyx_t_6;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":232
+      /* "py_raccoon/balance_spanning_trees.pyx":229
  * 
  *         for i in range(size):
  *             u = i             # <<<<<<<<<<<<<<
@@ -20100,7 +19842,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
       __pyx_v_u = __pyx_v_i;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":233
+      /* "py_raccoon/balance_spanning_trees.pyx":230
  *         for i in range(size):
  *             u = i
  *             while not in_tree[u]:             # <<<<<<<<<<<<<<
@@ -20111,7 +19853,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         __pyx_t_8 = (!(__pyx_v_in_tree[__pyx_v_u]));
         if (!__pyx_t_8) break;
 
-        /* "py_raccoon/balance_spanning_trees.pyx":234
+        /* "py_raccoon/balance_spanning_trees.pyx":231
  *             u = i
  *             while not in_tree[u]:
  *                 dist = uniform_int_distribution[int](0, degree[u] - 1)             # <<<<<<<<<<<<<<
@@ -20125,25 +19867,25 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         } else if (unlikely(__pyx_t_7 >= __pyx_v_degree.shape[0])) __pyx_t_9 = 0;
         if (unlikely(__pyx_t_9 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_9);
-          __PYX_ERR(0, 234, __pyx_L4_error)
+          __PYX_ERR(0, 231, __pyx_L4_error)
         }
         __pyx_v_dist = std::uniform_int_distribution<int> (0, ((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_7 * __pyx_v_degree.strides[0]) ))) - 1));
 
-        /* "py_raccoon/balance_spanning_trees.pyx":235
+        /* "py_raccoon/balance_spanning_trees.pyx":232
  *             while not in_tree[u]:
  *                 dist = uniform_int_distribution[int](0, degree[u] - 1)
  *                 choice = dist(c_rnd) #c_rnd() % degree[u] # random(c_rnd, degree[u]) #rand() % degree[u]#rnd.choice(degree[u]) #             # <<<<<<<<<<<<<<
  *                 parent[u] = neighbors[u][choice]
- *                 u = parent[u]
+ *                 parent_weight[u] = weights[u][choice]
  */
         __pyx_v_choice = __pyx_v_dist(__pyx_v_c_rnd);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":236
+        /* "py_raccoon/balance_spanning_trees.pyx":233
  *                 dist = uniform_int_distribution[int](0, degree[u] - 1)
  *                 choice = dist(c_rnd) #c_rnd() % degree[u] # random(c_rnd, degree[u]) #rand() % degree[u]#rnd.choice(degree[u]) #
  *                 parent[u] = neighbors[u][choice]             # <<<<<<<<<<<<<<
+ *                 parent_weight[u] = weights[u][choice]
  *                 u = parent[u]
- * 
  */
         __pyx_t_7 = __pyx_v_u;
         __pyx_t_9 = -1;
@@ -20152,13 +19894,31 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         } else if (unlikely(__pyx_t_7 >= __pyx_v_parent.shape[0])) __pyx_t_9 = 0;
         if (unlikely(__pyx_t_9 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_9);
-          __PYX_ERR(0, 236, __pyx_L4_error)
+          __PYX_ERR(0, 233, __pyx_L4_error)
         }
         *((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_7 * __pyx_v_parent.strides[0]) )) = ((__pyx_v_neighbors[__pyx_v_u])[__pyx_v_choice]);
 
-        /* "py_raccoon/balance_spanning_trees.pyx":237
+        /* "py_raccoon/balance_spanning_trees.pyx":234
  *                 choice = dist(c_rnd) #c_rnd() % degree[u] # random(c_rnd, degree[u]) #rand() % degree[u]#rnd.choice(degree[u]) #
  *                 parent[u] = neighbors[u][choice]
+ *                 parent_weight[u] = weights[u][choice]             # <<<<<<<<<<<<<<
+ *                 u = parent[u]
+ * 
+ */
+        __pyx_t_7 = __pyx_v_u;
+        __pyx_t_9 = -1;
+        if (__pyx_t_7 < 0) {
+          __pyx_t_9 = 0;
+        } else if (unlikely(__pyx_t_7 >= __pyx_v_parent_weight.shape[0])) __pyx_t_9 = 0;
+        if (unlikely(__pyx_t_9 != -1)) {
+          __Pyx_RaiseBufferIndexError(__pyx_t_9);
+          __PYX_ERR(0, 234, __pyx_L4_error)
+        }
+        *((signed char *) ( /* dim=0 */ (__pyx_v_parent_weight.data + __pyx_t_7 * __pyx_v_parent_weight.strides[0]) )) = ((__pyx_v_weights[__pyx_v_u])[__pyx_v_choice]);
+
+        /* "py_raccoon/balance_spanning_trees.pyx":235
+ *                 parent[u] = neighbors[u][choice]
+ *                 parent_weight[u] = weights[u][choice]
  *                 u = parent[u]             # <<<<<<<<<<<<<<
  * 
  *             u = i
@@ -20170,12 +19930,12 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         } else if (unlikely(__pyx_t_7 >= __pyx_v_parent.shape[0])) __pyx_t_9 = 0;
         if (unlikely(__pyx_t_9 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_9);
-          __PYX_ERR(0, 237, __pyx_L4_error)
+          __PYX_ERR(0, 235, __pyx_L4_error)
         }
         __pyx_v_u = (*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_7 * __pyx_v_parent.strides[0]) )));
       }
 
-      /* "py_raccoon/balance_spanning_trees.pyx":239
+      /* "py_raccoon/balance_spanning_trees.pyx":237
  *                 u = parent[u]
  * 
  *             u = i             # <<<<<<<<<<<<<<
@@ -20184,7 +19944,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
       __pyx_v_u = __pyx_v_i;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":240
+      /* "py_raccoon/balance_spanning_trees.pyx":238
  * 
  *             u = i
  *             while not in_tree[u]:             # <<<<<<<<<<<<<<
@@ -20195,7 +19955,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         __pyx_t_8 = (!(__pyx_v_in_tree[__pyx_v_u]));
         if (!__pyx_t_8) break;
 
-        /* "py_raccoon/balance_spanning_trees.pyx":241
+        /* "py_raccoon/balance_spanning_trees.pyx":239
  *             u = i
  *             while not in_tree[u]:
  *                 in_tree[u] = 1             # <<<<<<<<<<<<<<
@@ -20204,7 +19964,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
  */
         (__pyx_v_in_tree[__pyx_v_u]) = 1;
 
-        /* "py_raccoon/balance_spanning_trees.pyx":242
+        /* "py_raccoon/balance_spanning_trees.pyx":240
  *             while not in_tree[u]:
  *                 in_tree[u] = 1
  *                 u = parent[u]             # <<<<<<<<<<<<<<
@@ -20218,14 +19978,14 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
         } else if (unlikely(__pyx_t_7 >= __pyx_v_parent.shape[0])) __pyx_t_9 = 0;
         if (unlikely(__pyx_t_9 != -1)) {
           __Pyx_RaiseBufferIndexError(__pyx_t_9);
-          __PYX_ERR(0, 242, __pyx_L4_error)
+          __PYX_ERR(0, 240, __pyx_L4_error)
         }
         __pyx_v_u = (*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_7 * __pyx_v_parent.strides[0]) )));
       }
     }
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":244
+  /* "py_raccoon/balance_spanning_trees.pyx":242
  *                 u = parent[u]
  *     finally:
  *         free(in_tree)             # <<<<<<<<<<<<<<
@@ -20273,7 +20033,7 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
     __pyx_L5:;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":245
+  /* "py_raccoon/balance_spanning_trees.pyx":243
  *     finally:
  *         free(in_tree)
  *     return root             # <<<<<<<<<<<<<<
@@ -20283,10 +20043,10 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
   __pyx_r = __pyx_v_root;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":217
+  /* "py_raccoon/balance_spanning_trees.pyx":214
  * 
  * @cython.wraparound(False)
- * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):             # <<<<<<<<<<<<<<
+ * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):             # <<<<<<<<<<<<<<
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
  */
@@ -20303,7 +20063,342 @@ static int __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":248
+/* "py_raccoon/balance_spanning_trees.pyx":246
+ * 
+ * @cython.wraparound(False)
+ * cdef Graph_c to_Graph_c(int size, int[:] degree, G):             # <<<<<<<<<<<<<<
+ *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)
+ *     cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)
+ */
+
+static struct __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c __pyx_f_10py_raccoon_22balance_spanning_trees_to_Graph_c(int __pyx_v_size, __Pyx_memviewslice __pyx_v_degree, PyObject *__pyx_v_G) {
+  int **__pyx_v_neighbors;
+  signed char **__pyx_v_weights;
+  int __pyx_v_i;
+  int __pyx_v_j;
+  int __pyx_v_u;
+  PyObject *__pyx_v_adj_nodes = NULL;
+  struct __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c __pyx_r;
+  __Pyx_TraceDeclarations
+  __Pyx_RefNannyDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  Py_ssize_t __pyx_t_4;
+  int __pyx_t_5;
+  PyObject *__pyx_t_6 = NULL;
+  Py_ssize_t __pyx_t_7;
+  PyObject *(*__pyx_t_8)(PyObject *);
+  PyObject *__pyx_t_9 = NULL;
+  int __pyx_t_10;
+  PyObject *__pyx_t_11 = NULL;
+  signed char __pyx_t_12;
+  struct __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c __pyx_t_13;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_RefNannySetupContext("to_Graph_c", 1);
+  __Pyx_TraceCall("to_Graph_c", __pyx_f[0], 246, 0, __PYX_ERR(0, 246, __pyx_L1_error));
+
+  /* "py_raccoon/balance_spanning_trees.pyx":247
+ * @cython.wraparound(False)
+ * cdef Graph_c to_Graph_c(int size, int[:] degree, G):
+ *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)             # <<<<<<<<<<<<<<
+ *     cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)
+ *     cdef int i, j, u
+ */
+  __pyx_v_neighbors = ((int **)malloc(((sizeof(int *)) * __pyx_v_size)));
+
+  /* "py_raccoon/balance_spanning_trees.pyx":248
+ * cdef Graph_c to_Graph_c(int size, int[:] degree, G):
+ *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)
+ *     cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)             # <<<<<<<<<<<<<<
+ *     cdef int i, j, u
+ *     for i in range(size):
+ */
+  __pyx_v_weights = ((signed char **)malloc(((sizeof(signed char *)) * __pyx_v_size)));
+
+  /* "py_raccoon/balance_spanning_trees.pyx":250
+ *     cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)
+ *     cdef int i, j, u
+ *     for i in range(size):             # <<<<<<<<<<<<<<
+ *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+ */
+  __pyx_t_1 = __pyx_v_size;
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "py_raccoon/balance_spanning_trees.pyx":251
+ *     cdef int i, j, u
+ *     for i in range(size):
+ *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))             # <<<<<<<<<<<<<<
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+ *         adj_nodes = G[i]
+ */
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_degree.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      __PYX_ERR(0, 251, __pyx_L1_error)
+    }
+    (__pyx_v_neighbors[__pyx_v_i]) = ((int *)malloc(((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_4 * __pyx_v_degree.strides[0]) ))) * (sizeof(int)))));
+
+    /* "py_raccoon/balance_spanning_trees.pyx":252
+ *     for i in range(size):
+ *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))             # <<<<<<<<<<<<<<
+ *         adj_nodes = G[i]
+ *         for j, u in enumerate(adj_nodes):
+ */
+    __pyx_t_4 = __pyx_v_i;
+    __pyx_t_5 = -1;
+    if (__pyx_t_4 < 0) {
+      __pyx_t_5 = 0;
+    } else if (unlikely(__pyx_t_4 >= __pyx_v_degree.shape[0])) __pyx_t_5 = 0;
+    if (unlikely(__pyx_t_5 != -1)) {
+      __Pyx_RaiseBufferIndexError(__pyx_t_5);
+      __PYX_ERR(0, 252, __pyx_L1_error)
+    }
+    (__pyx_v_weights[__pyx_v_i]) = ((signed char *)malloc(((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_4 * __pyx_v_degree.strides[0]) ))) * (sizeof(signed char)))));
+
+    /* "py_raccoon/balance_spanning_trees.pyx":253
+ *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+ *         adj_nodes = G[i]             # <<<<<<<<<<<<<<
+ *         for j, u in enumerate(adj_nodes):
+ *             neighbors[i][j] = u
+ */
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_G, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_XDECREF_SET(__pyx_v_adj_nodes, __pyx_t_6);
+    __pyx_t_6 = 0;
+
+    /* "py_raccoon/balance_spanning_trees.pyx":254
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+ *         adj_nodes = G[i]
+ *         for j, u in enumerate(adj_nodes):             # <<<<<<<<<<<<<<
+ *             neighbors[i][j] = u
+ *             weights[i][j] = adj_nodes[u]['weight']
+ */
+    __pyx_t_5 = 0;
+    if (likely(PyList_CheckExact(__pyx_v_adj_nodes)) || PyTuple_CheckExact(__pyx_v_adj_nodes)) {
+      __pyx_t_6 = __pyx_v_adj_nodes; __Pyx_INCREF(__pyx_t_6);
+      __pyx_t_7 = 0;
+      __pyx_t_8 = NULL;
+    } else {
+      __pyx_t_7 = -1; __pyx_t_6 = PyObject_GetIter(__pyx_v_adj_nodes); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 254, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_6);
+      __pyx_t_8 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_6); if (unlikely(!__pyx_t_8)) __PYX_ERR(0, 254, __pyx_L1_error)
+    }
+    for (;;) {
+      if (likely(!__pyx_t_8)) {
+        if (likely(PyList_CheckExact(__pyx_t_6))) {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_6);
+            #if !CYTHON_ASSUME_SAFE_MACROS
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
+            #endif
+            if (__pyx_t_7 >= __pyx_temp) break;
+          }
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_9 = PyList_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_9); __pyx_t_7++; if (unlikely((0 < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
+          #else
+          __pyx_t_9 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 254, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          #endif
+        } else {
+          {
+            Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_6);
+            #if !CYTHON_ASSUME_SAFE_MACROS
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
+            #endif
+            if (__pyx_t_7 >= __pyx_temp) break;
+          }
+          #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
+          __pyx_t_9 = PyTuple_GET_ITEM(__pyx_t_6, __pyx_t_7); __Pyx_INCREF(__pyx_t_9); __pyx_t_7++; if (unlikely((0 < 0))) __PYX_ERR(0, 254, __pyx_L1_error)
+          #else
+          __pyx_t_9 = __Pyx_PySequence_ITEM(__pyx_t_6, __pyx_t_7); __pyx_t_7++; if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 254, __pyx_L1_error)
+          __Pyx_GOTREF(__pyx_t_9);
+          #endif
+        }
+      } else {
+        __pyx_t_9 = __pyx_t_8(__pyx_t_6);
+        if (unlikely(!__pyx_t_9)) {
+          PyObject* exc_type = PyErr_Occurred();
+          if (exc_type) {
+            if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
+            else __PYX_ERR(0, 254, __pyx_L1_error)
+          }
+          break;
+        }
+        __Pyx_GOTREF(__pyx_t_9);
+      }
+      __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_t_9); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 254, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_v_u = __pyx_t_10;
+      __pyx_v_j = __pyx_t_5;
+      __pyx_t_5 = (__pyx_t_5 + 1);
+
+      /* "py_raccoon/balance_spanning_trees.pyx":255
+ *         adj_nodes = G[i]
+ *         for j, u in enumerate(adj_nodes):
+ *             neighbors[i][j] = u             # <<<<<<<<<<<<<<
+ *             weights[i][j] = adj_nodes[u]['weight']
+ *     return Graph_c(neighbors, weights)
+ */
+      ((__pyx_v_neighbors[__pyx_v_i])[__pyx_v_j]) = __pyx_v_u;
+
+      /* "py_raccoon/balance_spanning_trees.pyx":256
+ *         for j, u in enumerate(adj_nodes):
+ *             neighbors[i][j] = u
+ *             weights[i][j] = adj_nodes[u]['weight']             # <<<<<<<<<<<<<<
+ *     return Graph_c(neighbors, weights)
+ * 
+ */
+      __pyx_t_9 = __Pyx_GetItemInt(__pyx_v_adj_nodes, __pyx_v_u, int, 1, __Pyx_PyInt_From_int, 0, 0, 1); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 256, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_9);
+      __pyx_t_11 = __Pyx_PyObject_Dict_GetItem(__pyx_t_9, __pyx_n_s_weight); if (unlikely(!__pyx_t_11)) __PYX_ERR(0, 256, __pyx_L1_error)
+      __Pyx_GOTREF(__pyx_t_11);
+      __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+      __pyx_t_12 = __Pyx_PyInt_As_signed_char(__pyx_t_11); if (unlikely((__pyx_t_12 == (signed char)-1) && PyErr_Occurred())) __PYX_ERR(0, 256, __pyx_L1_error)
+      __Pyx_DECREF(__pyx_t_11); __pyx_t_11 = 0;
+      ((__pyx_v_weights[__pyx_v_i])[__pyx_v_j]) = __pyx_t_12;
+
+      /* "py_raccoon/balance_spanning_trees.pyx":254
+ *         weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+ *         adj_nodes = G[i]
+ *         for j, u in enumerate(adj_nodes):             # <<<<<<<<<<<<<<
+ *             neighbors[i][j] = u
+ *             weights[i][j] = adj_nodes[u]['weight']
+ */
+    }
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+  }
+
+  /* "py_raccoon/balance_spanning_trees.pyx":257
+ *             neighbors[i][j] = u
+ *             weights[i][j] = adj_nodes[u]['weight']
+ *     return Graph_c(neighbors, weights)             # <<<<<<<<<<<<<<
+ * 
+ * cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):
+ */
+  __pyx_t_13.neighbors = __pyx_v_neighbors;
+  __pyx_t_13.weights = __pyx_v_weights;
+  __pyx_r = __pyx_t_13;
+  goto __pyx_L0;
+
+  /* "py_raccoon/balance_spanning_trees.pyx":246
+ * 
+ * @cython.wraparound(False)
+ * cdef Graph_c to_Graph_c(int size, int[:] degree, G):             # <<<<<<<<<<<<<<
+ *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)
+ *     cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)
+ */
+
+  /* function exit code */
+  __pyx_L1_error:;
+  __Pyx_XDECREF(__pyx_t_6);
+  __Pyx_XDECREF(__pyx_t_9);
+  __Pyx_XDECREF(__pyx_t_11);
+  __Pyx_AddTraceback("py_raccoon.balance_spanning_trees.to_Graph_c", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __Pyx_pretend_to_initialize(&__pyx_r);
+  __pyx_L0:;
+  __Pyx_XDECREF(__pyx_v_adj_nodes);
+  __Pyx_TraceReturn(Py_None, 0);
+  __Pyx_RefNannyFinishContext();
+  return __pyx_r;
+}
+
+/* "py_raccoon/balance_spanning_trees.pyx":259
+ *     return Graph_c(neighbors, weights)
+ * 
+ * cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):             # <<<<<<<<<<<<<<
+ *     for i in range(size):
+ *         free(neighbors[i])
+ */
+
+static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_neighbors_and_weights(int __pyx_v_size, int **__pyx_v_neighbors, signed char **__pyx_v_weights) {
+  int __pyx_v_i;
+  __Pyx_TraceDeclarations
+  int __pyx_t_1;
+  int __pyx_t_2;
+  int __pyx_t_3;
+  int __pyx_lineno = 0;
+  const char *__pyx_filename = NULL;
+  int __pyx_clineno = 0;
+  __Pyx_TraceCall("free_neighbors_and_weights", __pyx_f[0], 259, 0, __PYX_ERR(0, 259, __pyx_L1_error));
+
+  /* "py_raccoon/balance_spanning_trees.pyx":260
+ * 
+ * cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):
+ *     for i in range(size):             # <<<<<<<<<<<<<<
+ *         free(neighbors[i])
+ *         free(weights[i])
+ */
+  __pyx_t_1 = __pyx_v_size;
+  __pyx_t_2 = __pyx_t_1;
+  for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
+    __pyx_v_i = __pyx_t_3;
+
+    /* "py_raccoon/balance_spanning_trees.pyx":261
+ * cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):
+ *     for i in range(size):
+ *         free(neighbors[i])             # <<<<<<<<<<<<<<
+ *         free(weights[i])
+ *     free(neighbors)
+ */
+    free((__pyx_v_neighbors[__pyx_v_i]));
+
+    /* "py_raccoon/balance_spanning_trees.pyx":262
+ *     for i in range(size):
+ *         free(neighbors[i])
+ *         free(weights[i])             # <<<<<<<<<<<<<<
+ *     free(neighbors)
+ *     free(weights)
+ */
+    free((__pyx_v_weights[__pyx_v_i]));
+  }
+
+  /* "py_raccoon/balance_spanning_trees.pyx":263
+ *         free(neighbors[i])
+ *         free(weights[i])
+ *     free(neighbors)             # <<<<<<<<<<<<<<
+ *     free(weights)
+ * 
+ */
+  free(__pyx_v_neighbors);
+
+  /* "py_raccoon/balance_spanning_trees.pyx":264
+ *         free(weights[i])
+ *     free(neighbors)
+ *     free(weights)             # <<<<<<<<<<<<<<
+ * 
+ * @cython.wraparound(False)
+ */
+  free(__pyx_v_weights);
+
+  /* "py_raccoon/balance_spanning_trees.pyx":259
+ *     return Graph_c(neighbors, weights)
+ * 
+ * cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):             # <<<<<<<<<<<<<<
+ *     for i in range(size):
+ *         free(neighbors[i])
+ */
+
+  /* function exit code */
+  goto __pyx_L0;
+  __pyx_L1_error:;
+  __Pyx_AddTraceback("py_raccoon.balance_spanning_trees.free_neighbors_and_weights", __pyx_clineno, __pyx_lineno, __pyx_filename);
+  __pyx_L0:;
+  __Pyx_TraceReturn(Py_None, 0);
+}
+
+/* "py_raccoon/balance_spanning_trees.pyx":267
  * 
  * @cython.wraparound(False)
  * cdef int** graph_to_neighbors(int size, int[:] degree, G):             # <<<<<<<<<<<<<<
@@ -20333,9 +20428,9 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("graph_to_neighbors", 1);
-  __Pyx_TraceCall("graph_to_neighbors", __pyx_f[0], 248, 0, __PYX_ERR(0, 248, __pyx_L1_error));
+  __Pyx_TraceCall("graph_to_neighbors", __pyx_f[0], 267, 0, __PYX_ERR(0, 267, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":249
+  /* "py_raccoon/balance_spanning_trees.pyx":268
  * @cython.wraparound(False)
  * cdef int** graph_to_neighbors(int size, int[:] degree, G):
  *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)             # <<<<<<<<<<<<<<
@@ -20344,7 +20439,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
  */
   __pyx_v_neighbors = ((int **)malloc(((sizeof(int *)) * __pyx_v_size)));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":251
+  /* "py_raccoon/balance_spanning_trees.pyx":270
  *     cdef int** neighbors = <int**> malloc(sizeof(int*) * size)
  *     cdef int i, j, u
  *     for i in range(size):             # <<<<<<<<<<<<<<
@@ -20356,7 +20451,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":252
+    /* "py_raccoon/balance_spanning_trees.pyx":271
  *     cdef int i, j, u
  *     for i in range(size):
  *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))             # <<<<<<<<<<<<<<
@@ -20370,11 +20465,11 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
     } else if (unlikely(__pyx_t_4 >= __pyx_v_degree.shape[0])) __pyx_t_5 = 0;
     if (unlikely(__pyx_t_5 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_5);
-      __PYX_ERR(0, 252, __pyx_L1_error)
+      __PYX_ERR(0, 271, __pyx_L1_error)
     }
     (__pyx_v_neighbors[__pyx_v_i]) = ((int *)malloc(((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_4 * __pyx_v_degree.strides[0]) ))) * (sizeof(int)))));
 
-    /* "py_raccoon/balance_spanning_trees.pyx":253
+    /* "py_raccoon/balance_spanning_trees.pyx":272
  *     for i in range(size):
  *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
  *         for j, u in enumerate(G[i]):             # <<<<<<<<<<<<<<
@@ -20382,16 +20477,16 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
  *     return neighbors
  */
     __pyx_t_5 = 0;
-    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_G, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_GetItemInt(__pyx_v_G, __pyx_v_i, int, 1, __Pyx_PyInt_From_int, 0, 0, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 272, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     if (likely(PyList_CheckExact(__pyx_t_6)) || PyTuple_CheckExact(__pyx_t_6)) {
       __pyx_t_7 = __pyx_t_6; __Pyx_INCREF(__pyx_t_7);
       __pyx_t_8 = 0;
       __pyx_t_9 = NULL;
     } else {
-      __pyx_t_8 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 253, __pyx_L1_error)
+      __pyx_t_8 = -1; __pyx_t_7 = PyObject_GetIter(__pyx_t_6); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_7);
-      __pyx_t_9 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 253, __pyx_L1_error)
+      __pyx_t_9 = __Pyx_PyObject_GetIterNextFunc(__pyx_t_7); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 272, __pyx_L1_error)
     }
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     for (;;) {
@@ -20400,28 +20495,28 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
           {
             Py_ssize_t __pyx_temp = __Pyx_PyList_GET_SIZE(__pyx_t_7);
             #if !CYTHON_ASSUME_SAFE_MACROS
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 253, __pyx_L1_error)
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 272, __pyx_L1_error)
             #endif
             if (__pyx_t_8 >= __pyx_temp) break;
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 253, __pyx_L1_error)
+          __pyx_t_6 = PyList_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 272, __pyx_L1_error)
           #else
-          __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 272, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           #endif
         } else {
           {
             Py_ssize_t __pyx_temp = __Pyx_PyTuple_GET_SIZE(__pyx_t_7);
             #if !CYTHON_ASSUME_SAFE_MACROS
-            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 253, __pyx_L1_error)
+            if (unlikely((__pyx_temp < 0))) __PYX_ERR(0, 272, __pyx_L1_error)
             #endif
             if (__pyx_t_8 >= __pyx_temp) break;
           }
           #if CYTHON_ASSUME_SAFE_MACROS && !CYTHON_AVOID_BORROWED_REFS
-          __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 253, __pyx_L1_error)
+          __pyx_t_6 = PyTuple_GET_ITEM(__pyx_t_7, __pyx_t_8); __Pyx_INCREF(__pyx_t_6); __pyx_t_8++; if (unlikely((0 < 0))) __PYX_ERR(0, 272, __pyx_L1_error)
           #else
-          __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 253, __pyx_L1_error)
+          __pyx_t_6 = __Pyx_PySequence_ITEM(__pyx_t_7, __pyx_t_8); __pyx_t_8++; if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 272, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_6);
           #endif
         }
@@ -20431,19 +20526,19 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
           PyObject* exc_type = PyErr_Occurred();
           if (exc_type) {
             if (likely(__Pyx_PyErr_GivenExceptionMatches(exc_type, PyExc_StopIteration))) PyErr_Clear();
-            else __PYX_ERR(0, 253, __pyx_L1_error)
+            else __PYX_ERR(0, 272, __pyx_L1_error)
           }
           break;
         }
         __Pyx_GOTREF(__pyx_t_6);
       }
-      __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 253, __pyx_L1_error)
+      __pyx_t_10 = __Pyx_PyInt_As_int(__pyx_t_6); if (unlikely((__pyx_t_10 == (int)-1) && PyErr_Occurred())) __PYX_ERR(0, 272, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __pyx_v_u = __pyx_t_10;
       __pyx_v_j = __pyx_t_5;
       __pyx_t_5 = (__pyx_t_5 + 1);
 
-      /* "py_raccoon/balance_spanning_trees.pyx":254
+      /* "py_raccoon/balance_spanning_trees.pyx":273
  *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
  *         for j, u in enumerate(G[i]):
  *             neighbors[i][j] = u             # <<<<<<<<<<<<<<
@@ -20452,7 +20547,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
  */
       ((__pyx_v_neighbors[__pyx_v_i])[__pyx_v_j]) = __pyx_v_u;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":253
+      /* "py_raccoon/balance_spanning_trees.pyx":272
  *     for i in range(size):
  *         neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
  *         for j, u in enumerate(G[i]):             # <<<<<<<<<<<<<<
@@ -20463,7 +20558,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
     __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":255
+  /* "py_raccoon/balance_spanning_trees.pyx":274
  *         for j, u in enumerate(G[i]):
  *             neighbors[i][j] = u
  *     return neighbors             # <<<<<<<<<<<<<<
@@ -20473,7 +20568,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
   __pyx_r = __pyx_v_neighbors;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":248
+  /* "py_raccoon/balance_spanning_trees.pyx":267
  * 
  * @cython.wraparound(False)
  * cdef int** graph_to_neighbors(int size, int[:] degree, G):             # <<<<<<<<<<<<<<
@@ -20493,7 +20588,7 @@ static int **__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(in
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":257
+/* "py_raccoon/balance_spanning_trees.pyx":276
  *     return neighbors
  * 
  * cdef void free_graph_neighbors(int size, int** neighbors):             # <<<<<<<<<<<<<<
@@ -20510,9 +20605,9 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceCall("free_graph_neighbors", __pyx_f[0], 257, 0, __PYX_ERR(0, 257, __pyx_L1_error));
+  __Pyx_TraceCall("free_graph_neighbors", __pyx_f[0], 276, 0, __PYX_ERR(0, 276, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":258
+  /* "py_raccoon/balance_spanning_trees.pyx":277
  * 
  * cdef void free_graph_neighbors(int size, int** neighbors):
  *     for i in range(size):             # <<<<<<<<<<<<<<
@@ -20524,7 +20619,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
   for (__pyx_t_3 = 0; __pyx_t_3 < __pyx_t_2; __pyx_t_3+=1) {
     __pyx_v_i = __pyx_t_3;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":259
+    /* "py_raccoon/balance_spanning_trees.pyx":278
  * cdef void free_graph_neighbors(int size, int** neighbors):
  *     for i in range(size):
  *         free(neighbors[i])             # <<<<<<<<<<<<<<
@@ -20534,7 +20629,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
     free((__pyx_v_neighbors[__pyx_v_i]));
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":260
+  /* "py_raccoon/balance_spanning_trees.pyx":279
  *     for i in range(size):
  *         free(neighbors[i])
  *     free(neighbors)             # <<<<<<<<<<<<<<
@@ -20543,7 +20638,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
  */
   free(__pyx_v_neighbors);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":257
+  /* "py_raccoon/balance_spanning_trees.pyx":276
  *     return neighbors
  * 
  * cdef void free_graph_neighbors(int size, int** neighbors):             # <<<<<<<<<<<<<<
@@ -20559,7 +20654,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
   __Pyx_TraceReturn(Py_None, 0);
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":262
+/* "py_raccoon/balance_spanning_trees.pyx":281
  *     free(neighbors)
  * 
  * def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:             # <<<<<<<<<<<<<<
@@ -20568,16 +20663,16 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(i
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_5uniform_spanning_tree(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_3uniform_spanning_tree(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_4uniform_spanning_tree, "\n    Implements Wilson's Algorithm for random spanning trees [1].\n    Assumes G to be undirected and connected.\n\n    [1] David Bruce Wilson. 1996. Generating random spanning trees more quickly than the cover time. In Proceedings of the twenty-eighth annual ACM symposium on Theory of Computing (STOC '96). Association for Computing Machinery, New York, NY, USA, 296\342\200\223303. https://doi.org/10.1145/237814.237880\n    ");
-static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_5uniform_spanning_tree = {"uniform_spanning_tree", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_5uniform_spanning_tree, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_4uniform_spanning_tree};
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_5uniform_spanning_tree(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_2uniform_spanning_tree, "\n    Implements Wilson's Algorithm for random spanning trees [1].\n    Assumes G to be undirected and connected.\n\n    [1] David Bruce Wilson. 1996. Generating random spanning trees more quickly than the cover time. In Proceedings of the twenty-eighth annual ACM symposium on Theory of Computing (STOC '96). Association for Computing Machinery, New York, NY, USA, 296\342\200\223303. https://doi.org/10.1145/237814.237880\n    ");
+static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_3uniform_spanning_tree = {"uniform_spanning_tree", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_3uniform_spanning_tree, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_2uniform_spanning_tree};
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_3uniform_spanning_tree(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -20585,7 +20680,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ) {
   PyObject *__pyx_v_G = 0;
-  PyObject *__pyx_v_rnd = 0;
+  CYTHON_UNUSED PyObject *__pyx_v_rnd = 0;
   #if !CYTHON_METH_FASTCALL
   CYTHON_UNUSED Py_ssize_t __pyx_nargs;
   #endif
@@ -20624,7 +20719,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 281, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -20632,14 +20727,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 262, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 281, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("uniform_spanning_tree", 1, 2, 2, 1); __PYX_ERR(0, 262, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("uniform_spanning_tree", 1, 2, 2, 1); __PYX_ERR(0, 281, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "uniform_spanning_tree") < 0)) __PYX_ERR(0, 262, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "uniform_spanning_tree") < 0)) __PYX_ERR(0, 281, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 2)) {
       goto __pyx_L5_argtuple_error;
@@ -20652,7 +20747,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("uniform_spanning_tree", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 262, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("uniform_spanning_tree", 1, 2, 2, __pyx_nargs); __PYX_ERR(0, 281, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -20666,7 +20761,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spanning_tree(__pyx_self, __pyx_v_G, __pyx_v_rnd);
+  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_2uniform_spanning_tree(__pyx_self, __pyx_v_G, __pyx_v_rnd);
 
   /* function exit code */
   {
@@ -20679,11 +20774,11 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spanning_tree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_G, PyObject *__pyx_v_rnd) {
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_2uniform_spanning_tree(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_G, CYTHON_UNUSED PyObject *__pyx_v_rnd) {
   int __pyx_v_size;
   __Pyx_memviewslice __pyx_v_degree = { 0, 0, { 0 }, { 0 }, { 0 } };
   PyObject *__pyx_v_np_parent = NULL;
-  __Pyx_memviewslice __pyx_v_parent = { 0, 0, { 0 }, { 0 }, { 0 } };
+  CYTHON_UNUSED __Pyx_memviewslice __pyx_v_parent = { 0, 0, { 0 }, { 0 }, { 0 } };
   int **__pyx_v_neighbors;
   PyObject *__pyx_r = NULL;
   __Pyx_TraceDeclarations
@@ -20696,106 +20791,97 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spannin
   PyObject *__pyx_t_6 = NULL;
   __Pyx_memviewslice __pyx_t_7 = { 0, 0, { 0 }, { 0 }, { 0 } };
   int **__pyx_t_8;
-  int __pyx_t_9;
-  int __pyx_t_10;
-  char const *__pyx_t_11;
-  PyObject *__pyx_t_12 = NULL;
-  PyObject *__pyx_t_13 = NULL;
-  PyObject *__pyx_t_14 = NULL;
-  PyObject *__pyx_t_15 = NULL;
-  PyObject *__pyx_t_16 = NULL;
-  PyObject *__pyx_t_17 = NULL;
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__12)
+  __Pyx_TraceFrameInit(__pyx_codeobj__11)
   __Pyx_RefNannySetupContext("uniform_spanning_tree", 1);
-  __Pyx_TraceCall("uniform_spanning_tree", __pyx_f[0], 262, 0, __PYX_ERR(0, 262, __pyx_L1_error));
+  __Pyx_TraceCall("uniform_spanning_tree", __pyx_f[0], 281, 0, __PYX_ERR(0, 281, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":269
+  /* "py_raccoon/balance_spanning_trees.pyx":288
  *     [1] David Bruce Wilson. 1996. Generating random spanning trees more quickly than the cover time. In Proceedings of the twenty-eighth annual ACM symposium on Theory of Computing (STOC '96). Association for Computing Machinery, New York, NY, USA, 296303. https://doi.org/10.1145/237814.237880
  *     """
  *     cdef int size = len(G.nodes)             # <<<<<<<<<<<<<<
  *     cdef int[:] degree = np.array(G.degree, dtype=np.int32)[:,1]
  *     np_parent = np.zeros(size, dtype=np.int32)
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 269, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 269, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 288, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_size = __pyx_t_2;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":270
+  /* "py_raccoon/balance_spanning_trees.pyx":289
  *     """
  *     cdef int size = len(G.nodes)
  *     cdef int[:] degree = np.array(G.degree, dtype=np.int32)[:,1]             # <<<<<<<<<<<<<<
  *     np_parent = np.zeros(size, dtype=np.int32)
  *     cdef int[:] parent = np_parent
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_array); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_degree); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 270, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_6, __pyx_tuple__13); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_t_6, __pyx_tuple__12); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 270, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_t_1, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 289, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_degree = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":271
+  /* "py_raccoon/balance_spanning_trees.pyx":290
  *     cdef int size = len(G.nodes)
  *     cdef int[:] degree = np.array(G.degree, dtype=np.int32)[:,1]
  *     np_parent = np.zeros(size, dtype=np.int32)             # <<<<<<<<<<<<<<
  *     cdef int[:] parent = np_parent
  *     neighbors = graph_to_neighbors(size, degree, G)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_size); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 271, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_5) < 0) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 271, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 290, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -20803,49 +20889,40 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spannin
   __pyx_v_np_parent = __pyx_t_5;
   __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":272
+  /* "py_raccoon/balance_spanning_trees.pyx":291
  *     cdef int[:] degree = np.array(G.degree, dtype=np.int32)[:,1]
  *     np_parent = np.zeros(size, dtype=np.int32)
  *     cdef int[:] parent = np_parent             # <<<<<<<<<<<<<<
  *     neighbors = graph_to_neighbors(size, degree, G)
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 272, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 291, __pyx_L1_error)
   __pyx_v_parent = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":273
+  /* "py_raccoon/balance_spanning_trees.pyx":292
  *     np_parent = np.zeros(size, dtype=np.int32)
  *     cdef int[:] parent = np_parent
  *     neighbors = graph_to_neighbors(size, degree, G)             # <<<<<<<<<<<<<<
  * 
  *     try:
  */
-  __pyx_t_8 = __pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(__pyx_v_size, __pyx_v_degree, __pyx_v_G); if (unlikely(__pyx_t_8 == ((int **)NULL) && PyErr_Occurred())) __PYX_ERR(0, 273, __pyx_L1_error)
+  __pyx_t_8 = __pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors(__pyx_v_size, __pyx_v_degree, __pyx_v_G); if (unlikely(__pyx_t_8 == ((int **)NULL) && PyErr_Occurred())) __PYX_ERR(0, 292, __pyx_L1_error)
   __pyx_v_neighbors = __pyx_t_8;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":275
+  /* "py_raccoon/balance_spanning_trees.pyx":294
  *     neighbors = graph_to_neighbors(size, degree, G)
  * 
  *     try:             # <<<<<<<<<<<<<<
  *         #srand(rnd.choice(100) + 5)
- *         uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
+ *         #uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
  */
   /*try:*/ {
-
-    /* "py_raccoon/balance_spanning_trees.pyx":277
- *     try:
- *         #srand(rnd.choice(100) + 5)
- *         uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)             # <<<<<<<<<<<<<<
- *     finally:
- *         free_graph_neighbors(size, neighbors)
- */
-    __pyx_t_9 = __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(__pyx_v_size, __pyx_v_degree, __pyx_v_neighbors, __pyx_v_parent, __pyx_v_rnd); if (unlikely(__pyx_t_9 == ((int)-1) && PyErr_Occurred())) __PYX_ERR(0, 277, __pyx_L4_error)
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":279
- *         uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
+  /* "py_raccoon/balance_spanning_trees.pyx":299
+ *         pass
  *     finally:
  *         free_graph_neighbors(size, neighbors)             # <<<<<<<<<<<<<<
  * 
@@ -20853,63 +20930,13 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spannin
  */
   /*finally:*/ {
     /*normal exit:*/{
-      __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(__pyx_v_size, __pyx_v_neighbors); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 279, __pyx_L1_error)
+      __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(__pyx_v_size, __pyx_v_neighbors); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 299, __pyx_L1_error)
       goto __pyx_L5;
-    }
-    __pyx_L4_error:;
-    /*exception exit:*/{
-      __Pyx_PyThreadState_declare
-      __Pyx_PyThreadState_assign
-      __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0;
-      __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
-      __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
-      __PYX_XCLEAR_MEMVIEW(&__pyx_t_7, 1);
-      __pyx_t_7.memview = NULL; __pyx_t_7.data = NULL;
-      if (PY_MAJOR_VERSION >= 3) __Pyx_ExceptionSwap(&__pyx_t_15, &__pyx_t_16, &__pyx_t_17);
-      if ((PY_MAJOR_VERSION < 3) || unlikely(__Pyx_GetException(&__pyx_t_12, &__pyx_t_13, &__pyx_t_14) < 0)) __Pyx_ErrFetch(&__pyx_t_12, &__pyx_t_13, &__pyx_t_14);
-      __Pyx_XGOTREF(__pyx_t_12);
-      __Pyx_XGOTREF(__pyx_t_13);
-      __Pyx_XGOTREF(__pyx_t_14);
-      __Pyx_XGOTREF(__pyx_t_15);
-      __Pyx_XGOTREF(__pyx_t_16);
-      __Pyx_XGOTREF(__pyx_t_17);
-      __pyx_t_9 = __pyx_lineno; __pyx_t_10 = __pyx_clineno; __pyx_t_11 = __pyx_filename;
-      {
-        __pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors(__pyx_v_size, __pyx_v_neighbors); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 279, __pyx_L7_error)
-      }
-      if (PY_MAJOR_VERSION >= 3) {
-        __Pyx_XGIVEREF(__pyx_t_15);
-        __Pyx_XGIVEREF(__pyx_t_16);
-        __Pyx_XGIVEREF(__pyx_t_17);
-        __Pyx_ExceptionReset(__pyx_t_15, __pyx_t_16, __pyx_t_17);
-      }
-      __Pyx_XGIVEREF(__pyx_t_12);
-      __Pyx_XGIVEREF(__pyx_t_13);
-      __Pyx_XGIVEREF(__pyx_t_14);
-      __Pyx_ErrRestore(__pyx_t_12, __pyx_t_13, __pyx_t_14);
-      __pyx_t_12 = 0; __pyx_t_13 = 0; __pyx_t_14 = 0; __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0;
-      __pyx_lineno = __pyx_t_9; __pyx_clineno = __pyx_t_10; __pyx_filename = __pyx_t_11;
-      goto __pyx_L1_error;
-      __pyx_L7_error:;
-      if (PY_MAJOR_VERSION >= 3) {
-        __Pyx_XGIVEREF(__pyx_t_15);
-        __Pyx_XGIVEREF(__pyx_t_16);
-        __Pyx_XGIVEREF(__pyx_t_17);
-        __Pyx_ExceptionReset(__pyx_t_15, __pyx_t_16, __pyx_t_17);
-      }
-      __Pyx_XDECREF(__pyx_t_12); __pyx_t_12 = 0;
-      __Pyx_XDECREF(__pyx_t_13); __pyx_t_13 = 0;
-      __Pyx_XDECREF(__pyx_t_14); __pyx_t_14 = 0;
-      __pyx_t_15 = 0; __pyx_t_16 = 0; __pyx_t_17 = 0;
-      goto __pyx_L1_error;
     }
     __pyx_L5:;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":281
+  /* "py_raccoon/balance_spanning_trees.pyx":301
  *         free_graph_neighbors(size, neighbors)
  * 
  *     return np_parent             # <<<<<<<<<<<<<<
@@ -20921,7 +20948,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spannin
   __pyx_r = __pyx_v_np_parent;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":262
+  /* "py_raccoon/balance_spanning_trees.pyx":281
  *     free(neighbors)
  * 
  * def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:             # <<<<<<<<<<<<<<
@@ -20949,7 +20976,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4uniform_spannin
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":284
+/* "py_raccoon/balance_spanning_trees.pyx":304
  * 
  * @cython.wraparound(False)
  * cdef void __calc_property_check(int node, int[:] parent, char[:] checked, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):             # <<<<<<<<<<<<<<
@@ -20968,9 +20995,9 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceCall("__calc_property_check", __pyx_f[0], 284, 0, __PYX_ERR(0, 284, __pyx_L1_error));
+  __Pyx_TraceCall("__calc_property_check", __pyx_f[0], 304, 0, __PYX_ERR(0, 304, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":285
+  /* "py_raccoon/balance_spanning_trees.pyx":305
  * @cython.wraparound(False)
  * cdef void __calc_property_check(int node, int[:] parent, char[:] checked, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):
  *     if node != -1:             # <<<<<<<<<<<<<<
@@ -20980,7 +21007,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
   __pyx_t_1 = (__pyx_v_node != -1L);
   if (__pyx_t_1) {
 
-    /* "py_raccoon/balance_spanning_trees.pyx":286
+    /* "py_raccoon/balance_spanning_trees.pyx":306
  * cdef void __calc_property_check(int node, int[:] parent, char[:] checked, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):
  *     if node != -1:
  *         p = parent[node]             # <<<<<<<<<<<<<<
@@ -20994,11 +21021,11 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
     } else if (unlikely(__pyx_t_2 >= __pyx_v_parent.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 286, __pyx_L1_error)
+      __PYX_ERR(0, 306, __pyx_L1_error)
     }
     __pyx_v_p = (*((int *) ( /* dim=0 */ (__pyx_v_parent.data + __pyx_t_2 * __pyx_v_parent.strides[0]) )));
 
-    /* "py_raccoon/balance_spanning_trees.pyx":287
+    /* "py_raccoon/balance_spanning_trees.pyx":307
  *     if node != -1:
  *         p = parent[node]
  *         if p != -1 and checked[node] == 0:             # <<<<<<<<<<<<<<
@@ -21018,14 +21045,14 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
     } else if (unlikely(__pyx_t_2 >= __pyx_v_checked.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 287, __pyx_L1_error)
+      __PYX_ERR(0, 307, __pyx_L1_error)
     }
     __pyx_t_4 = ((*((char *) ( /* dim=0 */ (__pyx_v_checked.data + __pyx_t_2 * __pyx_v_checked.strides[0]) ))) == 0);
     __pyx_t_1 = __pyx_t_4;
     __pyx_L5_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "py_raccoon/balance_spanning_trees.pyx":288
+      /* "py_raccoon/balance_spanning_trees.pyx":308
  *         p = parent[node]
  *         if p != -1 and checked[node] == 0:
  *             if checked[p] == 0:             # <<<<<<<<<<<<<<
@@ -21039,21 +21066,21 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
       } else if (unlikely(__pyx_t_2 >= __pyx_v_checked.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 288, __pyx_L1_error)
+        __PYX_ERR(0, 308, __pyx_L1_error)
       }
       __pyx_t_1 = ((*((char *) ( /* dim=0 */ (__pyx_v_checked.data + __pyx_t_2 * __pyx_v_checked.strides[0]) ))) == 0);
       if (__pyx_t_1) {
 
-        /* "py_raccoon/balance_spanning_trees.pyx":289
+        /* "py_raccoon/balance_spanning_trees.pyx":309
  *         if p != -1 and checked[node] == 0:
  *             if checked[p] == 0:
  *                 __calc_property_check(p, parent, checked, result, root_val, degree, update_fun)             # <<<<<<<<<<<<<<
  *             result[node] = update_fun(node, p, result[p], degree)
  *             checked[node] = 1
  */
-        __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(__pyx_v_p, __pyx_v_parent, __pyx_v_checked, __pyx_v_result, __pyx_v_root_val, __pyx_v_degree, __pyx_v_update_fun); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 289, __pyx_L1_error)
+        __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(__pyx_v_p, __pyx_v_parent, __pyx_v_checked, __pyx_v_result, __pyx_v_root_val, __pyx_v_degree, __pyx_v_update_fun); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L1_error)
 
-        /* "py_raccoon/balance_spanning_trees.pyx":288
+        /* "py_raccoon/balance_spanning_trees.pyx":308
  *         p = parent[node]
  *         if p != -1 and checked[node] == 0:
  *             if checked[p] == 0:             # <<<<<<<<<<<<<<
@@ -21062,7 +21089,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
  */
       }
 
-      /* "py_raccoon/balance_spanning_trees.pyx":290
+      /* "py_raccoon/balance_spanning_trees.pyx":310
  *             if checked[p] == 0:
  *                 __calc_property_check(p, parent, checked, result, root_val, degree, update_fun)
  *             result[node] = update_fun(node, p, result[p], degree)             # <<<<<<<<<<<<<<
@@ -21076,9 +21103,9 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
       } else if (unlikely(__pyx_t_2 >= __pyx_v_result.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 290, __pyx_L1_error)
+        __PYX_ERR(0, 310, __pyx_L1_error)
       }
-      __pyx_t_5 = __pyx_v_update_fun(__pyx_v_node, __pyx_v_p, (*((double *) ( /* dim=0 */ (__pyx_v_result.data + __pyx_t_2 * __pyx_v_result.strides[0]) ))), __pyx_v_degree); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 290, __pyx_L1_error)
+      __pyx_t_5 = __pyx_v_update_fun(__pyx_v_node, __pyx_v_p, (*((double *) ( /* dim=0 */ (__pyx_v_result.data + __pyx_t_2 * __pyx_v_result.strides[0]) ))), __pyx_v_degree); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 310, __pyx_L1_error)
       __pyx_t_2 = __pyx_v_node;
       __pyx_t_3 = -1;
       if (__pyx_t_2 < 0) {
@@ -21086,11 +21113,11 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
       } else if (unlikely(__pyx_t_2 >= __pyx_v_result.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 290, __pyx_L1_error)
+        __PYX_ERR(0, 310, __pyx_L1_error)
       }
       *((double *) ( /* dim=0 */ (__pyx_v_result.data + __pyx_t_2 * __pyx_v_result.strides[0]) )) = __pyx_t_5;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":291
+      /* "py_raccoon/balance_spanning_trees.pyx":311
  *                 __calc_property_check(p, parent, checked, result, root_val, degree, update_fun)
  *             result[node] = update_fun(node, p, result[p], degree)
  *             checked[node] = 1             # <<<<<<<<<<<<<<
@@ -21104,11 +21131,11 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
       } else if (unlikely(__pyx_t_2 >= __pyx_v_checked.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 291, __pyx_L1_error)
+        __PYX_ERR(0, 311, __pyx_L1_error)
       }
       *((char *) ( /* dim=0 */ (__pyx_v_checked.data + __pyx_t_2 * __pyx_v_checked.strides[0]) )) = 1;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":287
+      /* "py_raccoon/balance_spanning_trees.pyx":307
  *     if node != -1:
  *         p = parent[node]
  *         if p != -1 and checked[node] == 0:             # <<<<<<<<<<<<<<
@@ -21117,7 +21144,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
  */
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":292
+    /* "py_raccoon/balance_spanning_trees.pyx":312
  *             result[node] = update_fun(node, p, result[p], degree)
  *             checked[node] = 1
  *         if p == -1 and checked[node] == 0:             # <<<<<<<<<<<<<<
@@ -21137,14 +21164,14 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
     } else if (unlikely(__pyx_t_2 >= __pyx_v_checked.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 292, __pyx_L1_error)
+      __PYX_ERR(0, 312, __pyx_L1_error)
     }
     __pyx_t_4 = ((*((char *) ( /* dim=0 */ (__pyx_v_checked.data + __pyx_t_2 * __pyx_v_checked.strides[0]) ))) == 0);
     __pyx_t_1 = __pyx_t_4;
     __pyx_L9_bool_binop_done:;
     if (__pyx_t_1) {
 
-      /* "py_raccoon/balance_spanning_trees.pyx":293
+      /* "py_raccoon/balance_spanning_trees.pyx":313
  *             checked[node] = 1
  *         if p == -1 and checked[node] == 0:
  *             result[node] = root_val             # <<<<<<<<<<<<<<
@@ -21158,11 +21185,11 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
       } else if (unlikely(__pyx_t_2 >= __pyx_v_result.shape[0])) __pyx_t_3 = 0;
       if (unlikely(__pyx_t_3 != -1)) {
         __Pyx_RaiseBufferIndexError(__pyx_t_3);
-        __PYX_ERR(0, 293, __pyx_L1_error)
+        __PYX_ERR(0, 313, __pyx_L1_error)
       }
       *((double *) ( /* dim=0 */ (__pyx_v_result.data + __pyx_t_2 * __pyx_v_result.strides[0]) )) = __pyx_v_root_val;
 
-      /* "py_raccoon/balance_spanning_trees.pyx":292
+      /* "py_raccoon/balance_spanning_trees.pyx":312
  *             result[node] = update_fun(node, p, result[p], degree)
  *             checked[node] = 1
  *         if p == -1 and checked[node] == 0:             # <<<<<<<<<<<<<<
@@ -21171,7 +21198,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
  */
     }
 
-    /* "py_raccoon/balance_spanning_trees.pyx":285
+    /* "py_raccoon/balance_spanning_trees.pyx":305
  * @cython.wraparound(False)
  * cdef void __calc_property_check(int node, int[:] parent, char[:] checked, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):
  *     if node != -1:             # <<<<<<<<<<<<<<
@@ -21180,7 +21207,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":284
+  /* "py_raccoon/balance_spanning_trees.pyx":304
  * 
  * @cython.wraparound(False)
  * cdef void __calc_property_check(int node, int[:] parent, char[:] checked, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):             # <<<<<<<<<<<<<<
@@ -21196,7 +21223,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(
   __Pyx_TraceReturn(Py_None, 0);
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":296
+/* "py_raccoon/balance_spanning_trees.pyx":316
  * 
  * @cython.wraparound(False)
  * cdef void calc_property_fast(int[:] parent, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):             # <<<<<<<<<<<<<<
@@ -21223,38 +21250,38 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__P
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("calc_property_fast", 1);
-  __Pyx_TraceCall("calc_property_fast", __pyx_f[0], 296, 0, __PYX_ERR(0, 296, __pyx_L1_error));
+  __Pyx_TraceCall("calc_property_fast", __pyx_f[0], 316, 0, __PYX_ERR(0, 316, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":297
+  /* "py_raccoon/balance_spanning_trees.pyx":317
  * @cython.wraparound(False)
  * cdef void calc_property_fast(int[:] parent, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):
  *     checked_np = np.zeros(len(parent), dtype=np.int8)             # <<<<<<<<<<<<<<
  *     cdef char[:] checked = checked_np
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_zeros); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_t_3 = __Pyx_MemoryView_Len(__pyx_v_parent); 
-  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_1 = PyInt_FromSsize_t(__pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int8); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 297, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 297, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_2, __pyx_t_4, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 317, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -21262,19 +21289,19 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__P
   __pyx_v_checked_np = __pyx_t_6;
   __pyx_t_6 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":298
+  /* "py_raccoon/balance_spanning_trees.pyx":318
  * cdef void calc_property_fast(int[:] parent, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):
  *     checked_np = np.zeros(len(parent), dtype=np.int8)
  *     cdef char[:] checked = checked_np             # <<<<<<<<<<<<<<
  * 
  *     for i in range(len(parent)):
  */
-  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_char(__pyx_v_checked_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 298, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_to_MemoryviewSlice_ds_char(__pyx_v_checked_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_7.memview)) __PYX_ERR(0, 318, __pyx_L1_error)
   __pyx_v_checked = __pyx_t_7;
   __pyx_t_7.memview = NULL;
   __pyx_t_7.data = NULL;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":300
+  /* "py_raccoon/balance_spanning_trees.pyx":320
  *     cdef char[:] checked = checked_np
  * 
  *     for i in range(len(parent)):             # <<<<<<<<<<<<<<
@@ -21286,17 +21313,17 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__P
   for (__pyx_t_9 = 0; __pyx_t_9 < __pyx_t_8; __pyx_t_9+=1) {
     __pyx_v_i = __pyx_t_9;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":301
+    /* "py_raccoon/balance_spanning_trees.pyx":321
  * 
  *     for i in range(len(parent)):
  *         __calc_property_check(i, parent, checked, result, root_val, degree, update_fun)             # <<<<<<<<<<<<<<
  * 
  * def normalize_cell(cell: tuple) -> tuple:
  */
-    __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(__pyx_v_i, __pyx_v_parent, __pyx_v_checked, __pyx_v_result, __pyx_v_root_val, __pyx_v_degree, __pyx_v_update_fun); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 301, __pyx_L1_error)
+    __pyx_f_10py_raccoon_22balance_spanning_trees___calc_property_check(__pyx_v_i, __pyx_v_parent, __pyx_v_checked, __pyx_v_result, __pyx_v_root_val, __pyx_v_degree, __pyx_v_update_fun); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 321, __pyx_L1_error)
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":296
+  /* "py_raccoon/balance_spanning_trees.pyx":316
  * 
  * @cython.wraparound(False)
  * cdef void calc_property_fast(int[:] parent, double[:] result, double root_val, int[:] degree, double (*update_fun)(int, int, double, int[:])):             # <<<<<<<<<<<<<<
@@ -21321,7 +21348,7 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__P
   __Pyx_RefNannyFinishContext();
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":303
+/* "py_raccoon/balance_spanning_trees.pyx":323
  *         __calc_property_check(i, parent, checked, result, root_val, degree, update_fun)
  * 
  * def normalize_cell(cell: tuple) -> tuple:             # <<<<<<<<<<<<<<
@@ -21330,16 +21357,16 @@ static void __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__P
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_7normalize_cell(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_5normalize_cell(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_6normalize_cell, "\n    normalizes tuple to have the smallest element at index 0 and the smaller\n    connected one at index 1 (instead of -1)\n    ");
-static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_7normalize_cell = {"normalize_cell", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_7normalize_cell, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_6normalize_cell};
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_7normalize_cell(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_4normalize_cell, "\n    normalizes tuple to have the smallest element at index 0 and the smaller\n    connected one at index 1 (instead of -1)\n    ");
+static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_5normalize_cell = {"normalize_cell", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_5normalize_cell, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_4normalize_cell};
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_5normalize_cell(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21383,12 +21410,12 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 303, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 323, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "normalize_cell") < 0)) __PYX_ERR(0, 303, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "normalize_cell") < 0)) __PYX_ERR(0, 323, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 1)) {
       goto __pyx_L5_argtuple_error;
@@ -21399,7 +21426,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("normalize_cell", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 303, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("normalize_cell", 1, 1, 1, __pyx_nargs); __PYX_ERR(0, 323, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -21413,8 +21440,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_cell), (&PyTuple_Type), 0, "cell", 1))) __PYX_ERR(0, 303, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(__pyx_self, __pyx_v_cell);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_cell), (&PyTuple_Type), 0, "cell", 1))) __PYX_ERR(0, 323, __pyx_L1_error)
+  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_4normalize_cell(__pyx_self, __pyx_v_cell);
 
   /* function exit code */
   goto __pyx_L0;
@@ -21431,7 +21458,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cell) {
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_4normalize_cell(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_cell) {
   PyObject *__pyx_v_min_index = NULL;
   PyObject *__pyx_v_shifted = NULL;
   PyObject *__pyx_r = NULL;
@@ -21446,26 +21473,26 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__14)
+  __Pyx_TraceFrameInit(__pyx_codeobj__13)
   __Pyx_RefNannySetupContext("normalize_cell", 1);
-  __Pyx_TraceCall("normalize_cell", __pyx_f[0], 303, 0, __PYX_ERR(0, 303, __pyx_L1_error));
+  __Pyx_TraceCall("normalize_cell", __pyx_f[0], 323, 0, __PYX_ERR(0, 323, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":308
+  /* "py_raccoon/balance_spanning_trees.pyx":328
  *     connected one at index 1 (instead of -1)
  *     """
  *     min_index = cell.index(min(cell))             # <<<<<<<<<<<<<<
  *     shifted = cell[min_index:] + cell[:min_index]
  *     if shifted[-1] < shifted[1]:
  */
-  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_min, __pyx_v_cell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_CallOneArg(__pyx_builtin_min, __pyx_v_cell); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyTuple_Type_index, __pyx_v_cell, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_CallUnboundCMethod1(&__pyx_umethod_PyTuple_Type_index, __pyx_v_cell, __pyx_t_1); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 328, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_min_index = __pyx_t_2;
   __pyx_t_2 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":309
+  /* "py_raccoon/balance_spanning_trees.pyx":329
  *     """
  *     min_index = cell.index(min(cell))
  *     shifted = cell[min_index:] + cell[:min_index]             # <<<<<<<<<<<<<<
@@ -21478,11 +21505,11 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
   if (__pyx_t_4) {
     __pyx_t_3 = 0;
   } else {
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_2); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_2); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 329, __pyx_L1_error)
     __pyx_t_3 = __pyx_t_5;
   }
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_2 = __Pyx_PyTuple_GetSlice(__pyx_v_cell, __pyx_t_3, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyTuple_GetSlice(__pyx_v_cell, __pyx_t_3, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 329, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
   __Pyx_INCREF(__pyx_v_min_index);
   __pyx_t_1 = __pyx_v_min_index;
@@ -21490,68 +21517,68 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
   if (__pyx_t_4) {
     __pyx_t_3 = PY_SSIZE_T_MAX;
   } else {
-    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 309, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyIndex_AsSsize_t(__pyx_t_1); if (unlikely((__pyx_t_5 == (Py_ssize_t)-1) && PyErr_Occurred())) __PYX_ERR(0, 329, __pyx_L1_error)
     __pyx_t_3 = __pyx_t_5;
   }
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyTuple_GetSlice(__pyx_v_cell, 0, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyTuple_GetSlice(__pyx_v_cell, 0, __pyx_t_3); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 309, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 329, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_shifted = ((PyObject*)__pyx_t_6);
   __pyx_t_6 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":310
+  /* "py_raccoon/balance_spanning_trees.pyx":330
  *     min_index = cell.index(min(cell))
  *     shifted = cell[min_index:] + cell[:min_index]
  *     if shifted[-1] < shifted[1]:             # <<<<<<<<<<<<<<
  *         shifted = shifted[::-1]
  *         shifted = shifted[-1:] + shifted[:-1]
  */
-  __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_shifted, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_GetItemInt_Tuple(__pyx_v_shifted, -1L, long, 1, __Pyx_PyInt_From_long, 0, 1, 1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_shifted, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_shifted, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_RichCompare(__pyx_t_6, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_2 = PyObject_RichCompare(__pyx_t_6, __pyx_t_1, Py_LT); __Pyx_XGOTREF(__pyx_t_2); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 310, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_2); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 330, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   if (__pyx_t_4) {
 
-    /* "py_raccoon/balance_spanning_trees.pyx":311
+    /* "py_raccoon/balance_spanning_trees.pyx":331
  *     shifted = cell[min_index:] + cell[:min_index]
  *     if shifted[-1] < shifted[1]:
  *         shifted = shifted[::-1]             # <<<<<<<<<<<<<<
  *         shifted = shifted[-1:] + shifted[:-1]
  *     return shifted
  */
-    __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_shifted, __pyx_slice__15); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 311, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_shifted, __pyx_slice__14); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 331, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
     __Pyx_DECREF_SET(__pyx_v_shifted, ((PyObject*)__pyx_t_2));
     __pyx_t_2 = 0;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":312
+    /* "py_raccoon/balance_spanning_trees.pyx":332
  *     if shifted[-1] < shifted[1]:
  *         shifted = shifted[::-1]
  *         shifted = shifted[-1:] + shifted[:-1]             # <<<<<<<<<<<<<<
  *     return shifted
  * 
  */
-    __pyx_t_2 = __Pyx_PyTuple_GetSlice(__pyx_v_shifted, -1L, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyTuple_GetSlice(__pyx_v_shifted, -1L, PY_SSIZE_T_MAX); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 332, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = __Pyx_PyTuple_GetSlice(__pyx_v_shifted, 0, -1L); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyTuple_GetSlice(__pyx_v_shifted, 0, -1L); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 332, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_6 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 312, __pyx_L1_error)
+    __pyx_t_6 = PyNumber_Add(__pyx_t_2, __pyx_t_1); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 332, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF_SET(__pyx_v_shifted, ((PyObject*)__pyx_t_6));
     __pyx_t_6 = 0;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":310
+    /* "py_raccoon/balance_spanning_trees.pyx":330
  *     min_index = cell.index(min(cell))
  *     shifted = cell[min_index:] + cell[:min_index]
  *     if shifted[-1] < shifted[1]:             # <<<<<<<<<<<<<<
@@ -21560,7 +21587,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":313
+  /* "py_raccoon/balance_spanning_trees.pyx":333
  *         shifted = shifted[::-1]
  *         shifted = shifted[-1:] + shifted[:-1]
  *     return shifted             # <<<<<<<<<<<<<<
@@ -21572,7 +21599,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
   __pyx_r = __pyx_v_shifted;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":303
+  /* "py_raccoon/balance_spanning_trees.pyx":323
  *         __calc_property_check(i, parent, checked, result, root_val, degree, update_fun)
  * 
  * def normalize_cell(cell: tuple) -> tuple:             # <<<<<<<<<<<<<<
@@ -21596,7 +21623,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_spanning_trees.pyx":315
+/* "py_raccoon/balance_spanning_trees.pyx":335
  *     return shifted
  * 
  * def get_induced_cycle(edge: Tuple[int, int], parent: np.ndarray, depth: np.ndarray) -> tuple:             # <<<<<<<<<<<<<<
@@ -21605,16 +21632,16 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6normalize_cell(
  */
 
 /* Python wrapper */
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_9get_induced_cycle(PyObject *__pyx_self, 
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_7get_induced_cycle(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
 PyObject *__pyx_args, PyObject *__pyx_kwds
 #endif
 ); /*proto*/
-PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_8get_induced_cycle, "\n    Gets the cycle induced by adding edge to the spanning tree modeled by node_level and parent_node\n    ");
-static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_9get_induced_cycle = {"get_induced_cycle", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_9get_induced_cycle, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_8get_induced_cycle};
-static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_9get_induced_cycle(PyObject *__pyx_self, 
+PyDoc_STRVAR(__pyx_doc_10py_raccoon_22balance_spanning_trees_6get_induced_cycle, "\n    Gets the cycle induced by adding edge to the spanning tree modeled by node_level and parent_node\n    ");
+static PyMethodDef __pyx_mdef_10py_raccoon_22balance_spanning_trees_7get_induced_cycle = {"get_induced_cycle", (PyCFunction)(void*)(__Pyx_PyCFunction_FastCallWithKeywords)__pyx_pw_10py_raccoon_22balance_spanning_trees_7get_induced_cycle, __Pyx_METH_FASTCALL|METH_KEYWORDS, __pyx_doc_10py_raccoon_22balance_spanning_trees_6get_induced_cycle};
+static PyObject *__pyx_pw_10py_raccoon_22balance_spanning_trees_7get_induced_cycle(PyObject *__pyx_self, 
 #if CYTHON_METH_FASTCALL
 PyObject *const *__pyx_args, Py_ssize_t __pyx_nargs, PyObject *__pyx_kwds
 #else
@@ -21664,7 +21691,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[0]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 335, __pyx_L3_error)
         else goto __pyx_L5_argtuple_error;
         CYTHON_FALLTHROUGH;
         case  1:
@@ -21672,9 +21699,9 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[1]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 335, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, 1); __PYX_ERR(0, 315, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, 1); __PYX_ERR(0, 335, __pyx_L3_error)
         }
         CYTHON_FALLTHROUGH;
         case  2:
@@ -21682,14 +21709,14 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
           (void)__Pyx_Arg_NewRef_FASTCALL(values[2]);
           kw_args--;
         }
-        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 315, __pyx_L3_error)
+        else if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 335, __pyx_L3_error)
         else {
-          __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, 2); __PYX_ERR(0, 315, __pyx_L3_error)
+          __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, 2); __PYX_ERR(0, 335, __pyx_L3_error)
         }
       }
       if (unlikely(kw_args > 0)) {
         const Py_ssize_t kwd_pos_args = __pyx_nargs;
-        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "get_induced_cycle") < 0)) __PYX_ERR(0, 315, __pyx_L3_error)
+        if (unlikely(__Pyx_ParseOptionalKeywords(__pyx_kwds, __pyx_kwvalues, __pyx_pyargnames, 0, values + 0, kwd_pos_args, "get_induced_cycle") < 0)) __PYX_ERR(0, 335, __pyx_L3_error)
       }
     } else if (unlikely(__pyx_nargs != 3)) {
       goto __pyx_L5_argtuple_error;
@@ -21704,7 +21731,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   }
   goto __pyx_L6_skip;
   __pyx_L5_argtuple_error:;
-  __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 315, __pyx_L3_error)
+  __Pyx_RaiseArgtupleInvalid("get_induced_cycle", 1, 3, 3, __pyx_nargs); __PYX_ERR(0, 335, __pyx_L3_error)
   __pyx_L6_skip:;
   goto __pyx_L4_argument_unpacking_done;
   __pyx_L3_error:;
@@ -21718,8 +21745,8 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   __Pyx_RefNannyFinishContext();
   return NULL;
   __pyx_L4_argument_unpacking_done:;
-  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_edge), (&PyTuple_Type), 0, "edge", 1))) __PYX_ERR(0, 315, __pyx_L1_error)
-  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cycle(__pyx_self, __pyx_v_edge, __pyx_v_parent, __pyx_v_depth);
+  if (unlikely(!__Pyx_ArgTypeTest(((PyObject *)__pyx_v_edge), (&PyTuple_Type), 0, "edge", 1))) __PYX_ERR(0, 335, __pyx_L1_error)
+  __pyx_r = __pyx_pf_10py_raccoon_22balance_spanning_trees_6get_induced_cycle(__pyx_self, __pyx_v_edge, __pyx_v_parent, __pyx_v_depth);
 
   /* function exit code */
   goto __pyx_L0;
@@ -21736,7 +21763,7 @@ PyObject *__pyx_args, PyObject *__pyx_kwds
   return __pyx_r;
 }
 
-static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cycle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_edge, PyObject *__pyx_v_parent, PyObject *__pyx_v_depth) {
+static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_6get_induced_cycle(CYTHON_UNUSED PyObject *__pyx_self, PyObject *__pyx_v_edge, PyObject *__pyx_v_parent, PyObject *__pyx_v_depth) {
   PyObject *__pyx_v_left = NULL;
   PyObject *__pyx_v_right = NULL;
   PyObject *__pyx_v_a = NULL;
@@ -21754,101 +21781,101 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cyc
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceFrameInit(__pyx_codeobj__16)
+  __Pyx_TraceFrameInit(__pyx_codeobj__15)
   __Pyx_RefNannySetupContext("get_induced_cycle", 1);
-  __Pyx_TraceCall("get_induced_cycle", __pyx_f[0], 315, 0, __PYX_ERR(0, 315, __pyx_L1_error));
+  __Pyx_TraceCall("get_induced_cycle", __pyx_f[0], 335, 0, __PYX_ERR(0, 335, __pyx_L1_error));
 
-  /* "py_raccoon/balance_spanning_trees.pyx":319
+  /* "py_raccoon/balance_spanning_trees.pyx":339
  *     Gets the cycle induced by adding edge to the spanning tree modeled by node_level and parent_node
  *     """
  *     left = []             # <<<<<<<<<<<<<<
  *     right = []
  * 
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 319, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 339, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_left = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":320
+  /* "py_raccoon/balance_spanning_trees.pyx":340
  *     """
  *     left = []
  *     right = []             # <<<<<<<<<<<<<<
  * 
  *     a = edge[0]
  */
-  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 320, __pyx_L1_error)
+  __pyx_t_1 = PyList_New(0); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_right = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":322
+  /* "py_raccoon/balance_spanning_trees.pyx":342
  *     right = []
  * 
  *     a = edge[0]             # <<<<<<<<<<<<<<
  *     b = edge[1]
  * 
  */
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 322, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 342, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_a = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":323
+  /* "py_raccoon/balance_spanning_trees.pyx":343
  * 
  *     a = edge[0]
  *     b = edge[1]             # <<<<<<<<<<<<<<
  * 
  *     if depth[a] < depth[b]:
  */
-  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 323, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 343, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
   __pyx_v_b = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":325
+  /* "py_raccoon/balance_spanning_trees.pyx":345
  *     b = edge[1]
  * 
  *     if depth[a] < depth[b]:             # <<<<<<<<<<<<<<
  *         a = edge[1]
  *         b = edge[0]
  */
-  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_3 = PyObject_RichCompare(__pyx_t_1, __pyx_t_2, Py_LT); __Pyx_XGOTREF(__pyx_t_3); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 325, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_3); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 345, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   if (__pyx_t_4) {
 
-    /* "py_raccoon/balance_spanning_trees.pyx":326
+    /* "py_raccoon/balance_spanning_trees.pyx":346
  * 
  *     if depth[a] < depth[b]:
  *         a = edge[1]             # <<<<<<<<<<<<<<
  *         b = edge[0]
  * 
  */
-    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 326, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 1, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 346, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_a, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":327
+    /* "py_raccoon/balance_spanning_trees.pyx":347
  *     if depth[a] < depth[b]:
  *         a = edge[1]
  *         b = edge[0]             # <<<<<<<<<<<<<<
  * 
  *     while depth[a] > depth[b]:
  */
-    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 327, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_GetItemInt_Tuple(__pyx_v_edge, 0, long, 1, __Pyx_PyInt_From_long, 0, 0, 1); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 347, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF_SET(__pyx_v_b, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":325
+    /* "py_raccoon/balance_spanning_trees.pyx":345
  *     b = edge[1]
  * 
  *     if depth[a] < depth[b]:             # <<<<<<<<<<<<<<
@@ -21857,7 +21884,7 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cyc
  */
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":329
+  /* "py_raccoon/balance_spanning_trees.pyx":349
  *         b = edge[0]
  * 
  *     while depth[a] > depth[b]:             # <<<<<<<<<<<<<<
@@ -21865,40 +21892,40 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cyc
  *         a = parent[a]
  */
   while (1) {
-    __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_a); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_a); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_2 = __Pyx_PyObject_GetItem(__pyx_v_depth, __pyx_v_b); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_2);
-    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_2, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_t_3, __pyx_t_2, Py_GT); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 329, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 349, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (!__pyx_t_4) break;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":330
+    /* "py_raccoon/balance_spanning_trees.pyx":350
  * 
  *     while depth[a] > depth[b]:
  *         left.append(a)             # <<<<<<<<<<<<<<
  *         a = parent[a]
  * 
  */
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 330, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 350, __pyx_L1_error)
 
-    /* "py_raccoon/balance_spanning_trees.pyx":331
+    /* "py_raccoon/balance_spanning_trees.pyx":351
  *     while depth[a] > depth[b]:
  *         left.append(a)
  *         a = parent[a]             # <<<<<<<<<<<<<<
  * 
  *     while a != b:
  */
-    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 331, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 351, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_a, __pyx_t_1);
     __pyx_t_1 = 0;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":333
+  /* "py_raccoon/balance_spanning_trees.pyx":353
  *         a = parent[a]
  * 
  *     while a != b:             # <<<<<<<<<<<<<<
@@ -21906,76 +21933,76 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cyc
  *         right.append(b)
  */
   while (1) {
-    __pyx_t_1 = PyObject_RichCompare(__pyx_v_a, __pyx_v_b, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 333, __pyx_L1_error)
-    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 333, __pyx_L1_error)
+    __pyx_t_1 = PyObject_RichCompare(__pyx_v_a, __pyx_v_b, Py_NE); __Pyx_XGOTREF(__pyx_t_1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 353, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_IsTrue(__pyx_t_1); if (unlikely((__pyx_t_4 < 0))) __PYX_ERR(0, 353, __pyx_L1_error)
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     if (!__pyx_t_4) break;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":334
+    /* "py_raccoon/balance_spanning_trees.pyx":354
  * 
  *     while a != b:
  *         left.append(a)             # <<<<<<<<<<<<<<
  *         right.append(b)
  *         a = parent[a]
  */
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 334, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 354, __pyx_L1_error)
 
-    /* "py_raccoon/balance_spanning_trees.pyx":335
+    /* "py_raccoon/balance_spanning_trees.pyx":355
  *     while a != b:
  *         left.append(a)
  *         right.append(b)             # <<<<<<<<<<<<<<
  *         a = parent[a]
  *         b = parent[b]
  */
-    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_right, __pyx_v_b); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 335, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_right, __pyx_v_b); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 355, __pyx_L1_error)
 
-    /* "py_raccoon/balance_spanning_trees.pyx":336
+    /* "py_raccoon/balance_spanning_trees.pyx":356
  *         left.append(a)
  *         right.append(b)
  *         a = parent[a]             # <<<<<<<<<<<<<<
  *         b = parent[b]
  * 
  */
-    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 336, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_a); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 356, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_a, __pyx_t_1);
     __pyx_t_1 = 0;
 
-    /* "py_raccoon/balance_spanning_trees.pyx":337
+    /* "py_raccoon/balance_spanning_trees.pyx":357
  *         right.append(b)
  *         a = parent[a]
  *         b = parent[b]             # <<<<<<<<<<<<<<
  * 
  *     left.append(a)
  */
-    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 337, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetItem(__pyx_v_parent, __pyx_v_b); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 357, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF_SET(__pyx_v_b, __pyx_t_1);
     __pyx_t_1 = 0;
   }
 
-  /* "py_raccoon/balance_spanning_trees.pyx":339
+  /* "py_raccoon/balance_spanning_trees.pyx":359
  *         b = parent[b]
  * 
  *     left.append(a)             # <<<<<<<<<<<<<<
  *     return normalize_cell(tuple(left + right[::-1]))
  */
-  __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 339, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyList_Append(__pyx_v_left, __pyx_v_a); if (unlikely(__pyx_t_5 == ((int)-1))) __PYX_ERR(0, 359, __pyx_L1_error)
 
-  /* "py_raccoon/balance_spanning_trees.pyx":340
+  /* "py_raccoon/balance_spanning_trees.pyx":360
  * 
  *     left.append(a)
  *     return normalize_cell(tuple(left + right[::-1]))             # <<<<<<<<<<<<<<
  */
   __Pyx_XDECREF(__pyx_r);
-  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_normalize_cell); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_2, __pyx_n_s_normalize_cell); if (unlikely(!__pyx_t_2)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_2);
-  __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_right, __pyx_slice__15); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_3 = __Pyx_PyObject_GetItem(__pyx_v_right, __pyx_slice__14); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_6 = PyNumber_Add(__pyx_v_left, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_6 = PyNumber_Add(__pyx_v_left, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-  __pyx_t_3 = PyList_AsTuple(((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 340, __pyx_L1_error)
+  __pyx_t_3 = PyList_AsTuple(((PyObject*)__pyx_t_6)); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 360, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __pyx_t_6 = NULL;
@@ -21997,16 +22024,16 @@ static PyObject *__pyx_pf_10py_raccoon_22balance_spanning_trees_8get_induced_cyc
     __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_2, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
     __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 340, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 360, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_2); __pyx_t_2 = 0;
   }
-  if (!(likely(PyTuple_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_t_1))) __PYX_ERR(0, 340, __pyx_L1_error)
+  if (!(likely(PyTuple_CheckExact(__pyx_t_1))||((__pyx_t_1) == Py_None) || __Pyx_RaiseUnexpectedTypeError("tuple", __pyx_t_1))) __PYX_ERR(0, 360, __pyx_L1_error)
   __pyx_r = ((PyObject*)__pyx_t_1);
   __pyx_t_1 = 0;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":315
+  /* "py_raccoon/balance_spanning_trees.pyx":335
  *     return shifted
  * 
  * def get_induced_cycle(edge: Tuple[int, int], parent: np.ndarray, depth: np.ndarray) -> tuple:             # <<<<<<<<<<<<<<
@@ -23047,7 +23074,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_View_MemoryView, __pyx_k_View_MemoryView, sizeof(__pyx_k_View_MemoryView), 0, 0, 1, 1},
     {&__pyx_kp_u__2, __pyx_k__2, sizeof(__pyx_k__2), 0, 1, 0, 0},
     {&__pyx_n_s__3, __pyx_k__3, sizeof(__pyx_k__3), 0, 0, 1, 1},
-    {&__pyx_n_s__33, __pyx_k__33, sizeof(__pyx_k__33), 0, 0, 1, 1},
+    {&__pyx_n_s__31, __pyx_k__31, sizeof(__pyx_k__31), 0, 0, 1, 1},
     {&__pyx_kp_u__6, __pyx_k__6, sizeof(__pyx_k__6), 0, 1, 0, 0},
     {&__pyx_kp_u__7, __pyx_k__7, sizeof(__pyx_k__7), 0, 1, 0, 0},
     {&__pyx_n_s_a, __pyx_k_a, sizeof(__pyx_k_a), 0, 0, 1, 1},
@@ -23057,12 +23084,10 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_array, __pyx_k_array, sizeof(__pyx_k_array), 0, 0, 1, 1},
     {&__pyx_n_s_asyncio_coroutines, __pyx_k_asyncio_coroutines, sizeof(__pyx_k_asyncio_coroutines), 0, 0, 1, 1},
     {&__pyx_n_s_b, __pyx_k_b, sizeof(__pyx_k_b), 0, 0, 1, 1},
+    {&__pyx_n_s_bal, __pyx_k_bal, sizeof(__pyx_k_bal), 0, 0, 1, 1},
     {&__pyx_n_s_base, __pyx_k_base, sizeof(__pyx_k_base), 0, 0, 1, 1},
     {&__pyx_n_s_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 0, 1, 1},
     {&__pyx_n_u_c, __pyx_k_c, sizeof(__pyx_k_c), 0, 1, 0, 1},
-    {&__pyx_n_s_c_node_pairs, __pyx_k_c_node_pairs, sizeof(__pyx_k_c_node_pairs), 0, 0, 1, 1},
-    {&__pyx_n_s_c_parent, __pyx_k_c_parent, sizeof(__pyx_k_c_parent), 0, 0, 1, 1},
-    {&__pyx_n_s_c_res, __pyx_k_c_res, sizeof(__pyx_k_c_res), 0, 0, 1, 1},
     {&__pyx_n_s_calc_depth, __pyx_k_calc_depth, sizeof(__pyx_k_calc_depth), 0, 0, 1, 1},
     {&__pyx_n_s_cdepth, __pyx_k_cdepth, sizeof(__pyx_k_cdepth), 0, 0, 1, 1},
     {&__pyx_n_s_cell, __pyx_k_cell, sizeof(__pyx_k_cell), 0, 0, 1, 1},
@@ -23108,11 +23133,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_itemsize, __pyx_k_itemsize, sizeof(__pyx_k_itemsize), 0, 0, 1, 1},
     {&__pyx_kp_s_itemsize_0_for_cython_array, __pyx_k_itemsize_0_for_cython_array, sizeof(__pyx_k_itemsize_0_for_cython_array), 0, 0, 1, 0},
     {&__pyx_n_s_lca, __pyx_k_lca, sizeof(__pyx_k_lca), 0, 0, 1, 1},
-    {&__pyx_n_s_lca_res, __pyx_k_lca_res, sizeof(__pyx_k_lca_res), 0, 0, 1, 1},
     {&__pyx_n_s_left, __pyx_k_left, sizeof(__pyx_k_left), 0, 0, 1, 1},
-    {&__pyx_n_s_list, __pyx_k_list, sizeof(__pyx_k_list), 0, 0, 1, 1},
-    {&__pyx_kp_s_list_tuple, __pyx_k_list_tuple, sizeof(__pyx_k_list_tuple), 0, 0, 1, 0},
-    {&__pyx_n_s_lowest_common_ancestor_py, __pyx_k_lowest_common_ancestor_py, sizeof(__pyx_k_lowest_common_ancestor_py), 0, 0, 1, 1},
     {&__pyx_n_s_main, __pyx_k_main, sizeof(__pyx_k_main), 0, 0, 1, 1},
     {&__pyx_n_s_memview, __pyx_k_memview, sizeof(__pyx_k_memview), 0, 0, 1, 1},
     {&__pyx_n_s_min, __pyx_k_min, sizeof(__pyx_k_min), 0, 0, 1, 1},
@@ -23125,7 +23146,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_networkx, __pyx_k_networkx, sizeof(__pyx_k_networkx), 0, 0, 1, 1},
     {&__pyx_n_s_new, __pyx_k_new, sizeof(__pyx_k_new), 0, 0, 1, 1},
     {&__pyx_kp_s_no_default___reduce___due_to_non, __pyx_k_no_default___reduce___due_to_non, sizeof(__pyx_k_no_default___reduce___due_to_non), 0, 0, 1, 0},
-    {&__pyx_n_s_node_pairs, __pyx_k_node_pairs, sizeof(__pyx_k_node_pairs), 0, 0, 1, 1},
     {&__pyx_n_s_nodes, __pyx_k_nodes, sizeof(__pyx_k_nodes), 0, 0, 1, 1},
     {&__pyx_n_s_normalize_cell, __pyx_k_normalize_cell, sizeof(__pyx_k_normalize_cell), 0, 0, 1, 1},
     {&__pyx_n_s_np, __pyx_k_np, sizeof(__pyx_k_np), 0, 0, 1, 1},
@@ -23155,7 +23175,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_reduce_cython, __pyx_k_reduce_cython, sizeof(__pyx_k_reduce_cython), 0, 0, 1, 1},
     {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
     {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
-    {&__pyx_n_s_result, __pyx_k_result, sizeof(__pyx_k_result), 0, 0, 1, 1},
     {&__pyx_n_s_return, __pyx_k_return, sizeof(__pyx_k_return), 0, 0, 1, 1},
     {&__pyx_n_s_right, __pyx_k_right, sizeof(__pyx_k_right), 0, 0, 1, 1},
     {&__pyx_n_s_rnd, __pyx_k_rnd, sizeof(__pyx_k_rnd), 0, 0, 1, 1},
@@ -23184,6 +23203,8 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_unpack, __pyx_k_unpack, sizeof(__pyx_k_unpack), 0, 0, 1, 1},
     {&__pyx_n_s_update, __pyx_k_update, sizeof(__pyx_k_update), 0, 0, 1, 1},
     {&__pyx_n_s_version_info, __pyx_k_version_info, sizeof(__pyx_k_version_info), 0, 0, 1, 1},
+    {&__pyx_n_s_weight, __pyx_k_weight, sizeof(__pyx_k_weight), 0, 0, 1, 1},
+    {&__pyx_n_s_weights, __pyx_k_weights, sizeof(__pyx_k_weights), 0, 0, 1, 1},
     {&__pyx_n_s_zeros, __pyx_k_zeros, sizeof(__pyx_k_zeros), 0, 0, 1, 1},
     {0, 0, 0, 0, 0, 0, 0}
   };
@@ -23191,9 +23212,9 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 }
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
-  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 59, __pyx_L1_error)
-  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 253, __pyx_L1_error)
-  __pyx_builtin_min = __Pyx_GetBuiltinName(__pyx_n_s_min); if (!__pyx_builtin_min) __PYX_ERR(0, 308, __pyx_L1_error)
+  __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 67, __pyx_L1_error)
+  __pyx_builtin_enumerate = __Pyx_GetBuiltinName(__pyx_n_s_enumerate); if (!__pyx_builtin_enumerate) __PYX_ERR(0, 254, __pyx_L1_error)
+  __pyx_builtin_min = __Pyx_GetBuiltinName(__pyx_n_s_min); if (!__pyx_builtin_min) __PYX_ERR(0, 328, __pyx_L1_error)
   __pyx_builtin___import__ = __Pyx_GetBuiltinName(__pyx_n_s_import); if (!__pyx_builtin___import__) __PYX_ERR(1, 100, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 141, __pyx_L1_error)
   __pyx_builtin_MemoryError = __Pyx_GetBuiltinName(__pyx_n_s_MemoryError); if (!__pyx_builtin_MemoryError) __PYX_ERR(1, 156, __pyx_L1_error)
@@ -23248,38 +23269,38 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__8);
   __Pyx_GIVEREF(__pyx_tuple__8);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":218
+  /* "py_raccoon/balance_spanning_trees.pyx":215
  * @cython.wraparound(False)
- * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
+ * cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):
  *     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))             # <<<<<<<<<<<<<<
  *     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
  *     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size
  */
-  __pyx_tuple__11 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_4294967296); if (unlikely(!__pyx_tuple__11)) __PYX_ERR(0, 218, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__11);
-  __Pyx_GIVEREF(__pyx_tuple__11);
+  __pyx_tuple__10 = PyTuple_Pack(2, __pyx_int_0, __pyx_int_4294967296); if (unlikely(!__pyx_tuple__10)) __PYX_ERR(0, 215, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__10);
+  __Pyx_GIVEREF(__pyx_tuple__10);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":270
+  /* "py_raccoon/balance_spanning_trees.pyx":289
  *     """
  *     cdef int size = len(G.nodes)
  *     cdef int[:] degree = np.array(G.degree, dtype=np.int32)[:,1]             # <<<<<<<<<<<<<<
  *     np_parent = np.zeros(size, dtype=np.int32)
  *     cdef int[:] parent = np_parent
  */
-  __pyx_tuple__13 = PyTuple_Pack(2, __pyx_slice__5, __pyx_int_1); if (unlikely(!__pyx_tuple__13)) __PYX_ERR(0, 270, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__13);
-  __Pyx_GIVEREF(__pyx_tuple__13);
+  __pyx_tuple__12 = PyTuple_Pack(2, __pyx_slice__5, __pyx_int_1); if (unlikely(!__pyx_tuple__12)) __PYX_ERR(0, 289, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__12);
+  __Pyx_GIVEREF(__pyx_tuple__12);
 
-  /* "py_raccoon/balance_spanning_trees.pyx":311
+  /* "py_raccoon/balance_spanning_trees.pyx":331
  *     shifted = cell[min_index:] + cell[:min_index]
  *     if shifted[-1] < shifted[1]:
  *         shifted = shifted[::-1]             # <<<<<<<<<<<<<<
  *         shifted = shifted[-1:] + shifted[:-1]
  *     return shifted
  */
-  __pyx_slice__15 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__15)) __PYX_ERR(0, 311, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_slice__15);
-  __Pyx_GIVEREF(__pyx_slice__15);
+  __pyx_slice__14 = PySlice_New(Py_None, Py_None, __pyx_int_neg_1); if (unlikely(!__pyx_slice__14)) __PYX_ERR(0, 331, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_slice__14);
+  __Pyx_GIVEREF(__pyx_slice__14);
 
   /* "View.MemoryView":100
  * cdef object __pyx_collections_abc_Sequence "__pyx_collections_abc_Sequence"
@@ -23288,12 +23309,12 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *         __pyx_collections_abc_Sequence = __import__("collections.abc").abc.Sequence
  *     else:
  */
-  __pyx_tuple__17 = PyTuple_Pack(1, __pyx_n_s_sys); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(1, 100, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(1, __pyx_n_s_sys); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(1, 100, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__16);
+  __Pyx_GIVEREF(__pyx_tuple__16);
+  __pyx_tuple__17 = PyTuple_Pack(2, __pyx_int_3, __pyx_int_3); if (unlikely(!__pyx_tuple__17)) __PYX_ERR(1, 100, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__17);
   __Pyx_GIVEREF(__pyx_tuple__17);
-  __pyx_tuple__18 = PyTuple_Pack(2, __pyx_int_3, __pyx_int_3); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(1, 100, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__18);
-  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":101
  * try:
@@ -23302,9 +23323,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  *     else:
  *         __pyx_collections_abc_Sequence = __import__("collections").Sequence
  */
-  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_kp_s_collections_abc); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(1, 101, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__19);
-  __Pyx_GIVEREF(__pyx_tuple__19);
+  __pyx_tuple__18 = PyTuple_Pack(1, __pyx_kp_s_collections_abc); if (unlikely(!__pyx_tuple__18)) __PYX_ERR(1, 101, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__18);
+  __Pyx_GIVEREF(__pyx_tuple__18);
 
   /* "View.MemoryView":103
  *         __pyx_collections_abc_Sequence = __import__("collections.abc").abc.Sequence
@@ -23313,9 +23334,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * except:
  * 
  */
-  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_n_s_collections); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(1, 103, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__20);
-  __Pyx_GIVEREF(__pyx_tuple__20);
+  __pyx_tuple__19 = PyTuple_Pack(1, __pyx_n_s_collections); if (unlikely(!__pyx_tuple__19)) __PYX_ERR(1, 103, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__19);
+  __Pyx_GIVEREF(__pyx_tuple__19);
 
   /* "View.MemoryView":309
  *         return self.name
@@ -23324,9 +23345,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(1, 309, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__21);
-  __Pyx_GIVEREF(__pyx_tuple__21);
+  __pyx_tuple__20 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct_or_indirect); if (unlikely(!__pyx_tuple__20)) __PYX_ERR(1, 309, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__20);
+  __Pyx_GIVEREF(__pyx_tuple__20);
 
   /* "View.MemoryView":310
  * 
@@ -23335,9 +23356,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 310, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__22);
-  __Pyx_GIVEREF(__pyx_tuple__22);
+  __pyx_tuple__21 = PyTuple_Pack(1, __pyx_kp_s_strided_and_direct); if (unlikely(!__pyx_tuple__21)) __PYX_ERR(1, 310, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__21);
+  __Pyx_GIVEREF(__pyx_tuple__21);
 
   /* "View.MemoryView":311
  * cdef generic = Enum("<strided and direct or indirect>")
@@ -23346,9 +23367,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(1, 311, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__23);
-  __Pyx_GIVEREF(__pyx_tuple__23);
+  __pyx_tuple__22 = PyTuple_Pack(1, __pyx_kp_s_strided_and_indirect); if (unlikely(!__pyx_tuple__22)) __PYX_ERR(1, 311, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__22);
+  __Pyx_GIVEREF(__pyx_tuple__22);
 
   /* "View.MemoryView":314
  * 
@@ -23357,9 +23378,9 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 314, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__24);
-  __Pyx_GIVEREF(__pyx_tuple__24);
+  __pyx_tuple__23 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_direct); if (unlikely(!__pyx_tuple__23)) __PYX_ERR(1, 314, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__23);
+  __Pyx_GIVEREF(__pyx_tuple__23);
 
   /* "View.MemoryView":315
  * 
@@ -23368,79 +23389,67 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
  * 
  * 
  */
-  __pyx_tuple__25 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(1, 315, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__25);
-  __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_tuple__24 = PyTuple_Pack(1, __pyx_kp_s_contiguous_and_indirect); if (unlikely(!__pyx_tuple__24)) __PYX_ERR(1, 315, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__24);
+  __Pyx_GIVEREF(__pyx_tuple__24);
 
   /* "(tree fragment)":1
  * def __pyx_unpickle_Enum(__pyx_type, long __pyx_checksum, __pyx_state):             # <<<<<<<<<<<<<<
  *     cdef object __pyx_PickleError
  *     cdef object __pyx_result
  */
-  __pyx_tuple__26 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__26)) __PYX_ERR(1, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__26);
-  __Pyx_GIVEREF(__pyx_tuple__26);
-  __pyx_codeobj__27 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__26, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__27)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __pyx_tuple__25 = PyTuple_Pack(5, __pyx_n_s_pyx_type, __pyx_n_s_pyx_checksum, __pyx_n_s_pyx_state, __pyx_n_s_pyx_PickleError, __pyx_n_s_pyx_result); if (unlikely(!__pyx_tuple__25)) __PYX_ERR(1, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__25);
+  __Pyx_GIVEREF(__pyx_tuple__25);
+  __pyx_codeobj__26 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__25, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_stringsource, __pyx_n_s_pyx_unpickle_Enum, 1, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__26)) __PYX_ERR(1, 1, __pyx_L1_error)
 
-  /* "py_raccoon/balance_spanning_trees.pyx":103
- *     return 0
- * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:             # <<<<<<<<<<<<<<
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- */
-  __pyx_tuple__28 = PyTuple_Pack(8, __pyx_n_s_parent, __pyx_n_s_node_pairs, __pyx_n_s_c_parent, __pyx_n_s_c_node_pairs, __pyx_n_s_result, __pyx_n_s_c_res, __pyx_n_s_lca_res, __pyx_n_s_i); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 103, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__28);
-  __Pyx_GIVEREF(__pyx_tuple__28);
-  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 8, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_lowest_common_ancestor_py, 103, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 103, __pyx_L1_error)
-
-  /* "py_raccoon/balance_spanning_trees.pyx":205
+  /* "py_raccoon/balance_spanning_trees.pyx":202
  *     return 0
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
  * def calc_depth(parent: np.ndarray) -> np.ndarray:
  */
-  __pyx_tuple__29 = PyTuple_Pack(5, __pyx_n_s_parent, __pyx_n_s_depth, __pyx_n_s_cdepth, __pyx_n_s_cparent, __pyx_n_s_i); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 205, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__29);
-  __Pyx_GIVEREF(__pyx_tuple__29);
-  __pyx_codeobj__10 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_calc_depth, 205, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__10)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_tuple__27 = PyTuple_Pack(5, __pyx_n_s_parent, __pyx_n_s_depth, __pyx_n_s_cdepth, __pyx_n_s_cparent, __pyx_n_s_i); if (unlikely(!__pyx_tuple__27)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__27);
+  __Pyx_GIVEREF(__pyx_tuple__27);
+  __pyx_codeobj__9 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 5, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__27, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_calc_depth, 202, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__9)) __PYX_ERR(0, 202, __pyx_L1_error)
 
-  /* "py_raccoon/balance_spanning_trees.pyx":262
+  /* "py_raccoon/balance_spanning_trees.pyx":281
  *     free(neighbors)
  * 
  * def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:             # <<<<<<<<<<<<<<
  *     """
  *     Implements Wilson's Algorithm for random spanning trees [1].
  */
-  __pyx_tuple__30 = PyTuple_Pack(7, __pyx_n_s_G, __pyx_n_s_rnd, __pyx_n_s_size, __pyx_n_s_degree, __pyx_n_s_np_parent, __pyx_n_s_parent, __pyx_n_s_neighbors); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__30);
-  __Pyx_GIVEREF(__pyx_tuple__30);
-  __pyx_codeobj__12 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_uniform_spanning_tree, 262, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__12)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_tuple__28 = PyTuple_Pack(7, __pyx_n_s_G, __pyx_n_s_rnd, __pyx_n_s_size, __pyx_n_s_degree, __pyx_n_s_np_parent, __pyx_n_s_parent, __pyx_n_s_neighbors); if (unlikely(!__pyx_tuple__28)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__28);
+  __Pyx_GIVEREF(__pyx_tuple__28);
+  __pyx_codeobj__11 = (PyObject*)__Pyx_PyCode_New(2, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__28, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_uniform_spanning_tree, 281, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__11)) __PYX_ERR(0, 281, __pyx_L1_error)
 
-  /* "py_raccoon/balance_spanning_trees.pyx":303
+  /* "py_raccoon/balance_spanning_trees.pyx":323
  *         __calc_property_check(i, parent, checked, result, root_val, degree, update_fun)
  * 
  * def normalize_cell(cell: tuple) -> tuple:             # <<<<<<<<<<<<<<
  *     """
  *     normalizes tuple to have the smallest element at index 0 and the smaller
  */
-  __pyx_tuple__31 = PyTuple_Pack(3, __pyx_n_s_cell, __pyx_n_s_min_index, __pyx_n_s_shifted); if (unlikely(!__pyx_tuple__31)) __PYX_ERR(0, 303, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__31);
-  __Pyx_GIVEREF(__pyx_tuple__31);
-  __pyx_codeobj__14 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__31, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_normalize_cell, 303, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__14)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_tuple__29 = PyTuple_Pack(3, __pyx_n_s_cell, __pyx_n_s_min_index, __pyx_n_s_shifted); if (unlikely(!__pyx_tuple__29)) __PYX_ERR(0, 323, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__29);
+  __Pyx_GIVEREF(__pyx_tuple__29);
+  __pyx_codeobj__13 = (PyObject*)__Pyx_PyCode_New(1, 0, 0, 3, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__29, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_normalize_cell, 323, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__13)) __PYX_ERR(0, 323, __pyx_L1_error)
 
-  /* "py_raccoon/balance_spanning_trees.pyx":315
+  /* "py_raccoon/balance_spanning_trees.pyx":335
  *     return shifted
  * 
  * def get_induced_cycle(edge: Tuple[int, int], parent: np.ndarray, depth: np.ndarray) -> tuple:             # <<<<<<<<<<<<<<
  *     """
  *     Gets the cycle induced by adding edge to the spanning tree modeled by node_level and parent_node
  */
-  __pyx_tuple__32 = PyTuple_Pack(7, __pyx_n_s_edge, __pyx_n_s_parent, __pyx_n_s_depth, __pyx_n_s_left, __pyx_n_s_right, __pyx_n_s_a, __pyx_n_s_b); if (unlikely(!__pyx_tuple__32)) __PYX_ERR(0, 315, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_tuple__32);
-  __Pyx_GIVEREF(__pyx_tuple__32);
-  __pyx_codeobj__16 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__32, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_get_induced_cycle, 315, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__16)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_tuple__30 = PyTuple_Pack(7, __pyx_n_s_edge, __pyx_n_s_parent, __pyx_n_s_depth, __pyx_n_s_left, __pyx_n_s_right, __pyx_n_s_a, __pyx_n_s_b); if (unlikely(!__pyx_tuple__30)) __PYX_ERR(0, 335, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_tuple__30);
+  __Pyx_GIVEREF(__pyx_tuple__30);
+  __pyx_codeobj__15 = (PyObject*)__Pyx_PyCode_New(3, 0, 0, 7, 0, CO_OPTIMIZED|CO_NEWLOCALS, __pyx_empty_bytes, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_tuple__30, __pyx_empty_tuple, __pyx_empty_tuple, __pyx_kp_s_src_py_raccoon_balance_spanning, __pyx_n_s_get_induced_cycle, 335, __pyx_empty_bytes); if (unlikely(!__pyx_codeobj__15)) __PYX_ERR(0, 335, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
   return 0;
   __pyx_L1_error:;
@@ -23516,9 +23525,11 @@ static int __Pyx_modinit_function_export_code(void) {
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("__Pyx_modinit_function_export_code", 0);
   /*--- Function export code ---*/
-  if (__Pyx_ExportFunction("lowest_common_ancestor", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor, "struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *(__Pyx_memviewslice, __Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("lowest_common_ancestor", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor, "struct __pyx_t_10py_raccoon_22balance_spanning_trees_LcaResult *(__Pyx_memviewslice, __Pyx_memviewslice, __Pyx_memviewslice)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("calc_property_fast", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast, "void (__Pyx_memviewslice, __Pyx_memviewslice, double, __Pyx_memviewslice, double (*)(int, int, double, __Pyx_memviewslice))") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  if (__Pyx_ExportFunction("uniform_spanning_tree_c", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c, "int (int, __Pyx_memviewslice, int **, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("uniform_spanning_tree_c", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c, "int (int, __Pyx_memviewslice, int **, signed char **, __Pyx_memviewslice, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("to_Graph_c", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_to_Graph_c, "struct __pyx_t_10py_raccoon_22balance_spanning_trees_Graph_c (int, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  if (__Pyx_ExportFunction("free_neighbors_and_weights", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_free_neighbors_and_weights, "void (int, int **, signed char **)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("graph_to_neighbors", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_graph_to_neighbors, "int **(int, __Pyx_memviewslice, PyObject *)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   if (__Pyx_ExportFunction("free_graph_neighbors", (void (*)(void))__pyx_f_10py_raccoon_22balance_spanning_trees_free_graph_neighbors, "void (int, int **)") < 0) __PYX_ERR(0, 1, __pyx_L1_error)
   __Pyx_RefNannyFinishContext();
@@ -24019,12 +24030,12 @@ if (!__Pyx_RefNanny) {
  *         __pyx_collections_abc_Sequence = __import__("collections.abc").abc.Sequence
  *     else:
  */
-      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__17, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 100, __pyx_L2_error)
+      __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__16, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 100, __pyx_L2_error)
       __Pyx_GOTREF(__pyx_t_4);
       __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_version_info); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 100, __pyx_L2_error)
       __Pyx_GOTREF(__pyx_t_5);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      __pyx_t_4 = PyObject_RichCompare(__pyx_t_5, __pyx_tuple__18, Py_GE); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 100, __pyx_L2_error)
+      __pyx_t_4 = PyObject_RichCompare(__pyx_t_5, __pyx_tuple__17, Py_GE); __Pyx_XGOTREF(__pyx_t_4); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 100, __pyx_L2_error)
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __pyx_t_6 = __Pyx_PyObject_IsTrue(__pyx_t_4); if (unlikely((__pyx_t_6 < 0))) __PYX_ERR(1, 100, __pyx_L2_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
@@ -24037,7 +24048,7 @@ if (!__Pyx_RefNanny) {
  *     else:
  *         __pyx_collections_abc_Sequence = __import__("collections").Sequence
  */
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 101, __pyx_L2_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__18, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 101, __pyx_L2_error)
         __Pyx_GOTREF(__pyx_t_4);
         __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_abc); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 101, __pyx_L2_error)
         __Pyx_GOTREF(__pyx_t_5);
@@ -24068,7 +24079,7 @@ if (!__Pyx_RefNanny) {
  * 
  */
       /*else*/ {
-        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 103, __pyx_L2_error)
+        __pyx_t_4 = __Pyx_PyObject_Call(__pyx_builtin___import__, __pyx_tuple__19, NULL); if (unlikely(!__pyx_t_4)) __PYX_ERR(1, 103, __pyx_L2_error)
         __Pyx_GOTREF(__pyx_t_4);
         __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_Sequence); if (unlikely(!__pyx_t_5)) __PYX_ERR(1, 103, __pyx_L2_error)
         __Pyx_GOTREF(__pyx_t_5);
@@ -24233,7 +24244,7 @@ if (!__Pyx_RefNanny) {
  * cdef strided = Enum("<strided and direct>") # default
  * cdef indirect = Enum("<strided and indirect>")
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 309, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__20, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 309, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(generic);
   __Pyx_DECREF_SET(generic, __pyx_t_7);
@@ -24247,7 +24258,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect = Enum("<strided and indirect>")
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 310, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__21, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 310, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(strided);
   __Pyx_DECREF_SET(strided, __pyx_t_7);
@@ -24261,7 +24272,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 311, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__22, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 311, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(indirect);
   __Pyx_DECREF_SET(indirect, __pyx_t_7);
@@ -24275,7 +24286,7 @@ if (!__Pyx_RefNanny) {
  * cdef indirect_contiguous = Enum("<contiguous and indirect>")
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 314, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__23, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 314, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(contiguous);
   __Pyx_DECREF_SET(contiguous, __pyx_t_7);
@@ -24289,7 +24300,7 @@ if (!__Pyx_RefNanny) {
  * 
  * 
  */
-  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__25, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 315, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_Call(((PyObject *)__pyx_MemviewEnum_type), __pyx_tuple__24, NULL); if (unlikely(!__pyx_t_7)) __PYX_ERR(1, 315, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_XGOTREF(indirect_contiguous);
   __Pyx_DECREF_SET(indirect_contiguous, __pyx_t_7);
@@ -24554,287 +24565,292 @@ if (!__Pyx_RefNanny) {
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":31
- *     int b
+  /* "py_raccoon/balance_spanning_trees.pyx":32
+ *     signed char weight
  * 
  * NP_EDGE = np.dtype([             # <<<<<<<<<<<<<<
  *     ('a', np.int32),
  *     ('b', np.int32),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dtype); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 31, __pyx_L1_error)
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_dtype); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":32
+  /* "py_raccoon/balance_spanning_trees.pyx":33
  * 
  * NP_EDGE = np.dtype([
  *     ('a', np.int32),             # <<<<<<<<<<<<<<
  *     ('b', np.int32),
- * ])
+ *     ('weight', np.int8),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 33, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_n_s_a);
   __Pyx_GIVEREF(__pyx_n_s_a);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_n_s_a)) __PYX_ERR(0, 32, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_n_s_a)) __PYX_ERR(0, 33, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error);
   __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":33
+  /* "py_raccoon/balance_spanning_trees.pyx":34
  * NP_EDGE = np.dtype([
  *     ('a', np.int32),
  *     ('b', np.int32),             # <<<<<<<<<<<<<<
+ *     ('weight', np.int8),
  * ])
- * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 33, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 34, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_n_s_b);
   __Pyx_GIVEREF(__pyx_n_s_b);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_n_s_b)) __PYX_ERR(0, 33, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_n_s_b)) __PYX_ERR(0, 34, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_9);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_9)) __PYX_ERR(0, 33, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_9)) __PYX_ERR(0, 34, __pyx_L1_error);
   __pyx_t_9 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":31
- *     int b
+  /* "py_raccoon/balance_spanning_trees.pyx":35
+ *     ('a', np.int32),
+ *     ('b', np.int32),
+ *     ('weight', np.int8),             # <<<<<<<<<<<<<<
+ * ])
+ * 
+ */
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_int8); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 35, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __Pyx_INCREF(__pyx_n_s_weight);
+  __Pyx_GIVEREF(__pyx_n_s_weight);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_n_s_weight)) __PYX_ERR(0, 35, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_10);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_10)) __PYX_ERR(0, 35, __pyx_L1_error);
+  __pyx_t_10 = 0;
+
+  /* "py_raccoon/balance_spanning_trees.pyx":32
+ *     signed char weight
  * 
  * NP_EDGE = np.dtype([             # <<<<<<<<<<<<<<
  *     ('a', np.int32),
  *     ('b', np.int32),
  */
-  __pyx_t_9 = PyList_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_10 = PyList_New(3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
   __Pyx_GIVEREF(__pyx_t_4);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_9, 0, __pyx_t_4)) __PYX_ERR(0, 31, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_4)) __PYX_ERR(0, 32, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_9, 1, __pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_t_5)) __PYX_ERR(0, 32, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_9);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 2, __pyx_t_9)) __PYX_ERR(0, 32, __pyx_L1_error);
   __pyx_t_4 = 0;
   __pyx_t_5 = 0;
-  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_9); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_9 = 0;
+  __pyx_t_9 = __Pyx_PyObject_CallOneArg(__pyx_t_7, __pyx_t_10); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 32, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
+  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NP_EDGE, __pyx_t_9) < 0) __PYX_ERR(0, 32, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NP_EDGE, __pyx_t_5) < 0) __PYX_ERR(0, 31, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":41
- *     int lca
+  /* "py_raccoon/balance_spanning_trees.pyx":48
+ *     signed char** weights
  * 
  * NP_LCA_RESULT = np.dtype([             # <<<<<<<<<<<<<<
  *     ('a', np.int32),
  *     ('b', np.int32),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_9 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_dtype); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 41, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 48, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_9);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_dtype); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_10);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":42
+  /* "py_raccoon/balance_spanning_trees.pyx":49
  * 
  * NP_LCA_RESULT = np.dtype([
  *     ('a', np.int32),             # <<<<<<<<<<<<<<
  *     ('b', np.int32),
  *     ('lca', np.int32),
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_9, __pyx_n_s_np); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
+  __pyx_t_7 = __Pyx_PyObject_GetAttrStr(__pyx_t_9, __pyx_n_s_int32); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 42, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_9 = PyTuple_New(2); if (unlikely(!__pyx_t_9)) __PYX_ERR(0, 49, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_9);
   __Pyx_INCREF(__pyx_n_s_a);
   __Pyx_GIVEREF(__pyx_n_s_a);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_n_s_a)) __PYX_ERR(0, 42, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 0, __pyx_n_s_a)) __PYX_ERR(0, 49, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_7)) __PYX_ERR(0, 42, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_9, 1, __pyx_t_7)) __PYX_ERR(0, 49, __pyx_L1_error);
   __pyx_t_7 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":43
+  /* "py_raccoon/balance_spanning_trees.pyx":50
  * NP_LCA_RESULT = np.dtype([
  *     ('a', np.int32),
  *     ('b', np.int32),             # <<<<<<<<<<<<<<
  *     ('lca', np.int32),
  * ])
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_7, __pyx_n_s_np); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_7, __pyx_n_s_int32); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_7); __pyx_t_7 = 0;
-  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 43, __pyx_L1_error)
+  __pyx_t_7 = PyTuple_New(2); if (unlikely(!__pyx_t_7)) __PYX_ERR(0, 50, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_7);
   __Pyx_INCREF(__pyx_n_s_b);
   __Pyx_GIVEREF(__pyx_n_s_b);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_n_s_b)) __PYX_ERR(0, 43, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_4);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_4)) __PYX_ERR(0, 43, __pyx_L1_error);
-  __pyx_t_4 = 0;
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 0, __pyx_n_s_b)) __PYX_ERR(0, 50, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_5);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_7, 1, __pyx_t_5)) __PYX_ERR(0, 50, __pyx_L1_error);
+  __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":44
+  /* "py_raccoon/balance_spanning_trees.pyx":51
  *     ('a', np.int32),
  *     ('b', np.int32),
  *     ('lca', np.int32),             # <<<<<<<<<<<<<<
  * ])
  * 
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_10 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_int32); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 44, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = PyTuple_New(2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 44, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  __pyx_t_5 = PyTuple_New(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 51, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_INCREF(__pyx_n_s_lca);
   __Pyx_GIVEREF(__pyx_n_s_lca);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_n_s_lca)) __PYX_ERR(0, 44, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_10);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_t_10)) __PYX_ERR(0, 44, __pyx_L1_error);
-  __pyx_t_10 = 0;
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_n_s_lca)) __PYX_ERR(0, 51, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_4);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 1, __pyx_t_4)) __PYX_ERR(0, 51, __pyx_L1_error);
+  __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":41
- *     int lca
+  /* "py_raccoon/balance_spanning_trees.pyx":48
+ *     signed char** weights
  * 
  * NP_LCA_RESULT = np.dtype([             # <<<<<<<<<<<<<<
  *     ('a', np.int32),
  *     ('b', np.int32),
  */
-  __pyx_t_10 = PyList_New(3); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_GIVEREF(__pyx_t_5);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 0, __pyx_t_5)) __PYX_ERR(0, 41, __pyx_L1_error);
+  __pyx_t_4 = PyList_New(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_4);
+  __Pyx_GIVEREF(__pyx_t_9);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 0, __pyx_t_9)) __PYX_ERR(0, 48, __pyx_L1_error);
   __Pyx_GIVEREF(__pyx_t_7);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 1, __pyx_t_7)) __PYX_ERR(0, 41, __pyx_L1_error);
-  __Pyx_GIVEREF(__pyx_t_4);
-  if (__Pyx_PyList_SET_ITEM(__pyx_t_10, 2, __pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error);
-  __pyx_t_5 = 0;
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 1, __pyx_t_7)) __PYX_ERR(0, 48, __pyx_L1_error);
+  __Pyx_GIVEREF(__pyx_t_5);
+  if (__Pyx_PyList_SET_ITEM(__pyx_t_4, 2, __pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error);
+  __pyx_t_9 = 0;
   __pyx_t_7 = 0;
-  __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_CallOneArg(__pyx_t_9, __pyx_t_10); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 41, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_DECREF(__pyx_t_9); __pyx_t_9 = 0;
+  __pyx_t_5 = 0;
+  __pyx_t_5 = __Pyx_PyObject_CallOneArg(__pyx_t_10, __pyx_t_4); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NP_LCA_RESULT, __pyx_t_4) < 0) __PYX_ERR(0, 41, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_NP_LCA_RESULT, __pyx_t_5) < 0) __PYX_ERR(0, 48, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":103
- *     return 0
- * 
- * def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:             # <<<<<<<<<<<<<<
- *     c_parent = np.array(parent, dtype=np.int32)
- *     c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
- */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 103, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_parent, __pyx_n_s_list) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_node_pairs, __pyx_n_s_list) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_list_tuple) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_1lowest_common_ancestor_py, 0, __pyx_n_s_lowest_common_ancestor_py, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 103, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_10, __pyx_t_4);
-  __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_lowest_common_ancestor_py, __pyx_t_10) < 0) __PYX_ERR(0, 103, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-
-  /* "py_raccoon/balance_spanning_trees.pyx":205
+  /* "py_raccoon/balance_spanning_trees.pyx":202
  *     return 0
  * 
  * @cython.boundscheck(False)             # <<<<<<<<<<<<<<
  * @cython.wraparound(False)
  * def calc_depth(parent: np.ndarray) -> np.ndarray:
  */
-  __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 205, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_parent, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_return, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_3calc_depth, 0, __pyx_n_s_calc_depth, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__10)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 205, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 202, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_parent, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_return, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_1calc_depth, 0, __pyx_n_s_calc_depth, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__9)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_10);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_depth, __pyx_t_4) < 0) __PYX_ERR(0, 205, __pyx_L1_error)
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_5);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_calc_depth, __pyx_t_4) < 0) __PYX_ERR(0, 202, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":262
+  /* "py_raccoon/balance_spanning_trees.pyx":281
  *     free(neighbors)
  * 
  * def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[np.int32]:             # <<<<<<<<<<<<<<
  *     """
  *     Implements Wilson's Algorithm for random spanning trees [1].
  */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 262, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(3); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 281, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_G, __pyx_kp_s_nx_Graph) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_rnd, __pyx_kp_s_np_random_Generator) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_np_ndarray_np_int32) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_5uniform_spanning_tree, 0, __pyx_n_s_uniform_spanning_tree, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__12)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_10, __pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_G, __pyx_kp_s_nx_Graph) < 0) __PYX_ERR(0, 281, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_rnd, __pyx_kp_s_np_random_Generator) < 0) __PYX_ERR(0, 281, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_kp_s_np_ndarray_np_int32) < 0) __PYX_ERR(0, 281, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_3uniform_spanning_tree, 0, __pyx_n_s_uniform_spanning_tree, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__11)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_uniform_spanning_tree, __pyx_t_10) < 0) __PYX_ERR(0, 262, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_uniform_spanning_tree, __pyx_t_5) < 0) __PYX_ERR(0, 281, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":303
+  /* "py_raccoon/balance_spanning_trees.pyx":323
  *         __calc_property_check(i, parent, checked, result, root_val, degree, update_fun)
  * 
  * def normalize_cell(cell: tuple) -> tuple:             # <<<<<<<<<<<<<<
  *     """
  *     normalizes tuple to have the smallest element at index 0 and the smaller
  */
-  __pyx_t_10 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 303, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_cell, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_10, __pyx_n_s_return, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
-  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_7normalize_cell, 0, __pyx_n_s_normalize_cell, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__14)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 303, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 323, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_cell, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 323, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_5, __pyx_n_s_return, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 323, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_5normalize_cell, 0, __pyx_n_s_normalize_cell, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__13)); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 323, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_10);
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_normalize_cell, __pyx_t_4) < 0) __PYX_ERR(0, 303, __pyx_L1_error)
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_4, __pyx_t_5);
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_normalize_cell, __pyx_t_4) < 0) __PYX_ERR(0, 323, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_spanning_trees.pyx":315
+  /* "py_raccoon/balance_spanning_trees.pyx":335
  *     return shifted
  * 
  * def get_induced_cycle(edge: Tuple[int, int], parent: np.ndarray, depth: np.ndarray) -> tuple:             # <<<<<<<<<<<<<<
  *     """
  *     Gets the cycle induced by adding edge to the spanning tree modeled by node_level and parent_node
  */
-  __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 315, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyDict_NewPresized(4); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 335, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_edge, __pyx_kp_s_Tuple_int_int) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_parent, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_depth, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
-  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
-  __pyx_t_10 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_9get_induced_cycle, 0, __pyx_n_s_get_induced_cycle, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__16)); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 315, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_10, __pyx_t_4);
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_edge, __pyx_kp_s_Tuple_int_int) < 0) __PYX_ERR(0, 335, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_parent, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 335, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_depth, __pyx_kp_s_np_ndarray) < 0) __PYX_ERR(0, 335, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_return, __pyx_n_s_tuple) < 0) __PYX_ERR(0, 335, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_CyFunction_New(&__pyx_mdef_10py_raccoon_22balance_spanning_trees_7get_induced_cycle, 0, __pyx_n_s_get_induced_cycle, NULL, __pyx_n_s_py_raccoon_balance_spanning_tree, __pyx_d, ((PyObject *)__pyx_codeobj__15)); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 335, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  __Pyx_CyFunction_SetAnnotationsDict(__pyx_t_5, __pyx_t_4);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_induced_cycle, __pyx_t_10) < 0) __PYX_ERR(0, 315, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_get_induced_cycle, __pyx_t_5) < 0) __PYX_ERR(0, 335, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
 
   /* "py_raccoon/balance_spanning_trees.pyx":1
  * # distutils: language=c++             # <<<<<<<<<<<<<<
  * # cython: profile=True
  * """
  */
-  __pyx_t_10 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_10)) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_GOTREF(__pyx_t_10);
-  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_10) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
-  __Pyx_DECREF(__pyx_t_10); __pyx_t_10 = 0;
+  __pyx_t_5 = __Pyx_PyDict_NewPresized(0); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_GOTREF(__pyx_t_5);
+  if (PyDict_SetItem(__pyx_d, __pyx_n_s_test, __pyx_t_5) < 0) __PYX_ERR(0, 1, __pyx_L1_error)
+  __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __Pyx_TraceReturn(Py_None, 0);
 
   /*--- Wrapped vars code ---*/
@@ -27470,6 +27486,23 @@ static void __Pyx_WriteUnraisable(const char *name, int clineno,
 #endif
 }
 
+/* BufferIndexError */
+static void __Pyx_RaiseBufferIndexError(int axis) {
+  PyErr_Format(PyExc_IndexError,
+     "Out of bounds on buffer access (axis %d)", axis);
+}
+
+/* BufferIndexErrorNogil */
+static void __Pyx_RaiseBufferIndexErrorNogil(int axis) {
+    #ifdef WITH_THREAD
+    PyGILState_STATE gilstate = PyGILState_Ensure();
+    #endif
+    __Pyx_RaiseBufferIndexError(axis);
+    #ifdef WITH_THREAD
+    PyGILState_Release(gilstate);
+    #endif
+}
+
 /* PyIntBinop */
 #if !CYTHON_COMPILING_IN_PYPY
 static PyObject* __Pyx_PyInt_MultiplyCObj(PyObject *op1, PyObject *op2, long intval, int inplace, int zerodivision_check) {
@@ -27617,11 +27650,29 @@ static PyObject* __Pyx_PyInt_MultiplyCObj(PyObject *op1, PyObject *op2, long int
 }
 #endif
 
-/* BufferIndexError */
-static void __Pyx_RaiseBufferIndexError(int axis) {
-  PyErr_Format(PyExc_IndexError,
-     "Out of bounds on buffer access (axis %d)", axis);
+/* DictGetItem */
+#if PY_MAJOR_VERSION >= 3 && !CYTHON_COMPILING_IN_PYPY
+static PyObject *__Pyx_PyDict_GetItem(PyObject *d, PyObject* key) {
+    PyObject *value;
+    value = PyDict_GetItemWithError(d, key);
+    if (unlikely(!value)) {
+        if (!PyErr_Occurred()) {
+            if (unlikely(PyTuple_Check(key))) {
+                PyObject* args = PyTuple_Pack(1, key);
+                if (likely(args)) {
+                    PyErr_SetObject(PyExc_KeyError, args);
+                    Py_DECREF(args);
+                }
+            } else {
+                PyErr_SetObject(PyExc_KeyError, key);
+            }
+        }
+        return NULL;
+    }
+    Py_INCREF(value);
+    return value;
 }
+#endif
 
 /* UnpackUnboundCMethod */
 static PyObject *__Pyx_SelflessCall(PyObject *method, PyObject *args, PyObject *kwargs) {
@@ -30759,29 +30810,6 @@ __pyx_fail:
     return result;
 }
 
-/* ObjectToMemviewSlice */
-  static CYTHON_INLINE __Pyx_memviewslice __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(PyObject *obj, int writable_flag) {
-    __Pyx_memviewslice result = { 0, 0, { 0 }, { 0 }, { 0 } };
-    __Pyx_BufFmt_StackElem stack[2];
-    int axes_specs[] = { (__Pyx_MEMVIEW_DIRECT | __Pyx_MEMVIEW_STRIDED) };
-    int retcode;
-    if (obj == Py_None) {
-        result.memview = (struct __pyx_memoryview_obj *) Py_None;
-        return result;
-    }
-    retcode = __Pyx_ValidateAndInit_memviewslice(axes_specs, 0,
-                                                 PyBUF_RECORDS_RO | writable_flag, 1,
-                                                 &__Pyx_TypeInfo_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge, stack,
-                                                 &result, obj);
-    if (unlikely(retcode == -1))
-        goto __pyx_fail;
-    return result;
-__pyx_fail:
-    result.memview = NULL;
-    result.data = NULL;
-    return result;
-}
-
 /* MemviewDtypeToObject */
   static CYTHON_INLINE PyObject *__pyx_memview_get_int(const char *itemp) {
     return (PyObject *) __Pyx_PyInt_From_int(*(int *) itemp);
@@ -31357,6 +31385,77 @@ raise_neg_overflow:
     return (int) -1;
 }
 
+/* CIntToPy */
+  static CYTHON_INLINE PyObject* __Pyx_PyInt_From_signed_char(signed char value) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const signed char neg_one = (signed char) -1, const_zero = (signed char) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+    if (is_unsigned) {
+        if (sizeof(signed char) < sizeof(long)) {
+            return PyInt_FromLong((long) value);
+        } else if (sizeof(signed char) <= sizeof(unsigned long)) {
+            return PyLong_FromUnsignedLong((unsigned long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(signed char) <= sizeof(unsigned PY_LONG_LONG)) {
+            return PyLong_FromUnsignedLongLong((unsigned PY_LONG_LONG) value);
+#endif
+        }
+    } else {
+        if (sizeof(signed char) <= sizeof(long)) {
+            return PyInt_FromLong((long) value);
+#ifdef HAVE_LONG_LONG
+        } else if (sizeof(signed char) <= sizeof(PY_LONG_LONG)) {
+            return PyLong_FromLongLong((PY_LONG_LONG) value);
+#endif
+        }
+    }
+    {
+        unsigned char *bytes = (unsigned char *)&value;
+#if !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX >= 0x030d00A4
+        if (is_unsigned) {
+            return PyLong_FromUnsignedNativeBytes(bytes, sizeof(value), -1);
+        } else {
+            return PyLong_FromNativeBytes(bytes, sizeof(value), -1);
+        }
+#elif !CYTHON_COMPILING_IN_LIMITED_API && PY_VERSION_HEX < 0x030d0000
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        return _PyLong_FromByteArray(bytes, sizeof(signed char),
+                                     little, !is_unsigned);
+#else
+        int one = 1; int little = (int)*(unsigned char *)&one;
+        PyObject *from_bytes, *result = NULL;
+        PyObject *py_bytes = NULL, *arg_tuple = NULL, *kwds = NULL, *order_str = NULL;
+        from_bytes = PyObject_GetAttrString((PyObject*)&PyLong_Type, "from_bytes");
+        if (!from_bytes) return NULL;
+        py_bytes = PyBytes_FromStringAndSize((char*)bytes, sizeof(signed char));
+        if (!py_bytes) goto limited_bad;
+        order_str = PyUnicode_FromString(little ? "little" : "big");
+        if (!order_str) goto limited_bad;
+        arg_tuple = PyTuple_Pack(2, py_bytes, order_str);
+        if (!arg_tuple) goto limited_bad;
+        if (!is_unsigned) {
+            kwds = PyDict_New();
+            if (!kwds) goto limited_bad;
+            if (PyDict_SetItemString(kwds, "signed", __Pyx_NewRef(Py_True))) goto limited_bad;
+        }
+        result = PyObject_Call(from_bytes, arg_tuple, kwds);
+        limited_bad:
+        Py_XDECREF(kwds);
+        Py_XDECREF(arg_tuple);
+        Py_XDECREF(order_str);
+        Py_XDECREF(py_bytes);
+        Py_XDECREF(from_bytes);
+        return result;
+#endif
+    }
+}
+
 /* CIntFromPy */
   static CYTHON_INLINE unsigned int __Pyx_PyInt_As_unsigned_int(PyObject *x) {
 #ifdef __Pyx_HAS_GCC_DIAGNOSTIC
@@ -31622,6 +31721,273 @@ raise_neg_overflow:
     PyErr_SetString(PyExc_OverflowError,
         "can't convert negative value to unsigned int");
     return (unsigned int) -1;
+}
+
+/* CIntFromPy */
+  static CYTHON_INLINE signed char __Pyx_PyInt_As_signed_char(PyObject *x) {
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wconversion"
+#endif
+    const signed char neg_one = (signed char) -1, const_zero = (signed char) 0;
+#ifdef __Pyx_HAS_GCC_DIAGNOSTIC
+#pragma GCC diagnostic pop
+#endif
+    const int is_unsigned = neg_one > const_zero;
+#if PY_MAJOR_VERSION < 3
+    if (likely(PyInt_Check(x))) {
+        if ((sizeof(signed char) < sizeof(long))) {
+            __PYX_VERIFY_RETURN_INT(signed char, long, PyInt_AS_LONG(x))
+        } else {
+            long val = PyInt_AS_LONG(x);
+            if (is_unsigned && unlikely(val < 0)) {
+                goto raise_neg_overflow;
+            }
+            return (signed char) val;
+        }
+    }
+#endif
+    if (unlikely(!PyLong_Check(x))) {
+        signed char val;
+        PyObject *tmp = __Pyx_PyNumber_IntOrLong(x);
+        if (!tmp) return (signed char) -1;
+        val = __Pyx_PyInt_As_signed_char(tmp);
+        Py_DECREF(tmp);
+        return val;
+    }
+    if (is_unsigned) {
+#if CYTHON_USE_PYLONG_INTERNALS
+        if (unlikely(__Pyx_PyLong_IsNeg(x))) {
+            goto raise_neg_overflow;
+        } else if (__Pyx_PyLong_IsCompact(x)) {
+            __PYX_VERIFY_RETURN_INT(signed char, __Pyx_compact_upylong, __Pyx_PyLong_CompactValueUnsigned(x))
+        } else {
+            const digit* digits = __Pyx_PyLong_Digits(x);
+            assert(__Pyx_PyLong_DigitCount(x) > 1);
+            switch (__Pyx_PyLong_DigitCount(x)) {
+                case 2:
+                    if ((8 * sizeof(signed char) > 1 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) >= 2 * PyLong_SHIFT)) {
+                            return (signed char) (((((signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0]));
+                        }
+                    }
+                    break;
+                case 3:
+                    if ((8 * sizeof(signed char) > 2 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) >= 3 * PyLong_SHIFT)) {
+                            return (signed char) (((((((signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0]));
+                        }
+                    }
+                    break;
+                case 4:
+                    if ((8 * sizeof(signed char) > 3 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) >= 4 * PyLong_SHIFT)) {
+                            return (signed char) (((((((((signed char)digits[3]) << PyLong_SHIFT) | (signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0]));
+                        }
+                    }
+                    break;
+            }
+        }
+#endif
+#if CYTHON_COMPILING_IN_CPYTHON && PY_VERSION_HEX < 0x030C00A7
+        if (unlikely(Py_SIZE(x) < 0)) {
+            goto raise_neg_overflow;
+        }
+#else
+        {
+            int result = PyObject_RichCompareBool(x, Py_False, Py_LT);
+            if (unlikely(result < 0))
+                return (signed char) -1;
+            if (unlikely(result == 1))
+                goto raise_neg_overflow;
+        }
+#endif
+        if ((sizeof(signed char) <= sizeof(unsigned long))) {
+            __PYX_VERIFY_RETURN_INT_EXC(signed char, unsigned long, PyLong_AsUnsignedLong(x))
+#ifdef HAVE_LONG_LONG
+        } else if ((sizeof(signed char) <= sizeof(unsigned PY_LONG_LONG))) {
+            __PYX_VERIFY_RETURN_INT_EXC(signed char, unsigned PY_LONG_LONG, PyLong_AsUnsignedLongLong(x))
+#endif
+        }
+    } else {
+#if CYTHON_USE_PYLONG_INTERNALS
+        if (__Pyx_PyLong_IsCompact(x)) {
+            __PYX_VERIFY_RETURN_INT(signed char, __Pyx_compact_pylong, __Pyx_PyLong_CompactValue(x))
+        } else {
+            const digit* digits = __Pyx_PyLong_Digits(x);
+            assert(__Pyx_PyLong_DigitCount(x) > 1);
+            switch (__Pyx_PyLong_SignedDigitCount(x)) {
+                case -2:
+                    if ((8 * sizeof(signed char) - 1 > 1 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, long, -(long) (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 2 * PyLong_SHIFT)) {
+                            return (signed char) (((signed char)-1)*(((((signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+                case 2:
+                    if ((8 * sizeof(signed char) > 1 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 2 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 2 * PyLong_SHIFT)) {
+                            return (signed char) ((((((signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+                case -3:
+                    if ((8 * sizeof(signed char) - 1 > 2 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, long, -(long) (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 3 * PyLong_SHIFT)) {
+                            return (signed char) (((signed char)-1)*(((((((signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+                case 3:
+                    if ((8 * sizeof(signed char) > 2 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 3 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((((unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 3 * PyLong_SHIFT)) {
+                            return (signed char) ((((((((signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+                case -4:
+                    if ((8 * sizeof(signed char) - 1 > 3 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, long, -(long) (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 4 * PyLong_SHIFT)) {
+                            return (signed char) (((signed char)-1)*(((((((((signed char)digits[3]) << PyLong_SHIFT) | (signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+                case 4:
+                    if ((8 * sizeof(signed char) > 3 * PyLong_SHIFT)) {
+                        if ((8 * sizeof(unsigned long) > 4 * PyLong_SHIFT)) {
+                            __PYX_VERIFY_RETURN_INT(signed char, unsigned long, (((((((((unsigned long)digits[3]) << PyLong_SHIFT) | (unsigned long)digits[2]) << PyLong_SHIFT) | (unsigned long)digits[1]) << PyLong_SHIFT) | (unsigned long)digits[0])))
+                        } else if ((8 * sizeof(signed char) - 1 > 4 * PyLong_SHIFT)) {
+                            return (signed char) ((((((((((signed char)digits[3]) << PyLong_SHIFT) | (signed char)digits[2]) << PyLong_SHIFT) | (signed char)digits[1]) << PyLong_SHIFT) | (signed char)digits[0])));
+                        }
+                    }
+                    break;
+            }
+        }
+#endif
+        if ((sizeof(signed char) <= sizeof(long))) {
+            __PYX_VERIFY_RETURN_INT_EXC(signed char, long, PyLong_AsLong(x))
+#ifdef HAVE_LONG_LONG
+        } else if ((sizeof(signed char) <= sizeof(PY_LONG_LONG))) {
+            __PYX_VERIFY_RETURN_INT_EXC(signed char, PY_LONG_LONG, PyLong_AsLongLong(x))
+#endif
+        }
+    }
+    {
+        signed char val;
+        int ret = -1;
+#if PY_VERSION_HEX >= 0x030d00A6 && !CYTHON_COMPILING_IN_LIMITED_API
+        Py_ssize_t bytes_copied = PyLong_AsNativeBytes(
+            x, &val, sizeof(val), Py_ASNATIVEBYTES_NATIVE_ENDIAN | (is_unsigned ? Py_ASNATIVEBYTES_UNSIGNED_BUFFER | Py_ASNATIVEBYTES_REJECT_NEGATIVE : 0));
+        if (unlikely(bytes_copied == -1)) {
+        } else if (unlikely(bytes_copied > (Py_ssize_t) sizeof(val))) {
+            goto raise_overflow;
+        } else {
+            ret = 0;
+        }
+#elif PY_VERSION_HEX < 0x030d0000 && !(CYTHON_COMPILING_IN_PYPY || CYTHON_COMPILING_IN_LIMITED_API) || defined(_PyLong_AsByteArray)
+        int one = 1; int is_little = (int)*(unsigned char *)&one;
+        unsigned char *bytes = (unsigned char *)&val;
+        ret = _PyLong_AsByteArray((PyLongObject *)x,
+                                    bytes, sizeof(val),
+                                    is_little, !is_unsigned);
+#else
+        PyObject *v;
+        PyObject *stepval = NULL, *mask = NULL, *shift = NULL;
+        int bits, remaining_bits, is_negative = 0;
+        int chunk_size = (sizeof(long) < 8) ? 30 : 62;
+        if (likely(PyLong_CheckExact(x))) {
+            v = __Pyx_NewRef(x);
+        } else {
+            v = PyNumber_Long(x);
+            if (unlikely(!v)) return (signed char) -1;
+            assert(PyLong_CheckExact(v));
+        }
+        {
+            int result = PyObject_RichCompareBool(v, Py_False, Py_LT);
+            if (unlikely(result < 0)) {
+                Py_DECREF(v);
+                return (signed char) -1;
+            }
+            is_negative = result == 1;
+        }
+        if (is_unsigned && unlikely(is_negative)) {
+            Py_DECREF(v);
+            goto raise_neg_overflow;
+        } else if (is_negative) {
+            stepval = PyNumber_Invert(v);
+            Py_DECREF(v);
+            if (unlikely(!stepval))
+                return (signed char) -1;
+        } else {
+            stepval = v;
+        }
+        v = NULL;
+        val = (signed char) 0;
+        mask = PyLong_FromLong((1L << chunk_size) - 1); if (unlikely(!mask)) goto done;
+        shift = PyLong_FromLong(chunk_size); if (unlikely(!shift)) goto done;
+        for (bits = 0; bits < (int) sizeof(signed char) * 8 - chunk_size; bits += chunk_size) {
+            PyObject *tmp, *digit;
+            long idigit;
+            digit = PyNumber_And(stepval, mask);
+            if (unlikely(!digit)) goto done;
+            idigit = PyLong_AsLong(digit);
+            Py_DECREF(digit);
+            if (unlikely(idigit < 0)) goto done;
+            val |= ((signed char) idigit) << bits;
+            tmp = PyNumber_Rshift(stepval, shift);
+            if (unlikely(!tmp)) goto done;
+            Py_DECREF(stepval); stepval = tmp;
+        }
+        Py_DECREF(shift); shift = NULL;
+        Py_DECREF(mask); mask = NULL;
+        {
+            long idigit = PyLong_AsLong(stepval);
+            if (unlikely(idigit < 0)) goto done;
+            remaining_bits = ((int) sizeof(signed char) * 8) - bits - (is_unsigned ? 0 : 1);
+            if (unlikely(idigit >= (1L << remaining_bits)))
+                goto raise_overflow;
+            val |= ((signed char) idigit) << bits;
+        }
+        if (!is_unsigned) {
+            if (unlikely(val & (((signed char) 1) << (sizeof(signed char) * 8 - 1))))
+                goto raise_overflow;
+            if (is_negative)
+                val = ~val;
+        }
+        ret = 0;
+    done:
+        Py_XDECREF(shift);
+        Py_XDECREF(mask);
+        Py_XDECREF(stepval);
+#endif
+        if (unlikely(ret))
+            return (signed char) -1;
+        return val;
+    }
+raise_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "value too large to convert to signed char");
+    return (signed char) -1;
+raise_neg_overflow:
+    PyErr_SetString(PyExc_OverflowError,
+        "can't convert negative value to signed char");
+    return (signed char) -1;
 }
 
 /* CIntToPy */
@@ -32239,7 +32605,7 @@ __Pyx_PyType_GetName(PyTypeObject* tp)
     if (unlikely(name == NULL) || unlikely(!PyUnicode_Check(name))) {
         PyErr_Clear();
         Py_XDECREF(name);
-        name = __Pyx_NewRef(__pyx_n_s__33);
+        name = __Pyx_NewRef(__pyx_n_s__31);
     }
     return name;
 }

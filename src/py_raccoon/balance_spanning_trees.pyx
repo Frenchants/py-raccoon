@@ -27,16 +27,23 @@ cdef extern from "<random>" namespace "std":
 cdef packed struct Edge:
     int a
     int b
+    signed char weight
 
 NP_EDGE = np.dtype([
     ('a', np.int32),
     ('b', np.int32),
+    ('weight', np.int8),
 ])
 
 cdef packed struct LcaResult:
     int a
     int b
     int lca
+    signed char bal
+
+cdef packed struct Graph_c:
+    int** neighbors
+    signed char** weights
 
 NP_LCA_RESULT = np.dtype([
     ('a', np.int32),
@@ -48,6 +55,7 @@ cdef struct LcaLookup:
     int other
     int a
     int b
+    signed char weight
 
 # initializes ancestor array, where ancestor of each node is the node itself
 cdef inline int* uf_init(int size) nogil: 
@@ -85,9 +93,10 @@ cdef inline void uf_union(int* parent, int a, int b) noexcept nogil:
     parent[uf_find(parent, a)] = uf_find(parent, b)
 
 
-cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
+cdef int __inner_lca(signed char[:] parent_weight, signed char* balance, int node, vector[int]** children, vector[LcaLookup]** queries, LcaResult* result, int* result_count, int* partition, int* ancestor, char* node_color) nogil: # nogil means that code may be executed without Global Interpreter Lock (which is a mutex to ensure that multiple threads dont execute the code at the same time)
     for child in children[node][0]:
-        __inner_lca(child, children, queries, result, result_count, partition, ancestor, node_color)
+        balance[child] = balance[node] * parent_weight[child]
+        __inner_lca(parent_weight, balance, child, children, queries, result, result_count, partition, ancestor, node_color)
         uf_union(partition, node, child)
         ancestor[uf_find(partition, node)] = node
     node_color[node] = 1
@@ -96,25 +105,15 @@ cdef int __inner_lca(int node, vector[int]** children, vector[LcaLookup]** queri
         a = lookup.a
         b = lookup.b
         if node_color[other]:
-            result[result_count[0]] = LcaResult(a, b, ancestor[uf_find(partition, other)])
+            lca = ancestor[uf_find(partition, other)]
+            bal = balance[a] * balance[b] * lookup.weight
+            result[result_count[0]] = LcaResult(a, b, lca, bal)
             result_count[0] += 1
     return 0
 
-def lowest_common_ancestor_py(parent: list, node_pairs: list) -> list[tuple]:
-    c_parent = np.array(parent, dtype=np.int32)
-    c_node_pairs = np.array(node_pairs, dtype=NP_EDGE)
-    result = []
-    c_res = lowest_common_ancestor(c_parent, c_node_pairs)
-    cdef LcaResult lca_res
-    for i in range(len(node_pairs)):
-        lca_res = c_res[i]
-        result.append((lca_res.a, lca_res.b, lca_res.lca))
-    free(c_res)
-    return result
-
 @cython.boundscheck(False)
 @cython.wraparound(False)
-cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
+cdef LcaResult* lowest_common_ancestor(int[:] parent, signed char[:] parent_weight, Edge[:] node_pairs):
     """
     Implementation of Tarjan's off-line lowest common ancestors algorithm
     (https://en.wikipedia.org/wiki/Tarjan%27s_off-line_lowest_common_ancestors_algorithm, https://doi.org/10.1145%2F322154.322161)
@@ -129,16 +128,17 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
     It is especially faster than the sorting we perform afterward.
     """
     cdef int p_size = parent.shape[0] # the number of nodes
-    cdef char* node_color = <char*> malloc(p_size * sizeof(char)) # pointer to array in memory with an entry of type char for every node (an array containing each node's color)
-    cdef int* ancestor = <int*> malloc(p_size * sizeof(int)) # pointer to array in memory with an entry of type int for every node (an array containing each node's ancestor)
+    cdef char* node_color = <char*> malloc(p_size * sizeof(char))
+    cdef int* ancestor = <int*> malloc(p_size * sizeof(int))
     cdef int i, node, p # both for iterating
     cdef Edge edge
     cdef int* partition = uf_init(p_size)
+    cdef signed char* balance = <signed char*> malloc(p_size * sizeof(signed char))
 
-    cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult)) # LcaResult is a struct containing nodes a and b and the node lca (where lca is their lowest-common-ancestor). So this is an array of LcaResults 
-    cdef int result_count = 0 # in inner_lca used to keep track of how many LcaResult were already computed and stored in "result"
-    cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*)) # children is a pointer to an array of pointers to vectors whose entries have data type int (vector comes from libcpp which is imported at the start of the file)
-    cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*)) # LcaLookup is a struct containing a, b und other. So this is a pointer to an array of pointers to vectors whose entries are of type LcaLookup. The vectors are from C++ (import via libcpp) and they do not have a fixed size. That is when called .push_back(elem) on them, elem will be added to them (like a list in python i guess). There is one vector for every node
+    cdef LcaResult* result = <LcaResult*> malloc(node_pairs.shape[0] * sizeof(LcaResult))
+    cdef int result_count = 0
+    cdef vector[int]** children = <vector[int]**> malloc(p_size * sizeof(void*))
+    cdef vector[LcaLookup]** queries = <vector[LcaLookup]**> malloc(p_size * sizeof(void*))
     
     # initializing stuff 
     for i in range(p_size):
@@ -154,9 +154,9 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
         for node in range(p_size):
             p = parent[node]
             if p != -1:
-                children[p][0].push_back(node) # hier wird das children addrey initialisiert, d.h. für alle nodes werden dessen children gefunden
+                children[p][0].push_back(node)
             else:
-                root = node # root node ist die node, dessen parent -1 ist (also keinen parent hat.)
+                root = node
 
         # need to efficiently retrieve queries
         # node -> (other, edge[0], edge[1])
@@ -165,19 +165,15 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
 
         for i in range(node_pairs.shape[0]):
             edge = node_pairs[i]
-            a = edge.a # a und b sind die jeweiligen Enden der edge jedes node_pairs (node pairs sind ja Eingabe des OLCA)
+            a = edge.a
             b = edge.b
-            queries[a][0].push_back(LcaLookup(b,a,b)) # add LcaLookup struct to the vector of every node (a is the main node here and b is the other node)
-            queries[b][0].push_back(LcaLookup(a,a,b)) # b is the main node here and a is the other node
+            weight = edge.weight
+            queries[a][0].push_back(LcaLookup(b,a,b,weight))
+            queries[b][0].push_back(LcaLookup(a,a,b,weight))
         
-        # we are passing:
-        # the root, the vector array called children which contains every node's children
-        # the queries
-        # the pointer result to the array of LcaResults
-        # the pointer partition to an array of every node's ancestors (which is used for the union-find datastructure)
-        # the ancestor array
-        # the node color array 
-        __inner_lca(root, children, queries, result, &result_count, partition, ancestor, node_color)
+        balance[root] = 1
+
+        __inner_lca(parent_weight, balance, root, children, queries, result, &result_count, partition, ancestor, node_color)
 
     finally:
         free(ancestor)
@@ -188,6 +184,7 @@ cdef LcaResult* lowest_common_ancestor(int[:] parent, Edge[:] node_pairs):
             del queries[i]
         free(children)
         free(queries)
+        free(balance)
 
     return result
 
@@ -214,7 +211,7 @@ def calc_depth(parent: np.ndarray) -> np.ndarray:
     return depth
 
 @cython.wraparound(False)
-cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:] parent, rnd):
+cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, signed char** weights, int[:] parent, signed char[:] parent_weight, rnd):
     cdef mt19937 c_rnd = mt19937(rnd.integers(0, 1 << 32))
     cdef uniform_int_distribution[int] dist = uniform_int_distribution[int](0, size - 1)
     cdef int root = dist(c_rnd) #rnd.choice(size) #rand() % size
@@ -234,6 +231,7 @@ cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:
                 dist = uniform_int_distribution[int](0, degree[u] - 1)
                 choice = dist(c_rnd) #c_rnd() % degree[u] # random(c_rnd, degree[u]) #rand() % degree[u]#rnd.choice(degree[u]) # 
                 parent[u] = neighbors[u][choice]
+                parent_weight[u] = weights[u][choice]
                 u = parent[u]
             
             u = i
@@ -243,6 +241,27 @@ cdef int uniform_spanning_tree_c(int size, int[:] degree, int** neighbors, int[:
     finally:
         free(in_tree)
     return root
+
+@cython.wraparound(False)
+cdef Graph_c to_Graph_c(int size, int[:] degree, G):
+    cdef int** neighbors = <int**> malloc(sizeof(int*) * size)
+    cdef signed char** weights = <signed char**> malloc(sizeof(signed char*) * size)
+    cdef int i, j, u
+    for i in range(size):
+        neighbors[i] = <int*> malloc(degree[i] * sizeof(int))
+        weights[i] = <signed char*> malloc(degree[i] * sizeof(signed char))
+        adj_nodes = G[i]
+        for j, u in enumerate(adj_nodes):
+            neighbors[i][j] = u
+            weights[i][j] = adj_nodes[u]['weight']
+    return Graph_c(neighbors, weights)
+
+cdef void free_neighbors_and_weights(int size, int** neighbors, signed char** weights):
+    for i in range(size):
+        free(neighbors[i])
+        free(weights[i])
+    free(neighbors)
+    free(weights)
 
 @cython.wraparound(False)
 cdef int** graph_to_neighbors(int size, int[:] degree, G):
@@ -274,7 +293,8 @@ def uniform_spanning_tree(G: nx.Graph, rnd: np.random.Generator) -> np.ndarray[n
 
     try:
         #srand(rnd.choice(100) + 5)
-        uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
+        #uniform_spanning_tree_c(size, degree, neighbors, parent, rnd)
+        pass
     finally:
         free_graph_neighbors(size, neighbors)
     
