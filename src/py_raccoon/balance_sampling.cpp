@@ -4,13 +4,10 @@
 {
     "distutils": {
         "depends": [],
-        "include_dirs": [
-            "src/"
-        ],
         "language": "c++",
         "name": "py_raccoon.balance_sampling",
         "sources": [
-            "src/py_raccoon/balance_sampling.pyx"
+            "/Users/fredericbusch/Desktop/Thesis/py-raccoon_fork/py-raccoon/src/py_raccoon/balance_sampling.pyx"
         ]
     },
     "module_name": "py_raccoon.balance_sampling"

@@ -1,0 +1,8 @@
+host: MBPvonFrederic
+Building DAG of jobs...
+MissingInputException in rule cythonize in file /Users/fredericbusch/Desktop/Thesis/py-raccoon_fork/py-raccoon/workflow/Snakefile, line 3:
+Missing input files for rule cythonize:
+    output: __cythonized__
+    affected files:
+        src/py_raccoon/balance_sampling.pyx
+        src/py_raccoon/balance_spanning_trees.pyx
