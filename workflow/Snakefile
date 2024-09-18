@@ -22,3 +22,11 @@ rule first_experiment:
         "results/my_first_output.csv"
     script:
         "scripts/random_graph_csv.py"
+
+rule first_plot: 
+    input:
+        "results/my_first_output.csv"
+    output:
+        "results/my_first_plot.pdf"
+    script:
+        "scripts/plot.py"
