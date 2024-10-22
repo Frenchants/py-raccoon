@@ -1,6 +1,0 @@
-host: MBPvonFrederic
-Building DAG of jobs...
-MissingInputException in rule all in file /Users/fredericbusch/Desktop/Thesis/py-raccoon_fork/py-raccoon/workflow/Snakefile, line 3:
-Missing input files for rule all:
-    affected files:
-        my_first_output.csv

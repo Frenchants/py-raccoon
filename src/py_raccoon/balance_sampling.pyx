@@ -69,7 +69,7 @@ def estimate_balance(G: nx.Graph, samples: int, p: float | None = None, seed:int
 
 @cython.boundscheck(False)
 @cython.wraparound(False)
-def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, samples: int, seed: np.random.Generator) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[bool], NDArray[bool], NDArray[bool], NDArray[np.int32], NDArray[np.int32], NDArray[np.int32]]:
+def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, samples: int, seed: np.random.Generator) -> tuple[NDArray[np.float64], NDArray[np.float64], NDArray[np.float64], NDArray[np.int32], NDArray[np.int32], NDArray[np.int32]]:
     """
     Estimates the number of cycles in `G` for each length.
 
@@ -159,12 +159,11 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     negative_zeros = np_negative_expected_counts == 0
 
     with np.errstate(divide='ignore'):
-        # WAHRSCHEINLCIH IWIE FALSCH
         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
         np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)
     
-    return np_total_est_counts, np_positive_est_counts, np_negative_est_counts, total_zeros, positive_zeros, negative_zeros, np_total_occurred, np_positive_occurred, np_negative_occurred
+    return np_total_est_counts, np_positive_est_counts, np_negative_est_counts, np_total_occurred, np_positive_occurred, np_negative_occurred
 
 @cython.boundscheck(False)
 @cython.wraparound(False)

@@ -3,7 +3,8 @@ from Cython.Build import cythonize
 rule all: 
     input:
         "results/__cythonized__",
-        "results/my_first_output.csv"
+        "results/pyr.csv",
+        "results/cx.csv"
 
 rule cythonize:
     # Cythonizes the required files.
@@ -17,11 +18,13 @@ rule cythonize:
         # remove option '-a' if you don't need to debug / profile
         "C_INCLUDE_PATH=$(python -c 'import numpy; print(numpy.get_include())') cythonize -i -a {input} && touch {output}"
 
-rule first_experiment:
+rule exp:
+    input:
+        "results/__cythonized__"
     output:
-        "results/my_first_output.csv"
+        "results/{alg}.csv"
     script:
-        "scripts/random_graph_csv.py"
+        "scripts/compute.py"
 
 rule first_plot: 
     input:

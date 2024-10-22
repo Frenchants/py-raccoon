@@ -5,3 +5,4 @@ build
 src/cell_sprouter.egg-info
 src/py_raccoon.egg-info
 __pycache__
+*.DS_Store
