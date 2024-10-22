@@ -5,7 +5,7 @@ import random
 import pandas as pd
 
 import utils
-from snakemake.script import Snakemake
+from snakemake.script import Snakemake # type: ignore
 from py_raccoon.balance_sampling import estimate_balance
 from py_raccoon.sampling import estimate_cycle_count
 from cycleindex import balance_ratio, clean_matrix, to_adj_matrix, vxsampling
