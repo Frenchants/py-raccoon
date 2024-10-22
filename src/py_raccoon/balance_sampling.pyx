@@ -154,10 +154,6 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     np_total_occurred = np_positive_occurred + np_negative_occurred
     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
 
-    total_zeros = np_total_expected_counts == 0
-    positive_zeros = np_positive_expected_counts == 0
-    negative_zeros = np_negative_expected_counts == 0
-
     with np.errstate(divide='ignore'):
         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)

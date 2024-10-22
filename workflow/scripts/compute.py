@@ -18,6 +18,19 @@ def fix_smk() -> Snakemake:
     """
     return snakemake
 
+def process_pyr_results(total, pos, neg, total_occurred, pos_occurred, neg_occurred):
+    
+    total_zeros = total == 0
+    pos_zeros = pos == 0
+    neg_zeros = neg == 0
+
+    data = []
+    for l in range(len(total)):
+            data.append({'l': l, 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
+    
+    return data
+
+
 def process_cx_results(plus_plus, plus_minus):
    
     plus_plus = np.asarray(plus_plus)
@@ -53,7 +66,11 @@ def process_cx_results(plus_plus, plus_minus):
     zeros_pos = avg_pos == 0
     zeros_neg = avg_neg == 0
 
-    return avg_total, avg_pos, avg_neg, zeros_total, zeros_pos, zeros_neg, std_total, std_pos, std_neg
+    data = []
+    for l in range(len(avg_total)):
+            data.append({'l': l, 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
+    
+    return data
 
 
 if __name__ == "__main__":
@@ -101,19 +118,16 @@ if __name__ == "__main__":
 
     if alg == 'pyr':
 
-        total, pos, neg, total_occurred, pos_occurred, neg_occurred = estimate_balance(G, samples=samples, p=prob_p, seed=rnd)
+        results = estimate_balance(G, samples=samples, p=prob_p, seed=rnd)
+        data = process_pyr_results(*results)
 
     elif alg == 'cx':
         
         adj_matrix = clean_matrix(to_adj_matrix(G))
-        plus_plus, plus_minus = balance_ratio(adj_matrix, 10, exact=False, n_samples=samples, parallel=False)
+        results = balance_ratio(adj_matrix, 10, exact=False, n_samples=samples, parallel=False)
+        data = process_cx_results(*results)
 
-        avg_total, avg_pos, avg_neg, zeros_total, zeros_pos, zeros_neg, std_total, std_pos, std_neg = process_cx_results(plus_plus, plus_minus)
-
-        for l in range(len(avg_total)):
-            data.append({'l': l, 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
-
-
+        
     
     df_data = pd.DataFrame(data)
     df_data.to_csv(snakemake.output[0])
