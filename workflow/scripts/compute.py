@@ -37,11 +37,6 @@ def save_cx_results(plus_minus, plus_plus):
    
     plus_plus = np.asarray(plus_plus)
     plus_minus = np.asarray(plus_minus)
-
-    if directed_graph:
-         plus_plus /= 2
-         plus_minus /= 2
-         plus_plus[1] = plus_minus[1] = 0
     
     if plus_minus.ndim == 1:
         plus_minus = np.expand_dims(plus_minus, 0)
@@ -50,24 +45,49 @@ def save_cx_results(plus_minus, plus_plus):
         plus_minus = np.concatenate(plus_minus)
         plus_plus = np.concatenate(plus_plus)
 
+    if not directed_graph:
+         plus_plus /= 2
+         plus_minus /= 2
+              
     pos = (plus_plus + plus_minus) / 2
     neg = plus_plus - pos
+    neg_degree_of_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    pos_degree_of_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    neg_to_pos_ratio = np.nan_to_num(neg / pos, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    pos_to_neg_ratio = np.nan_to_num(pos / neg, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
 
-    std_total = np.empty(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
-    avg_total = np.empty(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
-    std_pos = np.empty(pos.shape[1] + 1, dtype=pos.dtype)
-    avg_pos = np.empty(pos.shape[1] + 1, dtype=pos.dtype)
-    std_neg = np.empty(neg.shape[1] + 1, dtype=neg.dtype)
-    avg_neg = np.empty(neg.shape[1] + 1, dtype=neg.dtype)
-
-    std_total[0] = avg_total[0] = std_pos[0] = avg_pos[0] = std_neg[0] = avg_neg[0] = 0
-
+    std_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
+    avg_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
+    std_pos = np.zeros(pos.shape[1] + 1, dtype=pos.dtype)
+    avg_pos = np.zeros(pos.shape[1] + 1, dtype=pos.dtype)
+    std_neg = np.zeros(neg.shape[1] + 1, dtype=neg.dtype)
+    avg_neg = np.zeros(neg.shape[1] + 1, dtype=neg.dtype)
+    std_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1] + 1, dtype=pos_degree_of_bal.dtype)
+    avg_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1] + 1, dtype=pos_degree_of_bal.dtype)
+    std_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1] + 1, dtype=neg_degree_of_bal.dtype)
+    avg_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1] + 1, dtype=neg_degree_of_bal.dtype)
+    std_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1] + 1, dtype=pos_to_neg_ratio.dtype)
+    avg_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1] + 1, dtype=pos_to_neg_ratio.dtype)
+    std_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
+    avg_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
+    
     std_total[1:] = np.std(plus_plus, axis=0)
     avg_total[1:] = np.mean(plus_plus, axis=0)
     std_pos[1:] = np.std(pos, axis=0)
     avg_pos[1:] = np.mean(pos, axis=0)
     std_neg[1:] = np.std(neg, axis=0)
     avg_neg[1:] = np.mean(neg, axis=0)
+    std_pos_degree_of_bal[1:] = np.std(pos_degree_of_bal, axis=0)
+    avg_pos_degree_of_bal[1:] = np.mean(pos_degree_of_bal, axis=0)
+    std_neg_degree_of_bal[1:] = np.std(neg_degree_of_bal, axis=0)
+    avg_neg_degree_of_bal[1:] = np.mean(neg_degree_of_bal, axis=0)
+    std_pos_to_neg_ratio[1:] = np.std(pos_to_neg_ratio, axis=0)
+    avg_pos_to_neg_ratio[1:] = np.mean(pos_to_neg_ratio, axis=0)
+    std_neg_to_pos_ratio[1:] = np.std(neg_to_pos_ratio, axis=0)
+    avg_neg_to_pos_ratio[1:] = np.mean(neg_to_pos_ratio, axis=0)
+
+    if not directed_graph:
+         std_total[2] = avg_total[2] = std_pos[2] = avg_pos[2] = std_neg[2] = avg_neg[2] = std_pos_degree_of_bal[2] = avg_pos_degree_of_bal[2] = std_neg_degree_of_bal[2] = avg_neg_degree_of_bal[2] = std_pos_to_neg_ratio[2] = avg_pos_to_neg_ratio[2] = std_neg_to_pos_ratio[2] = avg_neg_to_pos_ratio[2]
 
     zeros_total = avg_total == 0
     zeros_pos = avg_pos == 0
@@ -75,7 +95,17 @@ def save_cx_results(plus_minus, plus_plus):
 
     data = []
     for l in range(len(avg_total)):
-            data.append({'l': l, 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
+            data.append({'l': l, 'avg_pos_degree_of_bal': avg_pos_degree_of_bal[l], 'avg_neg_degree_of_bal': avg_neg_degree_of_bal[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_degree_of_bal': std_pos_degree_of_bal[l], 'std_neg_degree_of_bal': std_neg_degree_of_bal[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
+    
+    total_sum_cycles = np.sum(plus_plus, axis=1)
+    pos_sum_cycles = np.sum(pos, axis=1)
+    neg_sum_cycles = np.sum(neg, axis=1)
+    
+    pos_degree_of_bal_graph = np.mean(np.nan_to_num(pos_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
+    neg_degree_of_bal_graph = np.mean(np.nan_to_num(neg_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
+
+    data[0]['pos_degree_of_bal_graph'] = pos_degree_of_bal_graph
+    data[0]['neg_degree_of_bal_graph'] = neg_degree_of_bal_graph
     
     return data
 
@@ -94,6 +124,7 @@ def save_exp_params(data):
     if alg == 'cx': data[0]['matrix_mem'] = matrix_mem
     data[0]['script_run_time'] = script_end_time - script_start_time
     data[0]['exp_date'] = exp_date
+    data[0]['seed'] = seed
 
     if kind == 'er':
          pass
@@ -173,5 +204,7 @@ if __name__ == "__main__":
     df_data.to_csv(snakemake.output[0])
 
 
-    # ToDo: 
-    # Es fehlt noch das mit dem undirected. Und außerdem Ordnerstruktur überlegen.
+    # ToDo für Montag: 
+    # Ordnerstruktur überlegen.
+    # Überlegen, welche Graphen du testest
+    # balance ratios berechnen und zusätzlich speichern
