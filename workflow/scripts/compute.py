@@ -55,6 +55,7 @@ def save_cx_results(plus_minus, plus_plus):
     pos_degree_of_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
     neg_to_pos_ratio = np.nan_to_num(neg / pos, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
     pos_to_neg_ratio = np.nan_to_num(pos / neg, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    rel_signed_clust_coeff = np.nan_to_num(plus_minus / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
 
     std_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
     avg_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
@@ -70,6 +71,8 @@ def save_cx_results(plus_minus, plus_plus):
     avg_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1] + 1, dtype=pos_to_neg_ratio.dtype)
     std_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
     avg_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
+    std_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1] + 1, dtype=rel_signed_clust_coeff.dtype)
+    avg_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1] + 1, dtype=rel_signed_clust_coeff.dtype)
     
     std_total[1:] = np.std(plus_plus, axis=0)
     avg_total[1:] = np.mean(plus_plus, axis=0)
@@ -85,9 +88,11 @@ def save_cx_results(plus_minus, plus_plus):
     avg_pos_to_neg_ratio[1:] = np.mean(pos_to_neg_ratio, axis=0)
     std_neg_to_pos_ratio[1:] = np.std(neg_to_pos_ratio, axis=0)
     avg_neg_to_pos_ratio[1:] = np.mean(neg_to_pos_ratio, axis=0)
+    std_rel_signed_clust_coeff[1:] = np.std(rel_signed_clust_coeff, axis=0)
+    avg_rel_signed_clust_coeff[1:] = np.mean(rel_signed_clust_coeff, axis=0)
 
     if not directed_graph:
-         std_total[2] = avg_total[2] = std_pos[2] = avg_pos[2] = std_neg[2] = avg_neg[2] = std_pos_degree_of_bal[2] = avg_pos_degree_of_bal[2] = std_neg_degree_of_bal[2] = avg_neg_degree_of_bal[2] = std_pos_to_neg_ratio[2] = avg_pos_to_neg_ratio[2] = std_neg_to_pos_ratio[2] = avg_neg_to_pos_ratio[2]
+         std_total[2] = avg_total[2] = std_pos[2] = avg_pos[2] = std_neg[2] = avg_neg[2] = std_pos_degree_of_bal[2] = avg_pos_degree_of_bal[2] = std_neg_degree_of_bal[2] = avg_neg_degree_of_bal[2] = std_pos_to_neg_ratio[2] = avg_pos_to_neg_ratio[2] = std_neg_to_pos_ratio[2] = avg_neg_to_pos_ratio[2] = std_rel_signed_clust_coeff[2] = avg_rel_signed_clust_coeff[2] = 0
 
     zeros_total = avg_total == 0
     zeros_pos = avg_pos == 0
@@ -95,17 +100,17 @@ def save_cx_results(plus_minus, plus_plus):
 
     data = []
     for l in range(len(avg_total)):
-            data.append({'l': l, 'avg_pos_degree_of_bal': avg_pos_degree_of_bal[l], 'avg_neg_degree_of_bal': avg_neg_degree_of_bal[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_degree_of_bal': std_pos_degree_of_bal[l], 'std_neg_degree_of_bal': std_neg_degree_of_bal[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
+            data.append({'l': l, 'avg_pos_degree_of_bal': avg_pos_degree_of_bal[l], 'avg_neg_degree_of_bal': avg_neg_degree_of_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_degree_of_bal': std_pos_degree_of_bal[l], 'std_neg_degree_of_bal': std_neg_degree_of_bal[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
     
     total_sum_cycles = np.sum(plus_plus, axis=1)
     pos_sum_cycles = np.sum(pos, axis=1)
     neg_sum_cycles = np.sum(neg, axis=1)
     
-    pos_degree_of_bal_graph = np.mean(np.nan_to_num(pos_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
-    neg_degree_of_bal_graph = np.mean(np.nan_to_num(neg_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
+    avg_pos_degree_of_bal_graph = np.mean(np.nan_to_num(pos_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
+    avg_neg_degree_of_bal_graph = np.mean(np.nan_to_num(neg_sum_cycles / total_sum_cycles, copy=False, nan=0.0, posinf=0.0, neginf=0.0), axis=0)
 
-    data[0]['pos_degree_of_bal_graph'] = pos_degree_of_bal_graph
-    data[0]['neg_degree_of_bal_graph'] = neg_degree_of_bal_graph
+    data[0]['avg_pos_degree_of_bal_graph'] = avg_pos_degree_of_bal_graph
+    data[0]['avg_neg_degree_of_bal_graph'] = avg_neg_degree_of_bal_graph
     
     return data
 
@@ -113,6 +118,7 @@ def save_exp_params(data):
     data[0]['run'] = run
     data[0]['kind'] = kind
     data[0]['alg'] = alg
+    if alg == 'cx': data[0]['exact'] = exact
     data[0]['n_samples'] = n_samples
     data[0]['n_nodes'] = n_nodes
     data[0]['n_edges'] = n_edges
@@ -143,6 +149,7 @@ if __name__ == "__main__":
     prob_r = 0.5
     alg = snakemake.wildcards['alg'] #alg = "cx" # pyr for py_raccoon or cx for cycleindex
     test = snakemake.wildcards.get('test', "hello")
+    exact = False
     directed_graph = True
     exp_date = datetime.datetime.now()
 
@@ -189,7 +196,7 @@ if __name__ == "__main__":
          alg_before_mem, _ = tracemalloc.get_traced_memory()
          tracemalloc.reset_peak()
          alg_start_time = time.time()
-         results = cx.balance_ratio(adj_matrix, 10, exact=False, n_samples=n_samples, parallel=False)
+         results = cx.balance_ratio(adj_matrix, 10, exact=exact, n_samples=n_samples, parallel=False)
          alg_end_time = time.time()
          after_mem, alg_peak_mem = tracemalloc.get_traced_memory()
          data = save_cx_results(*results)
@@ -205,6 +212,7 @@ if __name__ == "__main__":
 
 
     # ToDo für Montag: 
+    # Zunächst: die ganzen balance ratios auch für pyr berechnen! 
     # Ordnerstruktur überlegen.
     # Überlegen, welche Graphen du testest
     # balance ratios berechnen und zusätzlich speichern
