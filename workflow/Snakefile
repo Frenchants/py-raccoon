@@ -3,7 +3,7 @@ from Cython.Build import cythonize
 rule all: 
     input:
         "results/__cythonized__",
-        #"results/pyr.csv",
+        "results/pyr.csv",
         "results/cx.csv"
 
 rule cythonize:

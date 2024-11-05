@@ -21,16 +21,32 @@ def fix_smk() -> Snakemake:
     """
     return snakemake
 
-def save_pyr_results(total, pos, neg, total_occurred, pos_occurred, neg_occurred):
+def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, neg_occurred):
     
-    total_zeros = total == 0
-    pos_zeros = pos == 0
-    neg_zeros = neg == 0
+    pos_degree_of_bal = np.nan_to_num(pos_est / total_est, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    neg_degree_of_bal = np.nan_to_num(neg_est / total_est, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    rel_signed_clust_coeff = np.nan_to_num((pos_est - neg_est) / total_est, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    pos_to_neg_ratio = np.nan_to_num(pos_est / neg_est, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+    neg_to_pos_ratio = np.nan_to_num(neg_est / pos_est, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
+
+    total_zeros = total_est == 0
+    pos_zeros = pos_est == 0
+    neg_zeros = neg_est == 0
 
     data = []
-    for l in range(len(total)):
-            data.append({'l': l, 'total': total[l], 'pos': pos[l], 'neg': neg[l], 'total_zeros': total_zeros[l], 'pos_zeros': pos_zeros[l], 'neg_zeros': neg_zeros[l], 'total_occurred': total_occurred[l], 'pos_occurred': pos_occurred[l], 'neg_occurred': neg_occurred[l]})
+    for l in range(len(total_est)):
+            data.append({'l': l, 'pos_degree_of_bal': pos_degree_of_bal[l], 'neg_degree_of_bal': neg_degree_of_bal[l], 'rel_signed_clust_coeff': rel_signed_clust_coeff[l], 'pos_to_neg_ratio': pos_to_neg_ratio[l], 'neg_to_pos_ratio': neg_to_pos_ratio[l], 'total_est': total_est[l], 'pos_est': pos_est[l], 'neg_est': neg_est[l], 'total_zeros': total_zeros[l], 'pos_zeros': pos_zeros[l], 'neg_zeros': neg_zeros[l], 'total_occurred': total_occurred[l], 'pos_occurred': pos_occurred[l], 'neg_occurred': neg_occurred[l]})
     
+    total_sum_cycles = np.sum(total_est)
+    pos_sum_cycles = np.sum(pos_est)
+    neg_sum_cycles = np.sum(neg_est)
+
+    pos_degree_of_bal_graph = pos_sum_cycles / total_sum_cycles
+    neg_degree_of_bal_graph = neg_sum_cycles / total_sum_cycles
+
+    data[0]['pos_degree_of_bal_graph'] = pos_degree_of_bal_graph
+    data[0]['neg_degree_of_bal_graph'] = neg_degree_of_bal_graph
+
     return data
 
 def save_cx_results(plus_minus, plus_plus):
@@ -138,6 +154,12 @@ def save_exp_params(data):
 
 if __name__ == "__main__":
 
+    script_start_time = time.time()
+    tracemalloc.start()
+
+    # Suppress invalid value warnings (e.g., divide by zero or NaN)
+    np.seterr(divide='ignore', invalid='ignore')
+
     SEEDS = [130250193, 4259459283, 1535995910, 1779285243, 347749838, 2843683941, 1121168978, 1281646427, 2640136520, 1846011679, 2548891259, 889869862, 816974034, 898432604, 3953502902, 480242123, 1422106884, 2844494128, 2766920156, 3963647525, 2800650013, 3026969699, 617436447, 3125820586, 968979614, 3011594777, 2949848623, 2343270211, 1911319159, 678032221, 2644994550, 2694585517, 876264514, 1420930522, 1191847850, 3452672408, 694543404, 429751076, 1464333811, 2794718515, 3303745309, 2176095271, 1235875709, 2083610798, 2992731158, 1458240102, 3463342733, 2894203811, 1901449950, 807625046]
 
     snakemake = fix_smk()
@@ -152,10 +174,6 @@ if __name__ == "__main__":
     exact = False
     directed_graph = True
     exp_date = datetime.datetime.now()
-
-    script_start_time = time.time()
-    tracemalloc.start()
-    snakemake = fix_smk()
     
     """ run = int(snakemake.wildcards['run'])
     samples = int(snakemake.wildcards['samples'])
@@ -211,8 +229,6 @@ if __name__ == "__main__":
     df_data.to_csv(snakemake.output[0])
 
 
-    # ToDo für Montag: 
-    # Zunächst: die ganzen balance ratios auch für pyr berechnen! 
+    # ToDo für Dienstag: 
     # Ordnerstruktur überlegen.
     # Überlegen, welche Graphen du testest
-    # balance ratios berechnen und zusätzlich speichern
