@@ -3,8 +3,8 @@ from Cython.Build import cythonize
 rule all: 
     input:
         "results/__cythonized__",
-        "results/pyr.csv",
-        "results/cx.csv"
+        "results/synthetic/er/samples=10_nodes=10_p=0.5_r=0.5/pyr_1.csv",
+        #"results/synthetic/er/10_0.5_0.5/cx_1.csv"
 
 rule cythonize:
     # Cythonizes the required files.
@@ -22,14 +22,6 @@ rule exp:
     input:
         "results/__cythonized__"
     output:
-        "results/{alg}.csv"
+        "results/synthetic/{kind}/samples={n_samples}_nodes={n_nodes}_p={prob_p}_r={prob_r}/{alg}_{run}.csv"
     script:
-        "scripts/compute.py"
-
-rule first_plot: 
-    input:
-        "results/my_first_output.csv"
-    output:
-        "results/my_first_plot.pdf"
-    script:
-        "scripts/plot.py"
+        "scripts/experiment.py"

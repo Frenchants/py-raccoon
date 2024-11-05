@@ -1,0 +1,58 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job      count
+-----  -------
+all          1
+exp          2
+total        3
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Tue Nov  5 14:04:12 2024]
+localrule exp:
+    input: results/__cythonized__
+    output: results/synthetic/er/10_0.5_0.5/cx_1.csv
+    jobid: 3
+    reason: Missing output files: results/synthetic/er/10_0.5_0.5/cx_1.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, prob_r=0.5, alg=cx, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov  5 14:04:12 2024]
+localrule exp:
+    input: results/__cythonized__
+    output: results/synthetic/er/10_0.5_0.5/pyr_1.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/10_0.5_0.5/pyr_1.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, prob_r=0.5, alg=pyr, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+WorkflowError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 27:
+Failed to open source file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/compute.py
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/compute.py'
+[Tue Nov  5 14:04:12 2024]
+Error in rule exp:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/er/10_0.5_0.5/pyr_1.csv
+
+RuleException:
+WorkflowError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 27:
+Failed to open source file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/compute.py
+FileNotFoundError: [Errno 2] No such file or directory: '/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/compute.py'
+[Tue Nov  5 14:04:12 2024]
+Error in rule exp:
+    jobid: 3
+    input: results/__cythonized__
+    output: results/synthetic/er/10_0.5_0.5/cx_1.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-05T140412.105776.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
