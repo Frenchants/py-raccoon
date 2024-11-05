@@ -64,7 +64,11 @@ def save_cx_results(plus_minus, plus_plus):
     if not directed_graph:
          plus_plus /= 2
          plus_minus /= 2
-              
+    
+    # insert zeros for cycle length 0 because these are included in the 'pyr' alg as well
+    plus_plus = np.array([np.insert(arr, 0, 0) for arr in plus_plus])
+    plus_minus = np.array([np.insert(arr, 0, 0) for arr in plus_minus])
+
     pos = (plus_plus + plus_minus) / 2
     neg = plus_plus - pos
     neg_degree_of_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
@@ -73,42 +77,39 @@ def save_cx_results(plus_minus, plus_plus):
     pos_to_neg_ratio = np.nan_to_num(pos / neg, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
     rel_signed_clust_coeff = np.nan_to_num(plus_minus / plus_plus, copy=False, nan=0.0, posinf=0.0, neginf=0.0)
 
-    std_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
-    avg_total = np.zeros(plus_plus.shape[1] + 1, dtype=plus_plus.dtype)
-    std_pos = np.zeros(pos.shape[1] + 1, dtype=pos.dtype)
-    avg_pos = np.zeros(pos.shape[1] + 1, dtype=pos.dtype)
-    std_neg = np.zeros(neg.shape[1] + 1, dtype=neg.dtype)
-    avg_neg = np.zeros(neg.shape[1] + 1, dtype=neg.dtype)
-    std_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1] + 1, dtype=pos_degree_of_bal.dtype)
-    avg_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1] + 1, dtype=pos_degree_of_bal.dtype)
-    std_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1] + 1, dtype=neg_degree_of_bal.dtype)
-    avg_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1] + 1, dtype=neg_degree_of_bal.dtype)
-    std_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1] + 1, dtype=pos_to_neg_ratio.dtype)
-    avg_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1] + 1, dtype=pos_to_neg_ratio.dtype)
-    std_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
-    avg_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1] + 1, dtype=neg_to_pos_ratio.dtype)
-    std_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1] + 1, dtype=rel_signed_clust_coeff.dtype)
-    avg_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1] + 1, dtype=rel_signed_clust_coeff.dtype)
+    std_total = np.zeros(plus_plus.shape[1], dtype=plus_plus.dtype)
+    avg_total = np.zeros(plus_plus.shape[1], dtype=plus_plus.dtype)
+    std_pos = np.zeros(pos.shape[1], dtype=pos.dtype)
+    avg_pos = np.zeros(pos.shape[1], dtype=pos.dtype)
+    std_neg = np.zeros(neg.shape[1], dtype=neg.dtype)
+    avg_neg = np.zeros(neg.shape[1], dtype=neg.dtype)
+    std_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1], dtype=pos_degree_of_bal.dtype)
+    avg_pos_degree_of_bal = np.zeros(pos_degree_of_bal.shape[1], dtype=pos_degree_of_bal.dtype)
+    std_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1], dtype=neg_degree_of_bal.dtype)
+    avg_neg_degree_of_bal = np.zeros(neg_degree_of_bal.shape[1], dtype=neg_degree_of_bal.dtype)
+    std_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1], dtype=pos_to_neg_ratio.dtype)
+    avg_pos_to_neg_ratio = np.zeros(pos_to_neg_ratio.shape[1], dtype=pos_to_neg_ratio.dtype)
+    std_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1], dtype=neg_to_pos_ratio.dtype)
+    avg_neg_to_pos_ratio = np.zeros(neg_to_pos_ratio.shape[1], dtype=neg_to_pos_ratio.dtype)
+    std_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1], dtype=rel_signed_clust_coeff.dtype)
+    avg_rel_signed_clust_coeff = np.zeros(rel_signed_clust_coeff.shape[1], dtype=rel_signed_clust_coeff.dtype)
     
-    std_total[1:] = np.std(plus_plus, axis=0)
-    avg_total[1:] = np.mean(plus_plus, axis=0)
-    std_pos[1:] = np.std(pos, axis=0)
-    avg_pos[1:] = np.mean(pos, axis=0)
-    std_neg[1:] = np.std(neg, axis=0)
-    avg_neg[1:] = np.mean(neg, axis=0)
-    std_pos_degree_of_bal[1:] = np.std(pos_degree_of_bal, axis=0)
-    avg_pos_degree_of_bal[1:] = np.mean(pos_degree_of_bal, axis=0)
-    std_neg_degree_of_bal[1:] = np.std(neg_degree_of_bal, axis=0)
-    avg_neg_degree_of_bal[1:] = np.mean(neg_degree_of_bal, axis=0)
-    std_pos_to_neg_ratio[1:] = np.std(pos_to_neg_ratio, axis=0)
-    avg_pos_to_neg_ratio[1:] = np.mean(pos_to_neg_ratio, axis=0)
-    std_neg_to_pos_ratio[1:] = np.std(neg_to_pos_ratio, axis=0)
-    avg_neg_to_pos_ratio[1:] = np.mean(neg_to_pos_ratio, axis=0)
-    std_rel_signed_clust_coeff[1:] = np.std(rel_signed_clust_coeff, axis=0)
-    avg_rel_signed_clust_coeff[1:] = np.mean(rel_signed_clust_coeff, axis=0)
-
-    if not directed_graph:
-         std_total[2] = avg_total[2] = std_pos[2] = avg_pos[2] = std_neg[2] = avg_neg[2] = std_pos_degree_of_bal[2] = avg_pos_degree_of_bal[2] = std_neg_degree_of_bal[2] = avg_neg_degree_of_bal[2] = std_pos_to_neg_ratio[2] = avg_pos_to_neg_ratio[2] = std_neg_to_pos_ratio[2] = avg_neg_to_pos_ratio[2] = std_rel_signed_clust_coeff[2] = avg_rel_signed_clust_coeff[2] = 0
+    std_total = np.std(plus_plus, axis=0)
+    avg_total = np.mean(plus_plus, axis=0)
+    std_pos = np.std(pos, axis=0)
+    avg_pos = np.mean(pos, axis=0)
+    std_neg = np.std(neg, axis=0)
+    avg_neg = np.mean(neg, axis=0)
+    std_pos_degree_of_bal = np.std(pos_degree_of_bal, axis=0)
+    avg_pos_degree_of_bal = np.mean(pos_degree_of_bal, axis=0)
+    std_neg_degree_of_bal = np.std(neg_degree_of_bal, axis=0)
+    avg_neg_degree_of_bal = np.mean(neg_degree_of_bal, axis=0)
+    std_pos_to_neg_ratio = np.std(pos_to_neg_ratio, axis=0)
+    avg_pos_to_neg_ratio = np.mean(pos_to_neg_ratio, axis=0)
+    std_neg_to_pos_ratio = np.std(neg_to_pos_ratio, axis=0)
+    avg_neg_to_pos_ratio = np.mean(neg_to_pos_ratio, axis=0)
+    std_rel_signed_clust_coeff = np.std(rel_signed_clust_coeff, axis=0)
+    avg_rel_signed_clust_coeff = np.mean(rel_signed_clust_coeff, axis=0)
 
     zeros_total = avg_total == 0
     zeros_pos = avg_pos == 0
