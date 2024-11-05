@@ -62,6 +62,9 @@ def save_cx_results(plus_minus, plus_plus):
         plus_plus = np.concatenate(plus_plus)
 
     if not directed_graph:
+         # if the graph is not directed, there are no cycles with length 2
+         plus_plus[:, 1] = plus_minus[:, 1] = 0
+         # if the graph is not directed, every cycle was counted twice by the alg
          plus_plus /= 2
          plus_minus /= 2
     

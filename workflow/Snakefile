@@ -4,7 +4,7 @@ rule all:
     input:
         "results/__cythonized__",
         #"results/synthetic/er/samples=10_nodes=10_p=0.5_r=0.5/pyr_1.csv",
-        "results/synthetic/er/samples=10_nodes=10_p=0.5_r=0.5/cx_1.csv",
+        "results/synthetic/er/samples=10_nodes=10_p=0.5_r=0/cx_1.csv",
 
 rule cythonize:
     # Cythonizes the required files.
