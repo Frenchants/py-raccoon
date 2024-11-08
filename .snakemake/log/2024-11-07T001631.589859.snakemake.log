@@ -1,0 +1,224 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+er_cx        26
+er_exp        1
+er_pyr        1
+total        28
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 6
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 21
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=15, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 13
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=15, prob_p=0.1, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 28
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 12
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=10, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 30
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 14
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=15, prob_p=0.1, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:32 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 29
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:35 2024]
+Finished job 12.
+1 of 28 steps (4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:16:35 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 11
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=10, prob_p=0.3, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:35 2024]
+Finished job 6.
+2 of 28 steps (7%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:16:35 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 27
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:35 2024]
+Finished job 14.
+3 of 28 steps (11%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:16:36 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 23
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.1, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:16:36 2024]
+Finished job 13.
+4 of 28 steps (14%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:16:36 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 19
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=15, prob_p=0.3, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmphi2cvxnm.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 19
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpsvw3f9yu.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 23
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp0g8qa3y_.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 27
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp_r8kozie.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 11
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp4lenpwqc.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 29
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp4gdtigc_.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp73gr9bn1.experiment.py' died with <Signals.SIGINT: 2>.
+Error in rule er_cx:
+    jobid: 21
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 28
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 47:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpa32psxl4.experiment.py' died with <Signals.SIGINT: 2>.
+[Thu Nov  7 00:16:37 2024]
+Error in rule er_cx:
+    jobid: 30
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+
+Complete log: .snakemake/log/2024-11-07T001631.589859.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

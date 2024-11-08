@@ -1,0 +1,35 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+er_exp             1
+exact_er_cx        1
+total              2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 20:25:18 2024]
+localrule exact_er_cx:
+    output: results/synthetic/er/n=20 p=0.5 r=0.5/cx/e=True l=10 d=True p=False/cx_0.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/n=20 p=0.5 r=0.5/cx/e=True l=10 d=True p=False/cx_0.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.5, neg_edge_prob=0.5, max_length=10, directed=True, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 46:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpyi3swtgx.experiment.py' died with <Signals.SIGINT: 2>.
+[Fri Nov  8 20:29:33 2024]
+Error in rule exact_er_cx:
+    jobid: 1
+    output: results/synthetic/er/n=20 p=0.5 r=0.5/cx/e=True l=10 d=True p=False/cx_0.csv
+
+Complete log: .snakemake/log/2024-11-08T202518.223484.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

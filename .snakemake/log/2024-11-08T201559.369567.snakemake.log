@@ -1,0 +1,32 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+er_exp             1
+exact_er_cx        1
+total              2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 20:15:59 2024]
+localrule exact_er_cx:
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/length=10 exact=True directed=True parallel=False/cx_0.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/length=10 exact=True directed=True parallel=False/cx_0.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, neg_edge_prob=0.5, max_length=10, exact=True, directed=True, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule exact_er_cx in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 43:
+Job 1  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/length=10 exact=True directed=True parallel=False/cx_0.csv (missing locally, parent dir not present)
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-08T201559.369567.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

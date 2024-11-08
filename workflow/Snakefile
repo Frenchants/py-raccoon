@@ -3,8 +3,18 @@ from Cython.Build import cythonize
 rule all: 
     input:
         "results/__cythonized__",
-        #"results/synthetic/er/samples=10_nodes=10_p=0.5_r=0.5/pyr_1.csv",
-        "results/synthetic/er/samples=10_nodes=10_p=0.5_r=0/cx_1.csv",
+        
+        "results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=False p=False l=10/cx_0.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=True p=False l=10/cx_0.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=True p=False l=10 s=20/cx_0.csv", 
+        
+        "results/synthetic/complete/n=20 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv",
+        "results/synthetic/complete/n=20 r=0.5/pyr/s=1000 sp=1/pyr_0.csv",
+        
+        "results/synthetic/random/n=20 m=50 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv",
+        "results/synthetic/random/n=20 m=50 r=0.5/pyr/s=1000 sp=1/pyr_0.csv",      
+
 
 rule cythonize:
     # Cythonizes the required files.
@@ -17,11 +27,96 @@ rule cythonize:
     shell:
         # remove option '-a' if you don't need to debug / profile
         "C_INCLUDE_PATH=$(python -c 'import numpy; print(numpy.get_include())') cythonize -i -a {input} && touch {output}"
-
-rule exp:
+       
+rule random_pyr:
     input:
         "results/__cythonized__"
     output:
-        "results/synthetic/{kind}/samples={n_samples}_nodes={n_nodes}_p={prob_p}_r={prob_r}/{alg}_{run}.csv"
+        "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob}/pyr/s={n_samples} sp={pyr_spec_edge_prob}/pyr_{run}.csv"
+    params:
+        kind = "random",
+        alg = "pyr",
+    script:
+        "scripts/experiment.py"
+
+rule random_cx:
+    output:
+        "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob}/cx/e=False d={directed} p={parallel} l={max_length} s={n_samples}/cx_{run}.csv"
+    params:
+        kind = "random",
+        alg="cx",
+        exact=False
+    script:
+        "scripts/experiment.py"
+
+rule exact_random_cx:
+    output:
+        "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob}/cx/e=True d={directed} p={parallel} l={max_length}/cx_{run}.csv"
+    params:
+        kind = "random",
+        alg = "cx",
+        exact = True
+    script:
+        "scripts/experiment.py"
+
+rule complete_pyr:
+    input:
+        "results/__cythonized__"
+    output:
+        "results/synthetic/complete/n={n_nodes} r={neg_edge_prob}/pyr/s={n_samples} sp={pyr_spec_edge_prob}/pyr_{run}.csv"
+    params:
+        kind = "complete",
+        alg = "pyr",
+    script:
+        "scripts/experiment.py"
+
+rule complete_cx:
+    output:
+        "results/synthetic/complete/n={n_nodes} r={neg_edge_prob}/cx/e=False d={directed} p={parallel} l={max_length} s={n_samples}/cx_{run}.csv"
+    params:
+        kind = "complete",
+        alg="cx",
+        exact=False
+    script:
+        "scripts/experiment.py"
+
+rule exact_complete_cx:
+    output:
+        "results/synthetic/complete/n={n_nodes} r={neg_edge_prob}/cx/e=True d={directed} p={parallel} l={max_length}/cx_{run}.csv"
+    params:
+        kind = "complete",
+        alg = "cx",
+        exact = True
+    script:
+        "scripts/experiment.py"
+
+rule er_pyr:
+    input:
+        "results/__cythonized__"
+    output:
+        "results/synthetic/er/n{n_nodes} p={prob_p} r={neg_edge_prob}/pyr/s={n_samples} sp={pyr_spec_edge_prob}/pyr_{run}.csv"
+    params:
+        kind = "er",
+        alg = "pyr"
+    script:
+        "scripts/experiment.py"
+
+rule er_cx:
+    output:
+        "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob}/cx/e=False d={directed} p={parallel} l={max_length} s={n_samples}/cx_{run}.csv"
+    params:
+        kind = "er",
+        alg="cx",
+        exact=False
+    script:
+        "scripts/experiment.py"
+
+rule exact_er_cx:
+    output:
+        "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob}/cx/e=True d={directed} p={parallel} l={max_length}/cx_{run}.csv"
+    params:
+        kind = "er",
+        alg="cx",
+        exact=True
     script:
         "scripts/experiment.py"

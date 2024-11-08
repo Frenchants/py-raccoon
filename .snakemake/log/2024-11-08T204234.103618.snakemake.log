@@ -1,0 +1,14 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules exact_er_cx and er_cx are ambiguous for the file results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csvresults/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=True p=False l=10/cx_0.csv.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	exact_er_cx: directed=True,kind=er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csvresults/synthetic/er,max_length=10,n_nodes=10,neg_edge_prob=0.5,parallel=False,prob_p=0.5,run=0
+	er_cx: directed=False,kind=er,max_length=10,n_nodes=10,n_samples=20/cx_0.csvresults/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=True p=False l=10,neg_edge_prob=0.5,parallel=False,prob_p=0.5,run=0
+Expected input files:
+	exact_er_cx: 
+	er_cx: 
+Expected output files:
+	exact_er_cx: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csvresults/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=True p=False l=10/cx_0.csv
+	er_cx: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csvresults/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=True p=False l=10/cx_0.csv

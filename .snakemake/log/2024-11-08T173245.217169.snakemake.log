@@ -1,0 +1,37 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+er_cx         1
+er_exp        1
+total         2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 17:32:45 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, neg_edge_prob=0.5, n_samples=10, max_length=10, exact=False, directed=True, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 50:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpxv8u8sek.experiment.py' returned non-zero exit status 1.
+[Fri Nov  8 17:33:08 2024]
+Error in rule er_cx:
+    jobid: 1
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+
+Complete log: .snakemake/log/2024-11-08T173245.217169.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

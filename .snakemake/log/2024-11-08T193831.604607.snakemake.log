@@ -1,0 +1,78 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+er_cx         3
+er_exp        1
+er_pyr        1
+total         5
+
+Select jobs to execute...
+Execute 4 jobs...
+
+[Fri Nov  8 19:38:31 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv
+    jobid: 3
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, n_samples=10, max_length=10, exact=False, directed=False, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 19:38:31 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_0.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, n_samples=100, pyr_spec_edge_prob=0.5, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 19:38:31 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, neg_edge_prob=0.5, n_samples=10, max_length=10, exact=False, directed=True, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 19:38:31 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, neg_edge_prob=0.5, n_samples=10, max_length=10, exact=False, directed=False, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 19:38:35 2024]
+Finished job 1.
+1 of 5 steps (20%) done
+[Fri Nov  8 19:38:35 2024]
+Finished job 4.
+2 of 5 steps (40%) done
+[Fri Nov  8 19:38:38 2024]
+Finished job 5.
+3 of 5 steps (60%) done
+[Fri Nov  8 19:38:39 2024]
+Finished job 3.
+4 of 5 steps (80%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 19:38:39 2024]
+localrule er_exp:
+    input: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_0.csv, results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv, results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv, results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_0.csv, results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv, results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv, results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 length=10 exact=False directed=False parallel=False/cx_0.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 19:38:39 2024]
+Finished job 0.
+5 of 5 steps (100%) done
+Complete log: .snakemake/log/2024-11-08T193831.604607.snakemake.log

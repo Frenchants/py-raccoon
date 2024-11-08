@@ -1,0 +1,6 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+MissingInputException in rule all in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 3:
+Missing input files for rule all:
+    affected files:
+        results/synthetic/er/nodes=10_p=0.5_r=0.5/pyr/samples=100_specified-p=0.5/pyr_1

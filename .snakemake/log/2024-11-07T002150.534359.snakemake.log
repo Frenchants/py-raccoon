@@ -1,0 +1,454 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count
+---------  -------
+cythonize        1
+er_cx           28
+er_exp           1
+er_pyr           1
+total           31
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:21:50 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 2
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+Finished job 2.
+1 of 31 steps (3%) done
+Select jobs to execute...
+Execute 8 jobs...
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 6
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 21
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.1, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 16
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.2, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.1, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 30
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.1, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:52 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 29
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:56 2024]
+Finished job 15.
+2 of 31 steps (6%) done
+[Thu Nov  7 00:21:56 2024]
+Finished job 13.
+3 of 31 steps (10%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Thu Nov  7 00:21:56 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:57 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 20
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.3, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:57 2024]
+Finished job 14.
+4 of 31 steps (13%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:21:57 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 11
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.3, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:21:57 2024]
+Finished job 6.
+5 of 31 steps (16%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:21:57 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 23
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.1, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Select jobs to execute...
+Waiting for more resources.
+[Thu Nov  7 00:21:57 2024]
+Finished job 16.
+6 of 31 steps (19%) done
+Execute 1 jobs...
+
+[Thu Nov  7 00:21:57 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.1, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:00 2024]
+Finished job 29.
+7 of 31 steps (23%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:00 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 19
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.3, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:00 2024]
+Finished job 30.
+8 of 31 steps (26%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:00 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.1, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:01 2024]
+Finished job 21.
+9 of 31 steps (29%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:01 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.2, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:01 2024]
+Finished job 5.
+10 of 31 steps (32%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:01 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 26
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:01 2024]
+Finished job 23.
+11 of 31 steps (35%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:01 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 3
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:02 2024]
+Finished job 4.
+12 of 31 steps (39%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:02 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 18
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.2, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:02 2024]
+Finished job 11.
+13 of 31 steps (42%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:02 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 25
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:05 2024]
+Finished job 22.
+14 of 31 steps (45%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:05 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 8
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.2, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:05 2024]
+Finished job 20.
+15 of 31 steps (48%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:05 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 27
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:06 2024]
+Finished job 7.
+16 of 31 steps (52%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:06 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 12
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.3, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:07 2024]
+Finished job 26.
+17 of 31 steps (55%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:07 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 9
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.2, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:07 2024]
+Finished job 18.
+18 of 31 steps (58%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:07 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 24
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.1, prob_r=0.7, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:08 2024]
+Finished job 25.
+19 of 31 steps (61%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:08 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=15 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 17
+    reason: Missing output files: results/synthetic/er/nodes=15 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=15, prob_p=0.2, prob_r=0.6, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:09 2024]
+Finished job 19.
+20 of 31 steps (65%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:09 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, prob_r=0.5, n_samples=100, pyr_spec_edge_prob=0.5, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:10 2024]
+Finished job 8.
+21 of 31 steps (68%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:10 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 28
+    reason: Missing output files: results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=20, prob_p=0.3, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:11 2024]
+Finished job 27.
+22 of 31 steps (71%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:11 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=10 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 10
+    reason: Missing output files: results/synthetic/er/nodes=10 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv; Input files updated by another job: results/__cythonized__
+    wildcards: kind=er, n_nodes=10, prob_p=0.3, prob_r=0.5, n_samples=10, exact=False, parallel=False, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:12 2024]
+Finished job 24.
+23 of 31 steps (74%) done
+[Thu Nov  7 00:22:12 2024]
+Finished job 12.
+24 of 31 steps (77%) done
+[Thu Nov  7 00:22:12 2024]
+Finished job 1.
+25 of 31 steps (81%) done
+[Thu Nov  7 00:22:12 2024]
+Finished job 9.
+26 of 31 steps (84%) done
+[Thu Nov  7 00:22:12 2024]
+Finished job 17.
+27 of 31 steps (87%) done
+[Thu Nov  7 00:22:14 2024]
+Finished job 3.
+28 of 31 steps (90%) done
+[Thu Nov  7 00:22:14 2024]
+Finished job 10.
+29 of 31 steps (94%) done
+[Thu Nov  7 00:22:15 2024]
+Finished job 28.
+30 of 31 steps (97%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Thu Nov  7 00:22:15 2024]
+localrule er_exp:
+    input: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csv, results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/nodes=15 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csv, results/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.1 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.1 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=15 p=0.3 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=10 p=0.2 r=0.6/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.3 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv, results/synthetic/er/nodes=20 p=0.2 r=0.7/cx/samples=10 exact=False parallel=False/cx_1.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Thu Nov  7 00:22:15 2024]
+Finished job 0.
+31 of 31 steps (100%) done
+Complete log: .snakemake/log/2024-11-07T002150.534359.snakemake.log

@@ -1,0 +1,14 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules pyr_exp and cx_exp are ambiguous for the file results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csvresults/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	pyr_exp: kind=er,n_nodes=10,n_samples=100,prob_p=0.5,prob_r=0.5,pyr_spec_edge_prob=0.5,run=1.csvresults/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1
+	cx_exp: exact=False,kind=er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csvresults/synthetic/er,n_nodes=10,n_samples=10,parallel=False,prob_p=0.5,prob_r=0.5,run=1
+Expected input files:
+	pyr_exp: results/__cythonized__
+	cx_exp: results/__cythonized__
+Expected output files:
+	pyr_exp: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csvresults/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv
+	cx_exp: results/synthetic/er/nodes=10 p=0.5 r=0.5/pyr/samples=100 specified_p=0.5/pyr_1.csvresults/synthetic/er/nodes=10 p=0.5 r=0.5/cx/samples=10 exact=False parallel=False/cx_1.csv

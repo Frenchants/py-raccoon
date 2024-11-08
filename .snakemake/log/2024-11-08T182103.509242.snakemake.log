@@ -1,0 +1,41 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job       count
+------  -------
+er_cx         1
+er_exp        1
+total         2
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 18:21:04 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    jobid: 1
+    reason: Code has changed since last execution
+    wildcards: kind=er, n_nodes=20, prob_p=0.2, neg_edge_prob=0.5, n_samples=10, max_length=10, exact=False, directed=True, parallel=False, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 18:21:10 2024]
+Finished job 1.
+1 of 2 steps (50%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 18:21:10 2024]
+localrule er_exp:
+    input: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/nodes=20 p=0.2 r=0.5/cx/samples=10 length=10 exact=False directed=True parallel=False/cx_0.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 18:21:10 2024]
+Finished job 0.
+2 of 2 steps (100%) done
+Complete log: .snakemake/log/2024-11-08T182103.509242.snakemake.log

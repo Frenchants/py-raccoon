@@ -1,0 +1,52 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job            count
+-----------  -------
+er_cx              1
+er_exp             1
+exact_er_cx        1
+total              3
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Fri Nov  8 20:41:49 2024]
+localrule exact_er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=False p=False l=10/cx_0.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=False p=False l=10/cx_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=False, parallel=False, max_length=10, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 20:41:49 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv
+    wildcards: kind=er, n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 20:41:53 2024]
+Finished job 2.
+1 of 3 steps (33%) done
+[Fri Nov  8 20:41:53 2024]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov  8 20:41:53 2024]
+localrule er_exp:
+    input: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=False p=False l=10/cx_0.csv, results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=True d=False p=False l=10/cx_0.csv, results/synthetic/er/n=10 p=0.5 r=0.5/cx/e=False d=False p=False l=10 s=20/cx_0.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov  8 20:41:53 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2024-11-08T204149.257296.snakemake.log
