@@ -1,0 +1,64 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        6
+complete_cx         6
+time_exp            1
+total              13
+
+Select jobs to execute...
+Execute 6 jobs...
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=27 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 6
+    reason: Missing output files: results/synthetic/complete/n=27 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=27, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=28 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 8
+    reason: Missing output files: results/synthetic/complete/n=28 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=28, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=29 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 10
+    reason: Missing output files: results/synthetic/complete/n=29 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=29, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=30 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 12
+    reason: Missing output files: results/synthetic/complete/n=30 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=30, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=25 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/complete/n=25 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=25, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 23:45:33 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=26 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/complete/n=26 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=26, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+

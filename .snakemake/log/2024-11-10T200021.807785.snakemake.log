@@ -1,0 +1,220 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+all                 1
+combine_exps       13
+complete_cx         3
+complete_pyr        3
+cythonize           1
+er_cx              12
+random_cx           1
+random_pyr         11
+sbm_cx             22
+sbm_pyr            22
+total              89
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_6.csv
+    jobid: 72
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_6.csv
+    wildcards: exp=0, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_5.csv
+    jobid: 83
+    reason: Missing output files: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_5.csv
+    wildcards: exp=1, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=5
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=True, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    jobid: 67
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    wildcards: exp=0, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 78
+    reason: Missing output files: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    wildcards: exp=1, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_10.csv
+    jobid: 88
+    reason: Missing output files: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_10.csv
+    wildcards: exp=1, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    jobid: 16
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=True, exact=False, parallel=False, max_length=10, n_samples=20, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:22 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_2.csv
+    jobid: 68
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_2.csv
+    wildcards: exp=0, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:34 2024]
+Finished job 72.
+1 of 89 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:00:34 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=True, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:36 2024]
+Finished job 67.
+2 of 89 steps (2%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:00:36 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    jobid: 20
+    reason: Missing output files: results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_1.csv
+    wildcards: n_nodes=20, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:36 2024]
+Finished job 68.
+3 of 89 steps (3%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:00:37 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_4.csv
+    jobid: 82
+    reason: Missing output files: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_4.csv
+    wildcards: exp=1, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:38 2024]
+Finished job 88.
+4 of 89 steps (4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:00:38 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_2.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_2.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:00:38 2024]
+Finished job 83.
+5 of 89 steps (6%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:00:38 2024]
+localrule sbm_cx:
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 66
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    wildcards: exp=0, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 110:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmprbddtbmo.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 20:00:39 2024]
+Error in rule er_cx:
+    jobid: 7
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+[Sun Nov 10 20:00:40 2024]
+Finished job 78.
+6 of 89 steps (7%) done
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 110:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpcp4ak6ic.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 20:00:42 2024]
+Error in rule er_cx:
+    jobid: 16
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 134:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp0iandvn9.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 20:00:42 2024]
+Error in rule sbm_cx:
+    jobid: 82
+    output: results/synthetic/sbm/exp=1 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_4.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 134:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpvojsyhqd.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpcpoxg6g1.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 110:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpj_meogzt.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 20:00:42 2024]
+[Sun Nov 10 20:00:42 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 110:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp9mc3jd05.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 20:00:42 2024]
+Error in rule sbm_cx:
+    jobid: 66
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 20
+    output: results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_1.csv
+
+[Sun Nov 10 20:00:42 2024]
+Error in rule er_cx:
+    jobid: 15
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 13
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=False p=False l=10 s=20/run/cx_2.csv
+
+Complete log: .snakemake/log/2024-11-10T200021.807785.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

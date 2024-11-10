@@ -1,0 +1,334 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps       49
+complete_cx        49
+time_exp            1
+total              99
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=37 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 74
+    reason: Missing output files: results/synthetic/complete/n=37 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=37, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=27 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 54
+    reason: Missing output files: results/synthetic/complete/n=27 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=27, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 44
+    reason: Missing output files: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=22, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=32 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 64
+    reason: Missing output files: results/synthetic/complete/n=32 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=32, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=47 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 94
+    reason: Missing output files: results/synthetic/complete/n=47 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=47, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=7, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=48 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 96
+    reason: Missing output files: results/synthetic/complete/n=48 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=48, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:52 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 16
+    reason: Missing output files: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=8, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:56 2024]
+Finished job 14.
+1 of 99 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:03:56 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=12 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 24
+    reason: Missing output files: results/synthetic/complete/n=12 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=12, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:56 2024]
+Finished job 16.
+2 of 99 steps (2%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:03:56 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=8 r=0.5 d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:03:58 2024]
+Finished job 15.
+3 of 99 steps (3%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:03:58 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=42 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 84
+    reason: Missing output files: results/synthetic/complete/n=42 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=42, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:04:04 2024]
+Finished job 24.
+4 of 99 steps (4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:04:04 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=2 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/complete/n=2 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=2, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:04:08 2024]
+Finished job 4.
+5 of 99 steps (5%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:04:08 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=24 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 48
+    reason: Missing output files: results/synthetic/complete/n=24 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=24, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:30:55 2024]
+Finished job 44.
+6 of 99 steps (6%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:30:56 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 43
+    reason: Missing output files: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=22 r=0.5 d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:30:59 2024]
+Finished job 43.
+7 of 99 steps (7%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:30:59 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=7 r=0.5 d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 20:31:02 2024]
+Finished job 13.
+8 of 99 steps (8%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 20:31:02 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=39 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 78
+    reason: Missing output files: results/synthetic/complete/n=39 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=39, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 21:49:19 2024]
+Finished job 48.
+9 of 99 steps (9%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 21:49:19 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=17 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 34
+    reason: Missing output files: results/synthetic/complete/n=17 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=17, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 22:22:13 2024]
+Finished job 34.
+10 of 99 steps (10%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 22:22:13 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=16 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 32
+    reason: Missing output files: results/synthetic/complete/n=16 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=16, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 22:55:13 2024]
+Finished job 32.
+11 of 99 steps (11%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 22:55:13 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 12
+    reason: Missing output files: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=6, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 22:55:18 2024]
+Finished job 12.
+12 of 99 steps (12%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 22:55:18 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 11
+    reason: Missing output files: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=6 r=0.5 d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 22:55:21 2024]
+Finished job 11.
+13 of 99 steps (13%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 22:55:21 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=26 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 52
+    reason: Missing output files: results/synthetic/complete/n=26 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=26, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpinffoe4h.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Nov 10 22:59:15 2024]
+Error in rule complete_cx:
+    jobid: 52
+    output: results/synthetic/complete/n=26 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpkfusjagm.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Nov 10 22:59:16 2024]
+Error in rule complete_cx:
+    jobid: 64
+    output: results/synthetic/complete/n=32 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp110xjvkn.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Nov 10 22:59:16 2024]
+Error in rule complete_cx:
+    jobid: 74
+    output: results/synthetic/complete/n=37 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpkt6uc330.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Nov 10 22:59:16 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpztfgonc2.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp932jfa9i.experiment.py' died with <Signals.SIGINT: 2>.
+Error in rule complete_cx:
+    jobid: 84
+    output: results/synthetic/complete/n=42 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+[Sun Nov 10 22:59:16 2024]
+[Sun Nov 10 22:59:16 2024]
+Error in rule complete_cx:
+    jobid: 78
+    output: results/synthetic/complete/n=39 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 94
+    output: results/synthetic/complete/n=47 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpp5nlii57.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Nov 10 22:59:16 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 90:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp2arlceg_.experiment.py' died with <Signals.SIGINT: 2>.
+Error in rule complete_cx:
+    jobid: 96
+    output: results/synthetic/complete/n=48 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+[Sun Nov 10 22:59:16 2024]
+Error in rule complete_cx:
+    jobid: 54
+    output: results/synthetic/complete/n=27 r=0.5 d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+Complete log: .snakemake/log/2024-11-10T200352.372887.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

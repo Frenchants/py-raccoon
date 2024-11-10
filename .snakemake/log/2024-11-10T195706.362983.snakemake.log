@@ -1,0 +1,4 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+CyclicGraphException in rule time_exp_helper in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 34:
+Cyclic dependency on rule time_exp_helper.
