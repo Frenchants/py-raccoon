@@ -168,8 +168,8 @@ if __name__ == "__main__":
             G = nx.gnm_random_graph(n_nodes, n_edges, directed=directed, seed=rnd)
     
     elif kind == 'sbm':
-        kind_params['com_sizes'] = snakemake.wildcards['com_sizes']
-        kind_params['edge_probs'] = snakemake.wildcards['edge_probs']
+        kind_params['com_sizes'] = snakemake.params['com_sizes']
+        kind_params['edge_probs'] = snakemake.params['edge_probs']
         G = nx.stochastic_block_model(kind_params['com_sizes'], kind_params['edge_probs'], directed=directed, seed=rnd)
         while not is_connected(G):
             G = nx.stochastic_block_model(kind_params['com_sizes'], kind_params['edge_probs'], directed=directed, seed=rnd)
@@ -196,7 +196,10 @@ if __name__ == "__main__":
             raise ValueError("The 'pyr' algorithm does not work on directed graphs.")
         
         n_samples = int(snakemake.wildcards['n_samples'])
-        alg_params['pyr_spec_edge_prob'] = float(snakemake.wildcards['pyr_spec_edge_prob'])
+        if snakemake.wildcards['pyr_spec_edge_prob'].lower() == "none":
+            alg_params['pyr_spec_edge_prob'] = None
+        else:
+            alg_params['pyr_spec_edge_prob'] = float(snakemake.wildcards['pyr_spec_edge_prob'])
         
         init_mem, _ = tracemalloc.get_traced_memory()
         tracemalloc.reset_peak()
@@ -207,10 +210,12 @@ if __name__ == "__main__":
         data = save_pyr_results(*results)
     elif alg == 'cx':
         alg_params['max_length'] = int(snakemake.wildcards['max_length'])
-        alg_params['exact'] = snakemake.params['exact']
-        alg_params['directed'] = directed 
+        alg_params['exact'] = snakemake.wildcards['exact'].lower() == 'true'
         alg_params['parallel'] = snakemake.wildcards['parallel'].lower() == 'true'
 
+        if alg_params['exact'] and n_samples != 1:
+            raise ValueError("An exact solution does not use more than 1 sample.")
+        
         full_matrix = cx.to_adj_matrix(G)
         alg_params['full_matrix_mem'] = full_matrix.nbytes
         clean_matrix = cx.clean_matrix(full_matrix)
@@ -232,6 +237,7 @@ if __name__ == "__main__":
     params = {}
     params['run'] = run
     params['kind'] = kind
+    params['directed'] = directed
     params.update(kind_params)
     params['neg_edge_prob'] = neg_edge_prob
     params['n_nodes'] = n_nodes

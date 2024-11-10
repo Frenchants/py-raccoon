@@ -1,0 +1,48 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+test                1
+total               3
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Nov 10 17:32:13 2024]
+localrule combine_exps:
+    input: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_0.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_1.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_2.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_3.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_5.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_6.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_7.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_8.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_9.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_10.csv
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_10_combined.csv
+    jobid: 1
+    reason: Code has changed since last execution
+    wildcards: path=results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1, alg=pyr, runs=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+
+[Sun Nov 10 17:32:13 2024]
+localrule combine_exps:
+    input: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv
+    wildcards: path=results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None, alg=pyr, runs=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:32:14 2024]
+Error in rule combine_exps:
+    jobid: 14
+    input: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv
+
+[Sun Nov 10 17:32:14 2024]
+Finished job 1.
+1 of 3 steps (33%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-10T173213.220292.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

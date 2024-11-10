@@ -1,0 +1,9 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+File path 'results/synthetic/sbm/sizes=[10, 10] p=[[0.5 0.2]
+ [0.2 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv' contains line break. This is likely unintended. It can also lead to inconsistent results of the file-matching approach used by Snakemake.
+MissingInputException in rule test in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 29:
+Missing input files for rule test:
+    affected files:
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5 0.2]
+ [0.2 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv

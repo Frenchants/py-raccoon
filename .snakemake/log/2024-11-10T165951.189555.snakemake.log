@@ -1,0 +1,18 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+MissingInputException in rule combine_exps in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 128:
+Missing input files for rule combine_exps:
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/pyr_10_combined.csv
+    wildcards: path=results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None, alg=pyr, runs=10
+    affected files:
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_5.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_3.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_6.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_7.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_8.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_2.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_10.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_9.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_1.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_0.csv
+        results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=True/pyr/s=1000 sp=None/run/pyr_4.csv

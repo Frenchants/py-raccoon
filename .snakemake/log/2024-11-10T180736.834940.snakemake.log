@@ -1,0 +1,165 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+sbm_pyr            11
+test                1
+total              13
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    jobid: 6
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=3
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    jobid: 9
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv
+    jobid: 12
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=9
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv
+    jobid: 8
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=5
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 18:07:37 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    wildcards: exp=0, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp0vy4o3m8.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 18:07:41 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpclwt3dee.experiment.py' returned non-zero exit status 1.
+Error in rule sbm_pyr:
+    jobid: 7
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp6d_r60nr.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp4b346lgl.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 18:07:41 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpzz456fg6.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpsx8p6_x8.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp0z5k1piq.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 120:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpl5su2rrm.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 18:07:41 2024]
+[Sun Nov 10 18:07:41 2024]
+Error in rule sbm_pyr:
+    jobid: 13
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+
+[Sun Nov 10 18:07:41 2024]
+[Sun Nov 10 18:07:41 2024]
+[Sun Nov 10 18:07:41 2024]
+[Sun Nov 10 18:07:41 2024]
+Error in rule sbm_pyr:
+    jobid: 8
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv
+
+Error in rule sbm_pyr:
+    jobid: 5
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+
+Error in rule sbm_pyr:
+    jobid: 12
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv
+
+Error in rule sbm_pyr:
+    jobid: 4
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+
+Error in rule sbm_pyr:
+    jobid: 6
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+
+Error in rule sbm_pyr:
+    jobid: 9
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=0 r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-10T180736.834940.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

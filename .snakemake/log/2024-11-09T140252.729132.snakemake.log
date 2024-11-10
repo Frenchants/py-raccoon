@@ -1,0 +1,142 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+all                 1
+combine_exps        1
+complete_cx         1
+complete_pyr        1
+er_cx               4
+random_cx           1
+random_pyr          1
+total              10
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sat Nov  9 14:02:53 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=True p=False l=10 s=1/cx_0.csv
+    jobid: 3
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=True, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0.csv
+    jobid: 4
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/cx_0.csv
+    jobid: 5
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=True, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule complete_cx:
+    output: results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0.csv
+    jobid: 6
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule random_cx:
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0.csv
+    jobid: 8
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=20 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+    jobid: 7
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+    jobid: 9
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:53 2024]
+localrule er_cx:
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0.csv
+    jobid: 2
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:02:59 2024]
+Finished job 2.
+1 of 10 steps (10%) done
+[Sat Nov  9 14:02:59 2024]
+Finished job 3.
+2 of 10 steps (20%) done
+[Sat Nov  9 14:03:00 2024]
+Finished job 9.
+3 of 10 steps (30%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Nov  9 14:03:00 2024]
+localrule combine_exps:
+    input: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_combined.csv
+    jobid: 10
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_combined.csv; Input files updated by another job: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+    wildcards: path=results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1, alg=pyr
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Nov  9 14:03:02 2024]
+Error in rule combine_exps:
+    jobid: 10
+    input: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_combined.csv
+
+[Sat Nov  9 14:03:03 2024]
+Finished job 7.
+4 of 10 steps (40%) done
+[Sat Nov  9 14:03:06 2024]
+Finished job 8.
+5 of 10 steps (50%) done
+[Sat Nov  9 14:03:15 2024]
+Finished job 4.
+6 of 10 steps (60%) done
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 95:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpu9736yuk.experiment.py' returned non-zero exit status 1.
+[Sat Nov  9 14:03:20 2024]
+Error in rule er_cx:
+    jobid: 5
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 75:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpzikgvkik.experiment.py' returned non-zero exit status 1.
+[Sat Nov  9 14:03:20 2024]
+Error in rule complete_cx:
+    jobid: 6
+    output: results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0.csv
+
+Complete log: .snakemake/log/2024-11-09T140252.729132.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

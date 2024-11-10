@@ -1,0 +1,345 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+random_pyr         11
+sbm_pyr            11
+test                1
+total              25
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_1.csv
+    jobid: 4
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    jobid: 21
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_5.csv
+    jobid: 8
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=5
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_8.csv
+    jobid: 11
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=8
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_6.csv
+    jobid: 9
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_7.csv
+    jobid: 10
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=7
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=7
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:28 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_9.csv
+    jobid: 12
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=9
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+Finished job 9.
+1 of 25 steps (4%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 4.
+2 of 25 steps (8%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 11.
+3 of 25 steps (12%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 12.
+4 of 25 steps (16%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 10.
+5 of 25 steps (20%) done
+Select jobs to execute...
+Execute 5 jobs...
+
+[Sun Nov 10 17:24:34 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    jobid: 25
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 17
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_10.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_10.csv
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+
+[Sun Nov 10 17:24:34 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_2.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_2.csv
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+Finished job 8.
+6 of 25 steps (24%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 22.
+7 of 25 steps (28%) done
+[Sun Nov 10 17:24:34 2024]
+Finished job 21.
+8 of 25 steps (32%) done
+Select jobs to execute...
+Execute 3 jobs...
+
+[Sun Nov 10 17:24:34 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_0.csv
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:34 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv
+    jobid: 20
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=5
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Select jobs to execute...
+Waiting for more resources.
+Waiting for more resources.
+Waiting for more resources.
+Waiting for more resources.
+Waiting for more resources.
+Waiting for more resources.
+[Sun Nov 10 17:24:39 2024]
+Finished job 13.
+9 of 25 steps (36%) done
+Execute 1 jobs...
+
+[Sun Nov 10 17:24:39 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    jobid: 18
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=3
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:39 2024]
+Finished job 5.
+10 of 25 steps (40%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 17:24:40 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    jobid: 19
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:40 2024]
+Finished job 25.
+11 of 25 steps (44%) done
+[Sun Nov 10 17:24:40 2024]
+Finished job 7.
+12 of 25 steps (48%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Nov 10 17:24:40 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_3.csv
+    jobid: 6
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_3.csv
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=3
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+
+[Sun Nov 10 17:24:40 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv
+    jobid: 23
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=8
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:40 2024]
+Finished job 2.
+13 of 25 steps (52%) done
+[Sun Nov 10 17:24:40 2024]
+Finished job 15.
+14 of 25 steps (56%) done
+[Sun Nov 10 17:24:40 2024]
+Finished job 17.
+15 of 25 steps (60%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Nov 10 17:24:40 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv
+    jobid: 24
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=9
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:40 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 16
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:40 2024]
+Finished job 20.
+16 of 25 steps (64%) done
+[Sun Nov 10 17:24:44 2024]
+Finished job 6.
+17 of 25 steps (68%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 17:24:44 2024]
+localrule combine_exps:
+    input: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_0.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_1.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_2.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_3.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_5.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_6.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_7.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_8.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_9.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_10.csv
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_10_combined.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_10_combined.csv; Input files updated by another job: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_6.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_1.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_5.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_2.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_8.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_9.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_10.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_3.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_7.csv, results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_0.csv
+    wildcards: path=results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1, alg=pyr, runs=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:44 2024]
+Finished job 23.
+18 of 25 steps (72%) done
+[Sun Nov 10 17:24:44 2024]
+Finished job 19.
+19 of 25 steps (76%) done
+[Sun Nov 10 17:24:44 2024]
+Finished job 16.
+20 of 25 steps (80%) done
+[Sun Nov 10 17:24:44 2024]
+Finished job 18.
+21 of 25 steps (84%) done
+[Sun Nov 10 17:24:44 2024]
+Finished job 24.
+22 of 25 steps (88%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Nov 10 17:24:44 2024]
+localrule combine_exps:
+    input: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv; Input files updated by another job: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    wildcards: path=results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None, alg=pyr, runs=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:24:45 2024]
+Error in rule combine_exps:
+    jobid: 14
+    input: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_5.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_8.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_9.csv, results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv
+
+[Sun Nov 10 17:24:45 2024]
+Finished job 1.
+23 of 25 steps (92%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-10T172428.671482.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

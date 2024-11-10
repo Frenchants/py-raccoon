@@ -1,0 +1,12 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+InputFunctionException in rule combine_exps in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 99:
+Error:
+  WildcardError:
+    No values given for wildcard 'path'.
+Wildcards:
+  path=results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1
+  alg=pyr
+  runs=0
+Traceback:
+ (rule combine_exps, line 208, /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile)

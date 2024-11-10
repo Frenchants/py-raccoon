@@ -1,0 +1,13 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+InputFunctionException in rule sbm_pyr in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 107:
+Error:
+  KeyError: '0'
+Wildcards:
+  exp=0
+  neg_edge_prob=0.5
+  n_samples=1000
+  pyr_spec_edge_prob=None
+  run=0
+Traceback:
+  File "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile", line 115, in <lambda> (rule sbm_pyr, line 225, /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile)

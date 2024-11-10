@@ -1,0 +1,160 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+random_pyr          3
+sbm_pyr            11
+test                1
+total              17
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    jobid: 21
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    jobid: 25
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=10
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 17
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_4.csv
+    jobid: 7
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    jobid: 19
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=4
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=7
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:00:46 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    jobid: 18
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.2, 0.5], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=3
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp9uq996dx.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmph1ykbzsq.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:49 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp9l4vhq_8.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:49 2024]
+Error in rule sbm_pyr:
+    jobid: 15
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+
+[Sun Nov 10 17:00:50 2024]
+Error in rule sbm_pyr:
+    jobid: 25
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_10.csv
+
+Error in rule sbm_pyr:
+    jobid: 17
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpg9s7rxtt.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:50 2024]
+Error in rule sbm_pyr:
+    jobid: 21
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpk54uyrot.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:50 2024]
+Error in rule sbm_pyr:
+    jobid: 18
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_3.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp6d8yekbc.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:50 2024]
+Error in rule sbm_pyr:
+    jobid: 19
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_4.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp330scrle.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:00:50 2024]
+Error in rule sbm_pyr:
+    jobid: 22
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.2, 0.5], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+
+[Sun Nov 10 17:00:50 2024]
+Finished job 7.
+1 of 17 steps (6%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-10T170046.512710.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

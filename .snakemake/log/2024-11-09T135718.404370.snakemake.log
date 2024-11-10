@@ -1,0 +1,14 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules random_pyr and aggregate_exps are ambiguous for the file results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_aggregated.csv.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	random_pyr: n_edges=50,n_nodes=20,n_samples=1000,neg_edge_prob=0.5,pyr_spec_edge_prob=1,run=aggregated
+	aggregate_exps: alg=pyr,path=results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1
+Expected input files:
+	random_pyr: results/__cythonized__
+	aggregate_exps: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_0.csv
+Expected output files:
+	random_pyr: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_aggregated.csv
+	aggregate_exps: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_aggregated.csv

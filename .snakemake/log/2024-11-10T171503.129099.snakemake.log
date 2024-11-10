@@ -1,0 +1,130 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+random_pyr         11
+sbm_pyr            11
+test                1
+total              25
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_1.csv
+    jobid: 4
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    jobid: 21
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_5.csv
+    jobid: 8
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=5
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_8.csv
+    jobid: 11
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=8
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_6.csv
+    jobid: 9
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=6
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_7.csv
+    jobid: 10
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=7
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+    wildcards: com_sizes=[10, 10], edge_probs=[[0.5, 0.2], [0.2, 0.5]], neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=None, run=7
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Nov 10 17:15:03 2024]
+localrule random_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/run/pyr_9.csv
+    jobid: 12
+    reason: Code has changed since last execution
+    wildcards: n_nodes=20, n_edges=50, neg_edge_prob=0.5, n_samples=1000, pyr_spec_edge_prob=1, run=9
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpspm9pqdg.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:15:07 2024]
+Error in rule sbm_pyr:
+    jobid: 21
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_6.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp_b9_69m_.experiment.py' returned non-zero exit status 1.
+[Sun Nov 10 17:15:07 2024]
+Error in rule sbm_pyr:
+    jobid: 22
+    input: results/__cythonized__
+    output: results/synthetic/sbm/sizes=[10, 10] p=[[0.5, 0.2], [0.2, 0.5]] r=0.5 d=False/pyr/s=1000 sp=None/run/pyr_7.csv
+
+[Sun Nov 10 17:15:08 2024]
+Finished job 4.
+1 of 25 steps (4%) done
+[Sun Nov 10 17:15:08 2024]
+Finished job 8.
+2 of 25 steps (8%) done
+[Sun Nov 10 17:15:08 2024]
+Finished job 9.
+3 of 25 steps (12%) done
+[Sun Nov 10 17:15:08 2024]
+Finished job 10.
+4 of 25 steps (16%) done
+[Sun Nov 10 17:15:08 2024]
+Finished job 11.
+5 of 25 steps (20%) done
+[Sun Nov 10 17:15:08 2024]
+Finished job 12.
+6 of 25 steps (24%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-10T171503.129099.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

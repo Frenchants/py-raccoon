@@ -1,0 +1,13 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+InputFunctionException in rule sbm_pyr in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 109:
+Error:
+  NameError: name 'sizes' is not defined
+Wildcards:
+  exp=0
+  neg_edge_prob=0.5
+  n_samples=1000
+  pyr_spec_edge_prob=None
+  run=0
+Traceback:
+  File "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile", line 117, in <lambda> (rule sbm_pyr, line 227, /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile)
