@@ -1,5 +1,0 @@
-,Unnamed: 0,l,avg_pos_degree_of_bal,avg_neg_degree_of_bal,avg_rel_signed_clust_coeff,avg_pos_to_neg_ratio,avg_neg_to_pos_ratio,avg_total,avg_pos,avg_neg,zeros_total,zeros_pos,zeros_neg,std_pos_degree_of_bal,std_neg_degree_of_bal,std_rel_signed_clust_coeff,std_pos_to_neg_ratio,std_neg_to_pos_ratio,std_total,std_pos,std_neg,avg_pos_degree_of_bal_graph,avg_neg_degree_of_bal_graph,run,kind,directed,neg_edge_prob,n_nodes,n_edges,n_pos_edges,n_neg_edges,alg,n_samples,max_length,exact,parallel,full_matrix_mem,clean_matrix_mem,alg_run_time,alg_peak_mem,alg_only_mem,init_mem,seed,script_run_time,exp_date
-0,0,0,,,,,,0.0,0.0,0.0,True,True,True,,,,,,0.0,0.0,0.0,1.0,0.0,0.0,complete,False,0.5,3.0,3.0,1.0,2.0,cx,1.0,10.0,True,False,9.0,9.0,0.0070090293884277,31810.0,6115.0,25695.0,130250193.0,0.039201021194458,2024-11-10 23:25:03.663314
-1,1,1,,,,,,0.0,0.0,0.0,True,True,True,,,,,,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,
-2,2,2,1.0,0.0,1.0,,0.0,1.5,1.5,0.0,False,False,True,0.0,0.0,0.0,,0.0,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,
-3,3,3,1.0,0.0,1.0,,0.0,0.9999999999999994,0.9999999999999994,0.0,False,False,True,0.0,0.0,0.0,,0.0,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,

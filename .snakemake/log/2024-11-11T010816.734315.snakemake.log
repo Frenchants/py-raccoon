@@ -1,0 +1,25 @@
+host: fredduuxd
+Building DAG of jobs...
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job          count
+---------  -------
+cythonize        1
+total            1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Nov 11 01:08:16 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 0
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Mon Nov 11 01:08:21 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake\log\2024-11-11T010816.734315.snakemake.log
