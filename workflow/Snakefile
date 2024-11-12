@@ -57,7 +57,8 @@ rule all:
 
 rule complete_exp:
     input:
-        "results/synthetic/complete/n=13 r=0.5 re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
+        #expand("results/synthetic/complete/n={n} r={r} re=True d=False/{rest}", n=range(1, 31), r=[0.1, 0.3, 0.5, 0.7, 0.9], rest=["cx/e=True p=False l=10 s=1/cx_0_combined.csv", "cx/e=False p=False l=10 s=1000/cx_0_combined.csv", "pyr/s=1000 sp=None/pyr_2_combined.csv"]),
+        expand("results/synthetic/complete/n={n} r={r} re=True d=False/{rest}", n=range(4, 21), r=[0.1], rest=["pyr/s=1000 sp=None/pyr_2_combined.csv"]),
         
 
 rule cythonize:

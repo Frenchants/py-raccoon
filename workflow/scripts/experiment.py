@@ -259,7 +259,8 @@ if __name__ == "__main__":
     if alg == 'pyr':
         if directed: 
             raise ValueError("The 'pyr' algorithm does not work on directed graphs.")
-        
+        if n_nodes <= 3:
+            raise ValueError("The pyr algorithm doesn't work on less than 4 nodes")
         n_samples = int(snakemake.wildcards['n_samples'])
         if snakemake.wildcards['pyr_spec_edge_prob'].lower() == "none":
             alg_params['pyr_spec_edge_prob'] = None

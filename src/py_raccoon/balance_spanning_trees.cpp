@@ -4,14 +4,10 @@
 {
     "distutils": {
         "depends": [],
-        "include_dirs": [
-            "src/",
-            "C:\\Users\\fredduuxd\\miniforge3\\envs\\py-raccoon\\Lib\\site-packages\\numpy\\core\\include"
-        ],
         "language": "c++",
         "name": "py_raccoon.balance_spanning_trees",
         "sources": [
-            "src/py_raccoon/balance_spanning_trees.pyx"
+            "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/src/py_raccoon/balance_spanning_trees.pyx"
         ]
     },
     "module_name": "py_raccoon.balance_spanning_trees"
@@ -1506,7 +1502,7 @@ static const char *__pyx_filename;
 /* #### Code section: filename_table ### */
 
 static const char *__pyx_f[] = {
-  "src\\\\py_raccoon\\\\balance_spanning_trees.pyx",
+  "src/py_raccoon/balance_spanning_trees.pyx",
   "<stringsource>",
 };
 /* #### Code section: utility_code_proto_before_types ### */
@@ -3445,7 +3441,7 @@ static const char __pyx_k_Step_may_not_be_zero_axis_d[] = "Step may not be zero 
 static const char __pyx_k_itemsize_0_for_cython_array[] = "itemsize <= 0 for cython.array";
 static const char __pyx_k_unable_to_allocate_array_data[] = "unable to allocate array data.";
 static const char __pyx_k_strided_and_direct_or_indirect[] = "<strided and direct or indirect>";
-static const char __pyx_k_src_py_raccoon_balance_spanning[] = "src\\py_raccoon\\balance_spanning_trees.pyx";
+static const char __pyx_k_src_py_raccoon_balance_spanning[] = "src/py_raccoon/balance_spanning_trees.pyx";
 static const char __pyx_k_All_dimensions_preceding_dimensi[] = "All dimensions preceding dimension %d must be indexed and not sliced";
 static const char __pyx_k_Buffer_view_does_not_expose_stri[] = "Buffer view does not expose strides";
 static const char __pyx_k_Can_only_create_a_buffer_that_is[] = "Can only create a buffer that is contiguous in memory.";

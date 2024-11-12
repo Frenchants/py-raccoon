@@ -1,0 +1,175 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        6
+complete_exp        1
+complete_pyr        7
+total              14
+
+Select jobs to execute...
+Execute 8 jobs...
+
+[Tue Nov 12 01:46:26 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    output: results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    wildcards: path=results/synthetic/complete/n=5 r=0.1 re=True d=False/pyr/s=1000 sp=None, alg=pyr, runs=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+
+[Tue Nov 12 01:46:26 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 33
+    reason: Missing output files: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: n_nodes=9, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 8
+    reason: Missing output files: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: n_nodes=3, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=8 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 28
+    reason: Missing output files: results/synthetic/complete/n=8 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: n_nodes=8, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=4 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 13
+    reason: Missing output files: results/synthetic/complete/n=4 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: n_nodes=4, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 32
+    reason: Missing output files: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: n_nodes=9, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    wildcards: n_nodes=3, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:27 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    output: results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    wildcards: path=results/synthetic/complete/n=7 r=0.1 re=True d=False/pyr/s=1000 sp=None, alg=pyr, runs=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:29 2024]
+Finished job 14.
+1 of 14 steps (7%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 01:46:29 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 9
+    reason: Missing output files: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: n_nodes=3, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:46:29 2024]
+Finished job 22.
+2 of 14 steps (14%) done
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp11m84uhp.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 33
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpv3_trlc7.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 7
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpz3ru1uo5.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 13
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=4 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpxkneitq9.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 28
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=8 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpo3dm4t5p.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 32
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpjsbel9n2.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:30 2024]
+Error in rule complete_pyr:
+    jobid: 8
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 116:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpy4x2qz7d.experiment.py' returned non-zero exit status 1.
+[Tue Nov 12 01:46:31 2024]
+Error in rule complete_pyr:
+    jobid: 9
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-12T014626.852799.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
