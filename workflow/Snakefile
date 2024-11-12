@@ -53,9 +53,12 @@ rule all:
 
         expand("results/synthetic/sbm/exp={exp} re={re} d=False/{rest}", exp=range(0, len(config['sbm-exps'])), re=['True', 'False'], rest=['pyr/s=1000 sp=None/pyr_2_combined.csv', 'cx/e=False p=False l=10 s=20/cx_0_combined.csv']),
 
-rule sbm_exp:
-    input:
         "results/synthetic/sbm/exp=2 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
+
+rule complete_exp:
+    input:
+        "results/synthetic/complete/n=13 r=0.5 re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
+        
 
 rule cythonize:
     # Cythonizes the required files.

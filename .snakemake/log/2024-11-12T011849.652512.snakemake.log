@@ -1,0 +1,24 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+complete_exp        1
+total               1
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 01:18:49 2024]
+localrule complete_exp:
+    jobid: 0
+    reason: Rules with neither input nor output files are always executed.
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 01:18:49 2024]
+Finished job 0.
+1 of 1 steps (100%) done
+Complete log: .snakemake/log/2024-11-12T011849.652512.snakemake.log
