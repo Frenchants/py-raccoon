@@ -1,0 +1,38 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+sbm_exp             1
+sbm_pyr             1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 00:24:10 2024]
+localrule sbm_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=2 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/sbm/exp=2 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    wildcards: exp=2, neg_edge_dist_exact=True, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 158:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpdvbkjo2a.experiment.py' died with <Signals.SIGINT: 2>.
+[Tue Nov 12 00:24:46 2024]
+Error in rule sbm_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/sbm/exp=2 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+
+Complete log: .snakemake/log/2024-11-12T002410.900018.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

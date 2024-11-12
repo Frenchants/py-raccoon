@@ -1,0 +1,93 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+all                 1
+combine_exps        2
+er_pyr              3
+total               6
+
+Select jobs to execute...
+Execute 4 jobs...
+
+[Tue Nov 12 00:13:20 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    jobid: 25
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:20 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    jobid: 24
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_1.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=1
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:20 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 23
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:20 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    jobid: 18
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    wildcards: path=results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None, alg=pyr, runs=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:22 2024]
+Finished job 18.
+1 of 6 steps (17%) done
+[Tue Nov 12 00:13:24 2024]
+Finished job 23.
+2 of 6 steps (33%) done
+[Tue Nov 12 00:13:24 2024]
+Finished job 24.
+3 of 6 steps (50%) done
+[Tue Nov 12 00:13:24 2024]
+Finished job 25.
+4 of 6 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 00:13:24 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    output: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    jobid: 22
+    reason: Missing output files: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/pyr_2_combined.csv; Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_1.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/run/pyr_2.csv
+    wildcards: path=results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None, alg=pyr, runs=2
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:25 2024]
+Finished job 22.
+5 of 6 steps (83%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 00:13:25 2024]
+localrule all:
+    input: results/__cythonized__, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/cx/e=True p=False l=10 s=1/cx_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=True/cx/e=True p=False l=10 s=1/cx_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=True/cx/e=False p=False l=10 s=20/cx_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/pyr_2_combined.csv, results/synthetic/complete/n=20 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv, results/synthetic/complete/n=20 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_2_combined.csv, results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv, results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_3_combined.csv, results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_10_combined.csv, results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_10_combined.csv, results/synthetic/sbm/exp=0 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv, results/synthetic/sbm/exp=0 re=False d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv, results/synthetic/sbm/exp=1 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv, results/synthetic/sbm/exp=1 re=False d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv, results/synthetic/sbm/exp=0 re=True d=False/pyr/s=1000 sp=None/pyr_0_combined.csv, results/synthetic/sbm/exp=0 re=False d=False/pyr/s=1000 sp=None/pyr_0_combined.csv, results/synthetic/sbm/exp=1 re=True d=False/pyr/s=1000 sp=None/pyr_0_combined.csv, results/synthetic/sbm/exp=1 re=False d=False/pyr/s=1000 sp=None/pyr_0_combined.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/pyr_2_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Tue Nov 12 00:13:25 2024]
+Finished job 0.
+6 of 6 steps (100%) done
+Complete log: .snakemake/log/2024-11-12T001320.566454.snakemake.log

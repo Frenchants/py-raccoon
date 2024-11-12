@@ -122,6 +122,14 @@ def is_connected(G):
     else:
         return nx.is_connected(G)
 
+def get_group_sbm(u):
+    group = 0
+    upper = kind_params['com_sizes'][group]
+    while u >= upper:
+        group += 1
+        upper += kind_params['com_sizes'][group]
+    return group
+
 if __name__ == "__main__":
 
     script_start_time = time.time()
@@ -145,7 +153,8 @@ if __name__ == "__main__":
     n_samples = int(snakemake.wildcards.get('n_samples', 1))
     n_nodes = int(snakemake.wildcards.get('n_nodes', -1))
     n_edges = int(snakemake.wildcards.get('n_edges', -1))
-    neg_edge_prob = float(snakemake.wildcards['neg_edge_prob'])
+    neg_edge_prob = float(snakemake.wildcards.get('neg_edge_prob', -1))
+    neg_edge_dist_exact = snakemake.wildcards.get('neg_edge_dist_exact', 'false').lower() == 'true'
     directed = snakemake.wildcards.get('directed', 'false').lower() == 'true'
 
     seed = SEEDS[run]
@@ -171,24 +180,79 @@ if __name__ == "__main__":
     elif kind == 'sbm':
         kind_params['com_sizes'] = snakemake.params['com_sizes']
         kind_params['edge_probs'] = snakemake.params['edge_probs']
+        kind_params['neg_edge_probs'] = snakemake.params['neg_edge_probs']
+
         G = nx.stochastic_block_model(kind_params['com_sizes'], kind_params['edge_probs'], directed=directed, seed=rnd)
         while not is_connected(G):
             G = nx.stochastic_block_model(kind_params['com_sizes'], kind_params['edge_probs'], directed=directed, seed=rnd)
-    
+
+        if not directed:
+            if not np.array_equal(kind_params['neg_edge_probs'], np.transpose(kind_params['neg_edge_probs'])):
+                raise ValueError("If the graph is undirected, neg_edge_probs must be symmetric")
+
+
+        n_pos_edges = n_neg_edges = 0
+
+        if neg_edge_dist_exact:
+            n_groups = len(kind_params['com_sizes'])
+            edges_sorted_by_groups = [[[] for _ in range(n_groups)] for _ in range(n_groups)]
+
+            for u, v in G.edges():
+                group_u = get_group_sbm(u)
+                group_v = get_group_sbm(v)
+                edges_sorted_by_groups[group_u][group_v].append((u, v))
+            
+            for group_u in range(n_groups):
+                for group_v in range(n_groups):
+                    rnd.shuffle(edges_sorted_by_groups[group_u][group_v])
+                    prob_r = kind_params['neg_edge_probs'][group_u][group_v]
+                    n_edges_u_v = len(edges_sorted_by_groups[group_u][group_v])
+                    n_neg_edges_u_v = round(n_edges_u_v * prob_r)
+                    n_pos_edges_u_v = n_edges_u_v - n_neg_edges_u_v
+                    for a, b in edges_sorted_by_groups[group_u][group_v][0:n_neg_edges_u_v]:
+                        G[a][b]['weight'] = -1
+                    for a, b in edges_sorted_by_groups[group_u][group_v][n_neg_edges_u_v:]:
+                        G[a][b]['weight'] = 1
+                    n_pos_edges += n_pos_edges_u_v
+                    n_neg_edges += n_neg_edges_u_v
+        else: 
+            for u, v in G.edges():
+                group_u = get_group_sbm(u)
+                group_v = get_group_sbm(v)
+                prob_r = kind_params['neg_edge_probs'][group_u][group_v]
+                weight = rnd.choice([-1, 1], p=[prob_r, 1-prob_r])
+                G[u][v]['weight'] = weight
+                if weight > 0:
+                    n_pos_edges += 1
+                else: 
+                    n_neg_edges += 1
+
     else:
         raise ValueError("Unknown kind: ", kind)
     
-    n_pos_edges = n_neg_edges = 0
-    for u, v in G.edges():
-        weight = rnd.choice([-1, 1], p=[neg_edge_prob, 1-neg_edge_prob])
-        G[u][v]['weight'] = weight
-        if weight > 0:
-            n_pos_edges += 1
-        else: 
-            n_neg_edges += 1
-                 
     n_nodes = G.number_of_nodes()
     n_edges = G.number_of_edges()
+
+    if kind != 'sbm':
+        n_pos_edges = n_neg_edges = 0
+
+        if neg_edge_dist_exact:
+            n_neg_edges = round(n_edges * neg_edge_prob)
+            n_pos_edges = n_edges - n_neg_edges
+            shuffled_edges = list(G.edges())
+            rnd.shuffle(shuffled_edges)
+            for u, v in shuffled_edges[0:n_neg_edges]:
+                G[u][v]['weight'] = -1
+            for u, v in shuffled_edges[n_neg_edges:]:
+                G[u][v]['weight'] = 1
+        else: 
+            for u, v in G.edges():
+                weight = rnd.choice([-1, 1], p=[neg_edge_prob, 1-neg_edge_prob])
+                G[u][v]['weight'] = weight
+                if weight > 0:
+                    n_pos_edges += 1
+                else: 
+                    n_neg_edges += 1
 
     alg_params = {}
 
@@ -240,7 +304,8 @@ if __name__ == "__main__":
     params['kind'] = kind
     params['directed'] = directed
     params.update(kind_params)
-    params['neg_edge_prob'] = neg_edge_prob
+    params['neg_edge_dist_exact'] = neg_edge_dist_exact
+    if kind != 'sbm': params['neg_edge_prob'] = neg_edge_prob
     params['n_nodes'] = n_nodes
     params['n_edges'] = n_edges
     params['n_pos_edges'] = n_pos_edges

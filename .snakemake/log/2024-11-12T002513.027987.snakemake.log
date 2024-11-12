@@ -1,0 +1,6 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+MissingInputException in rule sbm_exp in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 56:
+Missing input files for rule sbm_exp:
+    affected files:
+        results/synthetic/sbm/exp=2 re=True d=True/pyr/s=1000 sp=None/cx/e=False p=False l=10 s=20/cx_0_combined.csv'

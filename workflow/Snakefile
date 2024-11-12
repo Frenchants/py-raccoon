@@ -1,6 +1,7 @@
 from Cython.Build import cythonize
 import pandas as pd
 import numpy as np
+import os
 
 configfile: "workflow/config/config.yml"
 
@@ -8,33 +9,53 @@ wildcard_constraints:
     run=r"\d+",
     runs=r"\d+",
 
+
+pyr_path = "pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
+cx_path = "cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
+
+
+random_path = "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
+er_path = "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
+complete_path = "results/synthetic/complete/n={n_nodes} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
+sbm_path = "results/synthetic/sbm/exp={exp} re={neg_edge_dist_exact} d={directed}/"
+
+def get_cython_cmd():
+    if os.name == 'nt':
+        return "python setup_balance.py build_ext --inplace && type NUL > {output}"
+    else:
+        # remove option '-a' if you don't need to debug / profile
+        return "C_INCLUDE_PATH=$(python -c 'import numpy; print(numpy.get_include())') cythonize -i -a {input} && touch {output}"
+
+
 rule all: 
     input:
         "results/__cythonized__",
 
-        "results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_2_combined.csv",
-        "results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=True p=False l=10 s=1/cx_2_combined.csv",
-        "results/synthetic/er/n=10 p=0.5 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv",
-        "results/synthetic/er/n=10 p=0.5 r=0.5 d=True/cx/e=False p=False l=10 s=20/cx_2_combined.csv", 
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/cx/e=True p=False l=10 s=1/cx_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=True/cx/e=True p=False l=10 s=1/cx_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=True/cx/e=False p=False l=10 s=20/cx_2_combined.csv", 
+
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_2_combined.csv",
+        "results/synthetic/er/n=10 p=0.5 r=0.5 re=False d=False/pyr/s=1000 sp=None/pyr_2_combined.csv",
         
-        "results/synthetic/complete/n=20 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv",
-        "results/synthetic/complete/n=20 r=0.5 d=False/pyr/s=1000 sp=1/pyr_2_combined.csv",
+        "results/synthetic/complete/n=20 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_2_combined.csv",
+        "results/synthetic/complete/n=20 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_2_combined.csv",
         
-        "results/synthetic/random/n=20 m=50 r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
-        "results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_3_combined.csv", 
+        "results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
+        "results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_3_combined.csv", 
 
-        "results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_10_combined.csv",  
+        "results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_10_combined.csv",  
 
-        "results/synthetic/random/n=20 m=50 r=0.5 d=False/pyr/s=1000 sp=1/pyr_10_combined.csv", 
+        "results/synthetic/random/n=20 m=50 r=0.5 re=True d=False/pyr/s=1000 sp=1/pyr_10_combined.csv", 
 
-        expand("results/synthetic/sbm/exp={exp} r=0.5 d=False/pyr/s=1000 sp=None/pyr_10_combined.csv", exp=range(0, len(config['sbm-exps']))),
+        expand("results/synthetic/sbm/exp={exp} re={re} d=False/{rest}", exp=range(0, len(config['sbm-exps'])), re=['True', 'False'], rest=['pyr/s=1000 sp=None/pyr_2_combined.csv', 'cx/e=False p=False l=10 s=20/cx_0_combined.csv']),
 
-        expand("results/synthetic/sbm/exp={exp} r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_10_combined.csv", exp=range(0, len(config['sbm-exps']))),
-
-rule time_exp:
+rule sbm_exp:
     input:
-        expand("results/synthetic/complete/n={n} r=0.5 d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n=range(1, 21, 1))
-        #expand("results/synthetic/complete/n={n} r=0.5 d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv", n=range(10, 1000, 5))
+        "results/synthetic/sbm/exp=2 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
 
 rule cythonize:
     # Cythonizes the required files.
@@ -45,15 +66,22 @@ rule cythonize:
         # actual output filename sytem-dependent and not relevant -> __cythonized__ used to mark dependencies and detect changes by snakemake.
         "results/__cythonized__"
     shell:
-        # remove option '-a' if you don't need to debug / profile
-        #"C_INCLUDE_PATH=$(python -c 'import numpy; print(numpy.get_include())') cythonize -i -a {input} && touch {output}"
-        "python setup_balance.py build_ext --inplace && type NUL > {output}"
-       
+        get_cython_cmd()
+
+rule combine_exps:
+    input: 
+        lambda wildcards: expand("{{path}}/run/{{alg}}_{run}.csv", run=list(range(0, int(wildcards.runs) + 1))),
+    output: 
+        "{path}/{alg}_{runs}_combined.csv",
+    run:
+        df_data = pd.concat([pd.read_csv(file) for file in input])
+        df_data.to_csv(output[0])
+
 rule random_pyr:
     input:
         "results/__cythonized__"
     output:
-        "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} d=False/pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
+        random_path + pyr_path,
     params:
         kind = "random",
         alg = "pyr",
@@ -61,8 +89,10 @@ rule random_pyr:
         "scripts/experiment.py"
 
 rule random_cx:
+    input:
+        "results/__cythonized__"
     output:
-        "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} d={directed}/cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
+        random_path + cx_path,
     params:
         kind = "random",
         alg="cx",
@@ -73,7 +103,7 @@ rule complete_pyr:
     input:
         "results/__cythonized__"
     output:
-        "results/synthetic/complete/n={n_nodes} r={neg_edge_prob} d=False/pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
+        complete_path + pyr_path, 
     params:
         kind = "complete",
         alg = "pyr",
@@ -81,8 +111,10 @@ rule complete_pyr:
         "scripts/experiment.py"
 
 rule complete_cx:
+    input:
+        "results/__cythonized__"
     output:
-        "results/synthetic/complete/n={n_nodes} r={neg_edge_prob} d={directed}/cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
+        complete_path + cx_path, 
     params:
         kind = "complete",
         alg="cx",
@@ -93,7 +125,7 @@ rule er_pyr:
     input:
         "results/__cythonized__"
     output:
-        "results/synthetic/er/n{n_nodes} p={prob_p} r={neg_edge_prob} d=False/pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
+        er_path + pyr_path, 
     params:
         kind = "er",
         alg = "pyr"
@@ -101,8 +133,10 @@ rule er_pyr:
         "scripts/experiment.py"
 
 rule er_cx:
+    input:
+        "results/__cythonized__"
     output:
-        "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob} d={directed}/cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
+        er_path + cx_path, 
     params:
         kind = "er",
         alg="cx",
@@ -113,33 +147,26 @@ rule sbm_pyr:
     input:
         "results/__cythonized__"
     output:
-        "results/synthetic/sbm/exp={exp} r={neg_edge_prob} d=False/pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
+        sbm_path + pyr_path
     params:
         kind = "sbm",
         alg = "pyr",
         com_sizes = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['sizes'],
         edge_probs = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['p'],
+        neg_edge_probs = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['r'],
     script:
         "scripts/experiment.py"
 
 rule sbm_cx:
+    input:
+        "results/__cythonized__"
     output:
-        "results/synthetic/sbm/exp={exp} r={neg_edge_prob} d={directed}/cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
+        sbm_path + cx_path,
     params:
         kind = "sbm",
         alg="cx",
         com_sizes = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['sizes'],
         edge_probs = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['p'],
+        neg_edge_probs = lambda wildcards: config['sbm-exps'][int(wildcards.exp)]['r'],
     script:
         "scripts/experiment.py"
-
-
-
-rule combine_exps:
-    input: 
-        lambda wildcards: expand("{{path}}/run/{{alg}}_{run}.csv", run=list(range(0, int(wildcards.runs) + 1))),
-    output: 
-        "{path}/{alg}_{runs}_combined.csv",
-    run:
-        df_data = pd.concat([pd.read_csv(file) for file in input])
-        df_data.to_csv(output[0])

@@ -1,0 +1,16 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+InputFunctionException in rule sbm_cx in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 165:
+Error:
+  ValueError: invalid literal for int() with base 10: '0 r=0.5'
+Wildcards:
+  exp=0 r=0.5
+  neg_edge_dist_exact=True
+  directed=False
+  exact=False
+  parallel=False
+  max_length=10
+  n_samples=20
+  run=0
+Traceback:
+  File "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile", line 173, in <lambda> (rule sbm_cx, line 324, /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile)
