@@ -1,0 +1,82 @@
+host: fredduuxd
+Building DAG of jobs...
+Provided cores: 1 (use --cores to define parallelism)
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+combine_exps              135
+complete_cx               135
+complete_exp_cx_true        1
+cythonize                   1
+total                     272
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 15:53:12 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Tue Nov 12 15:53:14 2024]
+Finished job 3.
+1 of 272 steps (0.4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 15:53:14 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 153
+    reason: Missing output files: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=19, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Tue Nov 12 15:54:52 2024]
+Finished job 153.
+2 of 272 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 15:57:23 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 152
+    reason: Missing output files: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Tue Nov 12 15:57:23 2024]
+Finished job 152.
+3 of 272 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Tue Nov 12 15:57:23 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 33
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=7, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\Thesis\py-raccoon\workflow\Snakefile, line 132:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\Thesis\py-raccoon\.snakemake\scripts\tmpzzawhnc3.experiment.py"' returned non-zero exit status 3221225786.
+[Tue Nov 12 15:57:25 2024]
+Error in rule complete_cx:
+    jobid: 33
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+Terminating processes on user request, this might take some time.
+Complete log: .snakemake\log\2024-11-12T155312.449050.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

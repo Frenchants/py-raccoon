@@ -1,0 +1,427 @@
+host: fredduuxd
+Building DAG of jobs...
+Provided cores: 16
+Rules claiming more threads will be scaled down.
+Job stats:
+job                      count
+---------------------  -------
+combine_exps               135
+complete_cx                135
+complete_exp_cx_false        1
+total                      271
+
+Select jobs to execute...
+Execute 16 jobs...
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=20 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 169
+    reason: Missing output files: results/synthetic/complete/n=20 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=20, neg_edge_prob=0.7, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 49
+    reason: Missing output files: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=8, neg_edge_prob=0.7, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=26 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 229
+    reason: Missing output files: results/synthetic/complete/n=26 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=26, neg_edge_prob=0.7, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=14 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 109
+    reason: Missing output files: results/synthetic/complete/n=14 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=14, neg_edge_prob=0.7, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=13 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 101
+    reason: Missing output files: results/synthetic/complete/n=13 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=13, neg_edge_prob=0.9, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=25 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 221
+    reason: Missing output files: results/synthetic/complete/n=25 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=25, neg_edge_prob=0.9, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 41
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=7, neg_edge_prob=0.9, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 161
+    reason: Missing output files: results/synthetic/complete/n=19 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=19, neg_edge_prob=0.9, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=16 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 127
+    reason: Missing output files: results/synthetic/complete/n=16 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=16, neg_edge_prob=0.5, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=5, neg_edge_prob=0.3, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=17 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 135
+    reason: Missing output files: results/synthetic/complete/n=17 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=17, neg_edge_prob=0.3, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=11 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 75
+    reason: Missing output files: results/synthetic/complete/n=11 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=11, neg_edge_prob=0.3, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=23 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 195
+    reason: Missing output files: results/synthetic/complete/n=23 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=23, neg_edge_prob=0.3, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=29 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 255
+    reason: Missing output files: results/synthetic/complete/n=29 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=29, neg_edge_prob=0.3, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=10 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 67
+    reason: Missing output files: results/synthetic/complete/n=10 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=10, neg_edge_prob=0.5, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:31 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=22 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 187
+    reason: Missing output files: results/synthetic/complete/n=22 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=22, neg_edge_prob=0.5, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:47 2024]
+Finished job 15.
+1 of 271 steps (0.4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:01:47 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    output: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv
+    jobid: 14
+    reason: Missing output files: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=5 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000, alg=cx, runs=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:01:47 2024]
+Finished job 14.
+2 of 271 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:01:47 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=28 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 247
+    reason: Missing output files: results/synthetic/complete/n=28 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=28, neg_edge_prob=0.5, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:02:35 2024]
+Finished job 41.
+3 of 271 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:07 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    output: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv
+    jobid: 40
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=7 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000, alg=cx, runs=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:03:07 2024]
+Finished job 40.
+4 of 271 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:07 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 7
+    reason: Missing output files: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=4, neg_edge_prob=0.5, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:03:15 2024]
+Finished job 7.
+5 of 271 steps (2%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:15 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    output: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv
+    jobid: 6
+    reason: Missing output files: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=4 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000, alg=cx, runs=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:03:15 2024]
+Finished job 6.
+6 of 271 steps (2%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:15 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 153
+    reason: Missing output files: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=19, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:03:50 2024]
+Finished job 49.
+7 of 271 steps (3%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:51 2024]
+localrule combine_exps:
+    input: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    output: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv
+    jobid: 48
+    reason: Missing output files: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv; Input files updated by another job: results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: path=results/synthetic/complete/n=8 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000, alg=cx, runs=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+[Wed Nov 13 03:03:51 2024]
+Finished job 48.
+8 of 271 steps (3%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Wed Nov 13 03:03:51 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 33
+    reason: Missing output files: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    wildcards: n_nodes=7, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=C:\Users\FREDDU~1\AppData\Local\Temp
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp16cbwheo.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 33
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=7 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpx3xou8xn.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 169
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=20 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmplph8n6i5.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 75
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=11 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpqdiwhfw0.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 161
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpoifsfdse.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 153
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.1 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp0h6sih4y.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp6pnscvp2.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpzu9jvkww.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpfzl1m7yc.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpul11qylx.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp7n1pya7e.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp2xq_rljb.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 229
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=26 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+[Wed Nov 13 03:04:23 2024]
+[Wed Nov 13 03:04:23 2024]
+[Wed Nov 13 03:04:23 2024]
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 67
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=10 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 109
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=14 r=0.7 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 221
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=25 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 127
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=16 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 101
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=13 r=0.9 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 195
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=23 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpm43aqlr9.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 255
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=29 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp94flewtt.experiment.py"' returned non-zero exit status 1.
+[Wed Nov 13 03:04:23 2024]
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmp_mai2g5s.experiment.py"' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file C:\Users\fredduuxd\Desktop\thesis\py-raccoon\workflow\Snakefile, line 136:
+Command 'C:/Users/fredduuxd/miniforge3/envs/py-raccoon/python.exe "C:\Users\fredduuxd\Desktop\thesis\py-raccoon\.snakemake\scripts\tmpl3thg54o.experiment.py"' returned non-zero exit status 1.
+Error in rule complete_cx:
+    jobid: 187
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=22 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+[Wed Nov 13 03:04:23 2024]
+[Wed Nov 13 03:04:23 2024]
+Error in rule complete_cx:
+    jobid: 247
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=28 r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Error in rule complete_cx:
+    jobid: 135
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=17 r=0.3 re=True d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+Complete log: .snakemake\log\2024-11-13T030130.999122.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
