@@ -3233,6 +3233,7 @@ int __pyx_module_is_main_py_raccoon__balance_sampling = 0;
 /* Implementation of "py_raccoon.balance_sampling" */
 /* #### Code section: global_var ### */
 static PyObject *__pyx_builtin_range;
+static PyObject *__pyx_builtin_print;
 static PyObject *__pyx_builtin_KeyError;
 static PyObject *__pyx_builtin_ValueError;
 static PyObject *__pyx_builtin___import__;
@@ -3316,6 +3317,7 @@ static const char __pyx_k_index[] = "index";
 static const char __pyx_k_int32[] = "int32";
 static const char __pyx_k_nodes[] = "nodes";
 static const char __pyx_k_numpy[] = "numpy";
+static const char __pyx_k_print[] = "print";
 static const char __pyx_k_range[] = "range";
 static const char __pyx_k_shape[] = "shape";
 static const char __pyx_k_start[] = "start";
@@ -3334,6 +3336,7 @@ static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_random[] = "random";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_return[] = "return";
+static const char __pyx_k_sample[] = "sample: ";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
@@ -3733,6 +3736,7 @@ typedef struct {
   PyObject *__pyx_n_s_pickle;
   PyObject *__pyx_n_s_positive_expected_counts;
   PyObject *__pyx_n_s_positive_occurred;
+  PyObject *__pyx_n_s_print;
   PyObject *__pyx_n_s_py_raccoon_balance_sampling;
   PyObject *__pyx_n_s_pyx_PickleError;
   PyObject *__pyx_n_s_pyx_checksum;
@@ -3748,6 +3752,7 @@ typedef struct {
   PyObject *__pyx_n_s_reduce_ex;
   PyObject *__pyx_n_s_register;
   PyObject *__pyx_n_s_return;
+  PyObject *__pyx_kp_u_sample;
   PyObject *__pyx_n_s_samples;
   PyObject *__pyx_n_s_seed;
   PyObject *__pyx_n_s_setstate;
@@ -4037,6 +4042,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_pickle);
   Py_CLEAR(clear_module_state->__pyx_n_s_positive_expected_counts);
   Py_CLEAR(clear_module_state->__pyx_n_s_positive_occurred);
+  Py_CLEAR(clear_module_state->__pyx_n_s_print);
   Py_CLEAR(clear_module_state->__pyx_n_s_py_raccoon_balance_sampling);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_checksum);
@@ -4052,6 +4058,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_ex);
   Py_CLEAR(clear_module_state->__pyx_n_s_register);
   Py_CLEAR(clear_module_state->__pyx_n_s_return);
+  Py_CLEAR(clear_module_state->__pyx_kp_u_sample);
   Py_CLEAR(clear_module_state->__pyx_n_s_samples);
   Py_CLEAR(clear_module_state->__pyx_n_s_seed);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate);
@@ -4319,6 +4326,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_pickle);
   Py_VISIT(traverse_module_state->__pyx_n_s_positive_expected_counts);
   Py_VISIT(traverse_module_state->__pyx_n_s_positive_occurred);
+  Py_VISIT(traverse_module_state->__pyx_n_s_print);
   Py_VISIT(traverse_module_state->__pyx_n_s_py_raccoon_balance_sampling);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_checksum);
@@ -4334,6 +4342,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_ex);
   Py_VISIT(traverse_module_state->__pyx_n_s_register);
   Py_VISIT(traverse_module_state->__pyx_n_s_return);
+  Py_VISIT(traverse_module_state->__pyx_kp_u_sample);
   Py_VISIT(traverse_module_state->__pyx_n_s_samples);
   Py_VISIT(traverse_module_state->__pyx_n_s_seed);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate);
@@ -4625,6 +4634,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_pickle __pyx_mstate_global->__pyx_n_s_pickle
 #define __pyx_n_s_positive_expected_counts __pyx_mstate_global->__pyx_n_s_positive_expected_counts
 #define __pyx_n_s_positive_occurred __pyx_mstate_global->__pyx_n_s_positive_occurred
+#define __pyx_n_s_print __pyx_mstate_global->__pyx_n_s_print
 #define __pyx_n_s_py_raccoon_balance_sampling __pyx_mstate_global->__pyx_n_s_py_raccoon_balance_sampling
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
 #define __pyx_n_s_pyx_checksum __pyx_mstate_global->__pyx_n_s_pyx_checksum
@@ -4640,6 +4650,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_reduce_ex __pyx_mstate_global->__pyx_n_s_reduce_ex
 #define __pyx_n_s_register __pyx_mstate_global->__pyx_n_s_register
 #define __pyx_n_s_return __pyx_mstate_global->__pyx_n_s_return
+#define __pyx_kp_u_sample __pyx_mstate_global->__pyx_kp_u_sample
 #define __pyx_n_s_samples __pyx_mstate_global->__pyx_n_s_samples
 #define __pyx_n_s_seed __pyx_mstate_global->__pyx_n_s_seed
 #define __pyx_n_s_setstate __pyx_mstate_global->__pyx_n_s_setstate
@@ -19648,7 +19659,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
   __Pyx_memviewslice __pyx_v_P = { 0, 0, { 0 }, { 0 }, { 0 } };
   int __pyx_v_l;
   PyObject *__pyx_v_undersample = NULL;
-  CYTHON_UNUSED int __pyx_v_i;
+  int __pyx_v_i;
   int __pyx_v_j;
   __Pyx_memviewslice __pyx_v_parent = { 0, 0, { 0 }, { 0 }, { 0 } };
   __Pyx_memviewslice __pyx_v_depth = { 0, 0, { 0 }, { 0 }, { 0 } };
@@ -20191,8 +20202,8 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  *     cdef OccurenceProb op
  *     cdef int tree_root
  *     for i in range(samples):             # <<<<<<<<<<<<<<
+ *         print(f"sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)
- *         parent = np_parent
  */
   __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_v_samples); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L1_error)
   __pyx_t_14 = __pyx_t_13;
@@ -20202,20 +20213,37 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     /* "py_raccoon/balance_sampling.pyx":122
  *     cdef int tree_root
  *     for i in range(samples):
+ *         print(f"sample: {i}")             # <<<<<<<<<<<<<<
+ *         np_parent = np.ndarray(n, np.int32)
+ *         parent = np_parent
+ */
+    __pyx_t_3 = __Pyx_PyUnicode_From_int(__pyx_v_i, 0, ' ', 'd'); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_kp_u_sample, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_6);
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+    __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GOTREF(__pyx_t_3);
+    __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
+    __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
+
+    /* "py_raccoon/balance_sampling.pyx":123
+ *     for i in range(samples):
+ *         print(f"sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)             # <<<<<<<<<<<<<<
  *         parent = np_parent
  *         np_parent_weight = np.ndarray(n, np.int8)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_int32); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 123, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __pyx_t_1 = NULL;
@@ -20238,43 +20266,43 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
       __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 123, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
     }
     __Pyx_XDECREF_SET(__pyx_v_np_parent, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "py_raccoon/balance_sampling.pyx":123
- *     for i in range(samples):
+    /* "py_raccoon/balance_sampling.pyx":124
+ *         print(f"sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent             # <<<<<<<<<<<<<<
  *         np_parent_weight = np.ndarray(n, np.int8)
  *         parent_weight = np_parent_weight
  */
-    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 123, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 124, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_v_parent, 1);
     __pyx_v_parent = __pyx_t_8;
     __pyx_t_8.memview = NULL;
     __pyx_t_8.data = NULL;
 
-    /* "py_raccoon/balance_sampling.pyx":124
+    /* "py_raccoon/balance_sampling.pyx":125
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent
  *         np_parent_weight = np.ndarray(n, np.int8)             # <<<<<<<<<<<<<<
  *         parent_weight = np_parent_weight
  *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, weights, parent, parent_weight, seed)
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 125, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_5 = __Pyx_PyInt_From_int(__pyx_v_n); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 125, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_5);
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 125, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 124, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_int8); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 125, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
     __pyx_t_6 = NULL;
@@ -20297,14 +20325,14 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
       __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 124, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 125, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_XDECREF_SET(__pyx_v_np_parent_weight, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "py_raccoon/balance_sampling.pyx":125
+    /* "py_raccoon/balance_sampling.pyx":126
  *         parent = np_parent
  *         np_parent_weight = np.ndarray(n, np.int8)
  *         parent_weight = np_parent_weight             # <<<<<<<<<<<<<<
@@ -20314,29 +20342,29 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     __Pyx_INCREF(__pyx_v_np_parent_weight);
     __Pyx_XDECREF_SET(__pyx_v_parent_weight, __pyx_v_np_parent_weight);
 
-    /* "py_raccoon/balance_sampling.pyx":126
+    /* "py_raccoon/balance_sampling.pyx":127
  *         np_parent_weight = np.ndarray(n, np.int8)
  *         parent_weight = np_parent_weight
  *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, weights, parent, parent_weight, seed)             # <<<<<<<<<<<<<<
  *         np_depth = calc_depth(parent)
  *         depth = np_depth
  */
-    __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_signed_char(__pyx_v_parent_weight, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 126, __pyx_L1_error)
-    __pyx_t_19 = __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(__pyx_v_n, __pyx_v_degree, __pyx_v_neighbors, __pyx_v_weights, __pyx_v_parent, __pyx_t_18, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 126, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_signed_char(__pyx_v_parent_weight, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __pyx_t_19 = __pyx_f_10py_raccoon_22balance_spanning_trees_uniform_spanning_tree_c(__pyx_v_n, __pyx_v_degree, __pyx_v_neighbors, __pyx_v_weights, __pyx_v_parent, __pyx_t_18, __pyx_v_seed); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 127, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_t_18, 1);
     __pyx_t_18.memview = NULL; __pyx_t_18.data = NULL;
     __pyx_v_tree_root = __pyx_t_19;
 
-    /* "py_raccoon/balance_sampling.pyx":127
+    /* "py_raccoon/balance_sampling.pyx":128
  *         parent_weight = np_parent_weight
  *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, weights, parent, parent_weight, seed)
  *         np_depth = calc_depth(parent)             # <<<<<<<<<<<<<<
  *         depth = np_depth
  * 
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_calc_depth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_calc_depth); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_parent, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 127, __pyx_L1_error)
+    __pyx_t_1 = __pyx_memoryview_fromslice(__pyx_v_parent, 1, (PyObject *(*)(char *)) __pyx_memview_get_int, (int (*)(char *, PyObject *)) __pyx_memview_set_int, 0);; if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 128, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __pyx_t_5 = NULL;
     __pyx_t_7 = 0;
@@ -20357,39 +20385,39 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
       __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 127, __pyx_L1_error)
+      if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 128, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     }
     __Pyx_XDECREF_SET(__pyx_v_np_depth, __pyx_t_3);
     __pyx_t_3 = 0;
 
-    /* "py_raccoon/balance_sampling.pyx":128
+    /* "py_raccoon/balance_sampling.pyx":129
  *         tree_root = uniform_spanning_tree_c(n, degree, neighbors, weights, parent, parent_weight, seed)
  *         np_depth = calc_depth(parent)
  *         depth = np_depth             # <<<<<<<<<<<<<<
  * 
  *         occ_probs = occurence_probability_fast(G, edges, p, np_parent, np_parent_weight, tree_root, np_depth, degree_np)
  */
-    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 128, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 129, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_v_depth, 1);
     __pyx_v_depth = __pyx_t_8;
     __pyx_t_8.memview = NULL;
     __pyx_t_8.data = NULL;
 
-    /* "py_raccoon/balance_sampling.pyx":130
+    /* "py_raccoon/balance_sampling.pyx":131
  *         depth = np_depth
  * 
  *         occ_probs = occurence_probability_fast(G, edges, p, np_parent, np_parent_weight, tree_root, np_depth, degree_np)             # <<<<<<<<<<<<<<
  *         for j in range(occ_probs.shape[0]):
  *             op = occ_probs[j]
  */
-    __pyx_t_20 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(__pyx_v_edges, PyBUF_WRITABLE); if (unlikely(!__pyx_t_20.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
-    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
-    __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_signed_char(__pyx_v_np_parent_weight, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
-    __pyx_t_21 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_21.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
-    __pyx_t_22 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_degree_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_22.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
-    __pyx_t_23 = __pyx_f_10py_raccoon_16balance_sampling_occurence_probability_fast(__pyx_v_G, __pyx_t_20, __pyx_v_p, __pyx_t_8, __pyx_t_18, __pyx_v_tree_root, __pyx_t_21, __pyx_t_22); if (unlikely(!__pyx_t_23.memview)) __PYX_ERR(0, 130, __pyx_L1_error)
+    __pyx_t_20 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(__pyx_v_edges, PyBUF_WRITABLE); if (unlikely(!__pyx_t_20.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_8 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_parent, PyBUF_WRITABLE); if (unlikely(!__pyx_t_8.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_18 = __Pyx_PyObject_to_MemoryviewSlice_ds_signed_char(__pyx_v_np_parent_weight, PyBUF_WRITABLE); if (unlikely(!__pyx_t_18.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_21 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_np_depth, PyBUF_WRITABLE); if (unlikely(!__pyx_t_21.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_22 = __Pyx_PyObject_to_MemoryviewSlice_ds_int(__pyx_v_degree_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_22.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
+    __pyx_t_23 = __pyx_f_10py_raccoon_16balance_sampling_occurence_probability_fast(__pyx_v_G, __pyx_t_20, __pyx_v_p, __pyx_t_8, __pyx_t_18, __pyx_v_tree_root, __pyx_t_21, __pyx_t_22); if (unlikely(!__pyx_t_23.memview)) __PYX_ERR(0, 131, __pyx_L1_error)
     __PYX_XCLEAR_MEMVIEW(&__pyx_t_20, 1);
     __pyx_t_20.memview = NULL; __pyx_t_20.data = NULL;
     __PYX_XCLEAR_MEMVIEW(&__pyx_t_8, 1);
@@ -20405,7 +20433,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     __pyx_t_23.memview = NULL;
     __pyx_t_23.data = NULL;
 
-    /* "py_raccoon/balance_sampling.pyx":131
+    /* "py_raccoon/balance_sampling.pyx":132
  * 
  *         occ_probs = occurence_probability_fast(G, edges, p, np_parent, np_parent_weight, tree_root, np_depth, degree_np)
  *         for j in range(occ_probs.shape[0]):             # <<<<<<<<<<<<<<
@@ -20417,7 +20445,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     for (__pyx_t_19 = 0; __pyx_t_19 < __pyx_t_24; __pyx_t_19+=1) {
       __pyx_v_j = __pyx_t_19;
 
-      /* "py_raccoon/balance_sampling.pyx":132
+      /* "py_raccoon/balance_sampling.pyx":133
  *         occ_probs = occurence_probability_fast(G, edges, p, np_parent, np_parent_weight, tree_root, np_depth, degree_np)
  *         for j in range(occ_probs.shape[0]):
  *             op = occ_probs[j]             # <<<<<<<<<<<<<<
@@ -20427,7 +20455,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __pyx_t_17 = __pyx_v_j;
       __pyx_v_op = (*((struct __pyx_t_10py_raccoon_16balance_sampling_OccurenceProb *) ( /* dim=0 */ (__pyx_v_occ_probs.data + __pyx_t_17 * __pyx_v_occ_probs.strides[0]) )));
 
-      /* "py_raccoon/balance_sampling.pyx":133
+      /* "py_raccoon/balance_sampling.pyx":134
  *         for j in range(occ_probs.shape[0]):
  *             op = occ_probs[j]
  *             l = depth[op.u] + depth[op.v] - 2*depth[op.lca] + 1             # <<<<<<<<<<<<<<
@@ -20439,7 +20467,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __pyx_t_26 = __pyx_v_op.lca;
       __pyx_v_l = ((((*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_17 * __pyx_v_depth.strides[0]) ))) + (*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_25 * __pyx_v_depth.strides[0]) )))) - (2 * (*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_26 * __pyx_v_depth.strides[0]) ))))) + 1);
 
-      /* "py_raccoon/balance_sampling.pyx":135
+      /* "py_raccoon/balance_sampling.pyx":136
  *             l = depth[op.u] + depth[op.v] - 2*depth[op.lca] + 1
  * 
  *             p_c_prime = cexp2(P[l] - op.p_c) / samples             # <<<<<<<<<<<<<<
@@ -20447,17 +20475,17 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  * 
  */
       __pyx_t_26 = __pyx_v_l;
-      __pyx_t_16 = __pyx_f_10py_raccoon_16balance_sampling_cexp2(((*((double *) ( /* dim=0 */ (__pyx_v_P.data + __pyx_t_26 * __pyx_v_P.strides[0]) ))) - __pyx_v_op.p_c)); if (unlikely(__pyx_t_16 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 135, __pyx_L1_error)
-      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_16); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 135, __pyx_L1_error)
+      __pyx_t_16 = __pyx_f_10py_raccoon_16balance_sampling_cexp2(((*((double *) ( /* dim=0 */ (__pyx_v_P.data + __pyx_t_26 * __pyx_v_P.strides[0]) ))) - __pyx_v_op.p_c)); if (unlikely(__pyx_t_16 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 136, __pyx_L1_error)
+      __pyx_t_3 = PyFloat_FromDouble(__pyx_t_16); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 136, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_3);
-      __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_v_samples); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 135, __pyx_L1_error)
+      __pyx_t_4 = __Pyx_PyNumber_Divide(__pyx_t_3, __pyx_v_samples); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 136, __pyx_L1_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-      __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 135, __pyx_L1_error)
+      __pyx_t_16 = __pyx_PyFloat_AsDouble(__pyx_t_4); if (unlikely((__pyx_t_16 == (double)-1) && PyErr_Occurred())) __PYX_ERR(0, 136, __pyx_L1_error)
       __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
       __pyx_v_p_c_prime = __pyx_t_16;
 
-      /* "py_raccoon/balance_sampling.pyx":141
+      /* "py_raccoon/balance_sampling.pyx":142
  *             #    print(p_c_prime, l, P[l], samples, p_c)
  * 
  *             if p_c_prime > 1:             # <<<<<<<<<<<<<<
@@ -20467,19 +20495,19 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __pyx_t_27 = (__pyx_v_p_c_prime > 1.0);
       if (__pyx_t_27) {
 
-        /* "py_raccoon/balance_sampling.pyx":142
+        /* "py_raccoon/balance_sampling.pyx":143
  * 
  *             if p_c_prime > 1:
  *                 undersample += 1             # <<<<<<<<<<<<<<
  * 
  *             if op.bal == 1: # positive balance
  */
-        __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_undersample, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 142, __pyx_L1_error)
+        __pyx_t_4 = __Pyx_PyInt_AddObjC(__pyx_v_undersample, __pyx_int_1, 1, 1, 0); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 143, __pyx_L1_error)
         __Pyx_GOTREF(__pyx_t_4);
         __Pyx_DECREF_SET(__pyx_v_undersample, __pyx_t_4);
         __pyx_t_4 = 0;
 
-        /* "py_raccoon/balance_sampling.pyx":141
+        /* "py_raccoon/balance_sampling.pyx":142
  *             #    print(p_c_prime, l, P[l], samples, p_c)
  * 
  *             if p_c_prime > 1:             # <<<<<<<<<<<<<<
@@ -20488,7 +20516,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  */
       }
 
-      /* "py_raccoon/balance_sampling.pyx":144
+      /* "py_raccoon/balance_sampling.pyx":145
  *                 undersample += 1
  * 
  *             if op.bal == 1: # positive balance             # <<<<<<<<<<<<<<
@@ -20498,7 +20526,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       __pyx_t_27 = (__pyx_v_op.bal == 1);
       if (__pyx_t_27) {
 
-        /* "py_raccoon/balance_sampling.pyx":145
+        /* "py_raccoon/balance_sampling.pyx":146
  * 
  *             if op.bal == 1: # positive balance
  *                 positive_expected_counts[l] += p_c_prime             # <<<<<<<<<<<<<<
@@ -20508,7 +20536,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         __pyx_t_26 = __pyx_v_l;
         *((double *) ( /* dim=0 */ (__pyx_v_positive_expected_counts.data + __pyx_t_26 * __pyx_v_positive_expected_counts.strides[0]) )) += __pyx_v_p_c_prime;
 
-        /* "py_raccoon/balance_sampling.pyx":146
+        /* "py_raccoon/balance_sampling.pyx":147
  *             if op.bal == 1: # positive balance
  *                 positive_expected_counts[l] += p_c_prime
  *                 positive_occurred[l] += 1             # <<<<<<<<<<<<<<
@@ -20518,7 +20546,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         __pyx_t_26 = __pyx_v_l;
         *((int *) ( /* dim=0 */ (__pyx_v_positive_occurred.data + __pyx_t_26 * __pyx_v_positive_occurred.strides[0]) )) += 1;
 
-        /* "py_raccoon/balance_sampling.pyx":144
+        /* "py_raccoon/balance_sampling.pyx":145
  *                 undersample += 1
  * 
  *             if op.bal == 1: # positive balance             # <<<<<<<<<<<<<<
@@ -20528,7 +20556,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         goto __pyx_L10;
       }
 
-      /* "py_raccoon/balance_sampling.pyx":148
+      /* "py_raccoon/balance_sampling.pyx":149
  *                 positive_occurred[l] += 1
  *             else: # negative balance
  *                 negative_expected_counts[l] += p_c_prime             # <<<<<<<<<<<<<<
@@ -20539,7 +20567,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         __pyx_t_26 = __pyx_v_l;
         *((double *) ( /* dim=0 */ (__pyx_v_negative_expected_counts.data + __pyx_t_26 * __pyx_v_negative_expected_counts.strides[0]) )) += __pyx_v_p_c_prime;
 
-        /* "py_raccoon/balance_sampling.pyx":149
+        /* "py_raccoon/balance_sampling.pyx":150
  *             else: # negative balance
  *                 negative_expected_counts[l] += p_c_prime
  *                 negative_occurred[l] += 1             # <<<<<<<<<<<<<<
@@ -20553,40 +20581,40 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     }
   }
 
-  /* "py_raccoon/balance_sampling.pyx":152
+  /* "py_raccoon/balance_sampling.pyx":153
  * 
  * 
  *     free_neighbors_and_weights(n, neighbors, weights)             # <<<<<<<<<<<<<<
  * 
  *     np_total_occurred = np_positive_occurred + np_negative_occurred
  */
-  __pyx_f_10py_raccoon_22balance_spanning_trees_free_neighbors_and_weights(__pyx_v_n, __pyx_v_neighbors, __pyx_v_weights); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 152, __pyx_L1_error)
+  __pyx_f_10py_raccoon_22balance_spanning_trees_free_neighbors_and_weights(__pyx_v_n, __pyx_v_neighbors, __pyx_v_weights); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 153, __pyx_L1_error)
 
-  /* "py_raccoon/balance_sampling.pyx":154
+  /* "py_raccoon/balance_sampling.pyx":155
  *     free_neighbors_and_weights(n, neighbors, weights)
  * 
  *     np_total_occurred = np_positive_occurred + np_negative_occurred             # <<<<<<<<<<<<<<
  *     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
  * 
  */
-  __pyx_t_4 = PyNumber_Add(__pyx_v_np_positive_occurred, __pyx_v_np_negative_occurred); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 154, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Add(__pyx_v_np_positive_occurred, __pyx_v_np_negative_occurred); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v_np_total_occurred = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":155
+  /* "py_raccoon/balance_sampling.pyx":156
  * 
  *     np_total_occurred = np_positive_occurred + np_negative_occurred
  *     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts             # <<<<<<<<<<<<<<
  * 
  *     with np.errstate(divide='ignore'):
  */
-  __pyx_t_4 = PyNumber_Add(__pyx_v_np_positive_expected_counts, __pyx_v_np_negative_expected_counts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 155, __pyx_L1_error)
+  __pyx_t_4 = PyNumber_Add(__pyx_v_np_positive_expected_counts, __pyx_v_np_negative_expected_counts); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 156, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __pyx_v_np_total_expected_counts = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":157
+  /* "py_raccoon/balance_sampling.pyx":158
  *     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
  * 
  *     with np.errstate(divide='ignore'):             # <<<<<<<<<<<<<<
@@ -20594,21 +20622,21 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  *         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
  */
   /*with:*/ {
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_errstate); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_errstate); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_4);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_divide, __pyx_n_s_ignore) < 0) __PYX_ERR(0, 157, __pyx_L1_error)
-    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 157, __pyx_L1_error)
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_divide, __pyx_n_s_ignore) < 0) __PYX_ERR(0, 158, __pyx_L1_error)
+    __pyx_t_1 = __Pyx_PyObject_Call(__pyx_t_3, __pyx_empty_tuple, __pyx_t_4); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_28 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 157, __pyx_L1_error)
+    __pyx_t_28 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_exit); if (unlikely(!__pyx_t_28)) __PYX_ERR(0, 158, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_28);
-    __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 157, __pyx_L11_error)
+    __pyx_t_3 = __Pyx_PyObject_LookupSpecial(__pyx_t_1, __pyx_n_s_enter); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L11_error)
     __Pyx_GOTREF(__pyx_t_3);
     __pyx_t_5 = NULL;
     __pyx_t_7 = 0;
@@ -20628,7 +20656,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
       PyObject *__pyx_callargs[2] = {__pyx_t_5, NULL};
       __pyx_t_4 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_7, 0+__pyx_t_7);
       __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 157, __pyx_L11_error)
+      if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L11_error)
       __Pyx_GOTREF(__pyx_t_4);
       __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     }
@@ -20644,21 +20672,21 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         __Pyx_XGOTREF(__pyx_t_31);
         /*try:*/ {
 
-          /* "py_raccoon/balance_sampling.pyx":158
+          /* "py_raccoon/balance_sampling.pyx":159
  * 
  *     with np.errstate(divide='ignore'):
  *         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)             # <<<<<<<<<<<<<<
  *         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
  *         np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_exp2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 158, __pyx_L15_error)
+          __pyx_t_3 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_exp2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_3);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 158, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_log2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L15_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_log2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 159, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           __pyx_t_5 = NULL;
@@ -20679,11 +20707,11 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             PyObject *__pyx_callargs[2] = {__pyx_t_5, __pyx_v_np_positive_expected_counts};
             __pyx_t_4 = __Pyx_PyObject_FastCall(__pyx_t_6, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 158, __pyx_L15_error)
+            if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_4);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           }
-          __pyx_t_6 = PyNumber_Subtract(__pyx_t_4, __pyx_v_np_P); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L15_error)
+          __pyx_t_6 = PyNumber_Subtract(__pyx_t_4, __pyx_v_np_P); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 159, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_t_4 = NULL;
@@ -20705,28 +20733,28 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_3, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 158, __pyx_L15_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           }
           __pyx_v_np_positive_est_counts = __pyx_t_1;
           __pyx_t_1 = 0;
 
-          /* "py_raccoon/balance_sampling.pyx":159
+          /* "py_raccoon/balance_sampling.pyx":160
  *     with np.errstate(divide='ignore'):
  *         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
  *         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)             # <<<<<<<<<<<<<<
  *         np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)
  * 
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 160, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_exp2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 159, __pyx_L15_error)
+          __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_exp2); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 160, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_6);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 159, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 160, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_4);
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_log2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L15_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_log2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           __pyx_t_4 = NULL;
@@ -20747,11 +20775,11 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             PyObject *__pyx_callargs[2] = {__pyx_t_4, __pyx_v_np_negative_expected_counts};
             __pyx_t_3 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 159, __pyx_L15_error)
+            if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 160, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_3);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           }
-          __pyx_t_5 = PyNumber_Subtract(__pyx_t_3, __pyx_v_np_P); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 159, __pyx_L15_error)
+          __pyx_t_5 = PyNumber_Subtract(__pyx_t_3, __pyx_v_np_P); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __pyx_t_3 = NULL;
@@ -20773,28 +20801,28 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_6, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 159, __pyx_L15_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           }
           __pyx_v_np_negative_est_counts = __pyx_t_1;
           __pyx_t_1 = 0;
 
-          /* "py_raccoon/balance_sampling.pyx":160
+          /* "py_raccoon/balance_sampling.pyx":161
  *         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
  *         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
  *         np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)             # <<<<<<<<<<<<<<
  * 
  *     return np_total_est_counts, np_positive_est_counts, np_negative_est_counts, np_total_occurred, np_positive_occurred, np_negative_occurred
  */
-          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 160, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_np); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 161, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_6);
-          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_exp2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 160, __pyx_L15_error)
+          __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_6, __pyx_n_s_exp2); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 161, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_5);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 160, __pyx_L15_error)
+          __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 161, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_3);
-          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_log2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 160, __pyx_L15_error)
+          __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_log2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
           __pyx_t_3 = NULL;
@@ -20815,11 +20843,11 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             PyObject *__pyx_callargs[2] = {__pyx_t_3, __pyx_v_np_total_expected_counts};
             __pyx_t_6 = __Pyx_PyObject_FastCall(__pyx_t_4, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
-            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 160, __pyx_L15_error)
+            if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 161, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_6);
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
           }
-          __pyx_t_4 = PyNumber_Subtract(__pyx_t_6, __pyx_v_np_P); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 160, __pyx_L15_error)
+          __pyx_t_4 = PyNumber_Subtract(__pyx_t_6, __pyx_v_np_P); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 161, __pyx_L15_error)
           __Pyx_GOTREF(__pyx_t_4);
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
           __pyx_t_6 = NULL;
@@ -20841,14 +20869,14 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             __pyx_t_1 = __Pyx_PyObject_FastCall(__pyx_t_5, __pyx_callargs+1-__pyx_t_7, 1+__pyx_t_7);
             __Pyx_XDECREF(__pyx_t_6); __pyx_t_6 = 0;
             __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 160, __pyx_L15_error)
+            if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 161, __pyx_L15_error)
             __Pyx_GOTREF(__pyx_t_1);
             __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
           }
           __pyx_v_np_total_est_counts = __pyx_t_1;
           __pyx_t_1 = 0;
 
-          /* "py_raccoon/balance_sampling.pyx":157
+          /* "py_raccoon/balance_sampling.pyx":158
  *     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
  * 
  *     with np.errstate(divide='ignore'):             # <<<<<<<<<<<<<<
@@ -20882,20 +20910,20 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         __pyx_t_8.memview = NULL; __pyx_t_8.data = NULL;
         /*except:*/ {
           __Pyx_AddTraceback("py_raccoon.balance_sampling.estimate_len_count_fast", __pyx_clineno, __pyx_lineno, __pyx_filename);
-          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_5, &__pyx_t_4) < 0) __PYX_ERR(0, 157, __pyx_L17_except_error)
+          if (__Pyx_GetException(&__pyx_t_1, &__pyx_t_5, &__pyx_t_4) < 0) __PYX_ERR(0, 158, __pyx_L17_except_error)
           __Pyx_XGOTREF(__pyx_t_1);
           __Pyx_XGOTREF(__pyx_t_5);
           __Pyx_XGOTREF(__pyx_t_4);
-          __pyx_t_6 = PyTuple_Pack(3, __pyx_t_1, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 157, __pyx_L17_except_error)
+          __pyx_t_6 = PyTuple_Pack(3, __pyx_t_1, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 158, __pyx_L17_except_error)
           __Pyx_GOTREF(__pyx_t_6);
           __pyx_t_32 = __Pyx_PyObject_Call(__pyx_t_28, __pyx_t_6, NULL);
           __Pyx_DECREF(__pyx_t_28); __pyx_t_28 = 0;
           __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-          if (unlikely(!__pyx_t_32)) __PYX_ERR(0, 157, __pyx_L17_except_error)
+          if (unlikely(!__pyx_t_32)) __PYX_ERR(0, 158, __pyx_L17_except_error)
           __Pyx_GOTREF(__pyx_t_32);
           __pyx_t_27 = __Pyx_PyObject_IsTrue(__pyx_t_32);
           __Pyx_DECREF(__pyx_t_32); __pyx_t_32 = 0;
-          if (__pyx_t_27 < 0) __PYX_ERR(0, 157, __pyx_L17_except_error)
+          if (__pyx_t_27 < 0) __PYX_ERR(0, 158, __pyx_L17_except_error)
           __pyx_t_33 = (!__pyx_t_27);
           if (unlikely(__pyx_t_33)) {
             __Pyx_GIVEREF(__pyx_t_1);
@@ -20903,7 +20931,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
             __Pyx_XGIVEREF(__pyx_t_4);
             __Pyx_ErrRestoreWithState(__pyx_t_1, __pyx_t_5, __pyx_t_4);
             __pyx_t_1 = 0; __pyx_t_5 = 0; __pyx_t_4 = 0; 
-            __PYX_ERR(0, 157, __pyx_L17_except_error)
+            __PYX_ERR(0, 158, __pyx_L17_except_error)
           }
           __Pyx_XDECREF(__pyx_t_1); __pyx_t_1 = 0;
           __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -20929,7 +20957,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
         if (__pyx_t_28) {
           __pyx_t_31 = __Pyx_PyObject_Call(__pyx_t_28, __pyx_tuple__16, NULL);
           __Pyx_DECREF(__pyx_t_28); __pyx_t_28 = 0;
-          if (unlikely(!__pyx_t_31)) __PYX_ERR(0, 157, __pyx_L1_error)
+          if (unlikely(!__pyx_t_31)) __PYX_ERR(0, 158, __pyx_L1_error)
           __Pyx_GOTREF(__pyx_t_31);
           __Pyx_DECREF(__pyx_t_31); __pyx_t_31 = 0;
         }
@@ -20944,7 +20972,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     __pyx_L24:;
   }
 
-  /* "py_raccoon/balance_sampling.pyx":162
+  /* "py_raccoon/balance_sampling.pyx":163
  *         np_total_est_counts = np.exp2(np.log2(np_total_expected_counts) - np_P)
  * 
  *     return np_total_est_counts, np_positive_est_counts, np_negative_est_counts, np_total_occurred, np_positive_occurred, np_negative_occurred             # <<<<<<<<<<<<<<
@@ -20952,29 +20980,29 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  * @cython.boundscheck(False)
  */
   __Pyx_XDECREF(__pyx_r);
-  if (unlikely(!__pyx_v_np_total_est_counts)) { __Pyx_RaiseUnboundLocalError("np_total_est_counts"); __PYX_ERR(0, 162, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_np_positive_est_counts)) { __Pyx_RaiseUnboundLocalError("np_positive_est_counts"); __PYX_ERR(0, 162, __pyx_L1_error) }
-  if (unlikely(!__pyx_v_np_negative_est_counts)) { __Pyx_RaiseUnboundLocalError("np_negative_est_counts"); __PYX_ERR(0, 162, __pyx_L1_error) }
-  __pyx_t_4 = PyTuple_New(6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 162, __pyx_L1_error)
+  if (unlikely(!__pyx_v_np_total_est_counts)) { __Pyx_RaiseUnboundLocalError("np_total_est_counts"); __PYX_ERR(0, 163, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_np_positive_est_counts)) { __Pyx_RaiseUnboundLocalError("np_positive_est_counts"); __PYX_ERR(0, 163, __pyx_L1_error) }
+  if (unlikely(!__pyx_v_np_negative_est_counts)) { __Pyx_RaiseUnboundLocalError("np_negative_est_counts"); __PYX_ERR(0, 163, __pyx_L1_error) }
+  __pyx_t_4 = PyTuple_New(6); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 163, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_INCREF(__pyx_v_np_total_est_counts);
   __Pyx_GIVEREF(__pyx_v_np_total_est_counts);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_np_total_est_counts)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 0, __pyx_v_np_total_est_counts)) __PYX_ERR(0, 163, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_np_positive_est_counts);
   __Pyx_GIVEREF(__pyx_v_np_positive_est_counts);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_np_positive_est_counts)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 1, __pyx_v_np_positive_est_counts)) __PYX_ERR(0, 163, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_np_negative_est_counts);
   __Pyx_GIVEREF(__pyx_v_np_negative_est_counts);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_v_np_negative_est_counts)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 2, __pyx_v_np_negative_est_counts)) __PYX_ERR(0, 163, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_np_total_occurred);
   __Pyx_GIVEREF(__pyx_v_np_total_occurred);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 3, __pyx_v_np_total_occurred)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 3, __pyx_v_np_total_occurred)) __PYX_ERR(0, 163, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_np_positive_occurred);
   __Pyx_GIVEREF(__pyx_v_np_positive_occurred);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 4, __pyx_v_np_positive_occurred)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 4, __pyx_v_np_positive_occurred)) __PYX_ERR(0, 163, __pyx_L1_error);
   __Pyx_INCREF(__pyx_v_np_negative_occurred);
   __Pyx_GIVEREF(__pyx_v_np_negative_occurred);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 5, __pyx_v_np_negative_occurred)) __PYX_ERR(0, 162, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_4, 5, __pyx_v_np_negative_occurred)) __PYX_ERR(0, 163, __pyx_L1_error);
   __pyx_r = ((PyObject*)__pyx_t_4);
   __pyx_t_4 = 0;
   goto __pyx_L0;
@@ -21036,7 +21064,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_sampling.pyx":166
+/* "py_raccoon/balance_sampling.pyx":167
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, double p, int[:] parent, signed char[:] parent_weight, int tree_root, int[:] depth, int[:] degree):             # <<<<<<<<<<<<<<
@@ -21113,22 +21141,22 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
   __Pyx_RefNannySetupContext("occurence_probability_fast", 1);
-  __Pyx_TraceCall("occurence_probability_fast", __pyx_f[0], 166, 0, __PYX_ERR(0, 166, __pyx_L1_error));
+  __Pyx_TraceCall("occurence_probability_fast", __pyx_f[0], 167, 0, __PYX_ERR(0, 167, __pyx_L1_error));
 
-  /* "py_raccoon/balance_sampling.pyx":180
+  /* "py_raccoon/balance_sampling.pyx":181
  *     Returns: List of tuples (u, v, lca(u,v), log_2(p_c)) for each $(u, v) \in G \setminus T$
  *     """
  *     cdef int n = len(G.nodes)             # <<<<<<<<<<<<<<
  *     cdef double c_prob = p
  * 
  */
-  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_v_G, __pyx_n_s_nodes); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 181, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 180, __pyx_L1_error)
+  __pyx_t_2 = PyObject_Length(__pyx_t_1); if (unlikely(__pyx_t_2 == ((Py_ssize_t)-1))) __PYX_ERR(0, 181, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
   __pyx_v_n = __pyx_t_2;
 
-  /* "py_raccoon/balance_sampling.pyx":181
+  /* "py_raccoon/balance_sampling.pyx":182
  *     """
  *     cdef int n = len(G.nodes)
  *     cdef double c_prob = p             # <<<<<<<<<<<<<<
@@ -21137,24 +21165,24 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
   __pyx_v_c_prob = __pyx_v_p;
 
-  /* "py_raccoon/balance_sampling.pyx":184
+  /* "py_raccoon/balance_sampling.pyx":185
  * 
  *     # calculate cumulative properties $\pi(r,u)$ and $\sigma(r,u)$
  *     cum_prod_np = np.ndarray(len(parent), np.float64)             # <<<<<<<<<<<<<<
  *     root_prod = deg_prod_update(tree_root, -1, 0, degree)
  *     calc_property_fast(parent, cum_prod_np, root_prod, degree, deg_prod_update)
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_2 = __Pyx_MemoryView_Len(__pyx_v_parent); 
-  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __pyx_t_3 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_5, __pyx_n_s_np); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 184, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_5, __pyx_n_s_float64); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 185, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
   __pyx_t_5 = NULL;
@@ -21177,65 +21205,65 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __Pyx_XDECREF(__pyx_t_5); __pyx_t_5 = 0;
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 184, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 185, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   }
   __pyx_v_cum_prod_np = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":185
+  /* "py_raccoon/balance_sampling.pyx":186
  *     # calculate cumulative properties $\pi(r,u)$ and $\sigma(r,u)$
  *     cum_prod_np = np.ndarray(len(parent), np.float64)
  *     root_prod = deg_prod_update(tree_root, -1, 0, degree)             # <<<<<<<<<<<<<<
  *     calc_property_fast(parent, cum_prod_np, root_prod, degree, deg_prod_update)
  *     cdef double[:] cum_prod = cum_prod_np
  */
-  __pyx_t_8 = __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(__pyx_v_tree_root, -1, 0.0, __pyx_v_degree); if (unlikely(__pyx_t_8 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 185, __pyx_L1_error)
+  __pyx_t_8 = __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(__pyx_v_tree_root, -1, 0.0, __pyx_v_degree); if (unlikely(__pyx_t_8 == ((double)-1) && PyErr_Occurred())) __PYX_ERR(0, 186, __pyx_L1_error)
   __pyx_v_root_prod = __pyx_t_8;
 
-  /* "py_raccoon/balance_sampling.pyx":186
+  /* "py_raccoon/balance_sampling.pyx":187
  *     cum_prod_np = np.ndarray(len(parent), np.float64)
  *     root_prod = deg_prod_update(tree_root, -1, 0, degree)
  *     calc_property_fast(parent, cum_prod_np, root_prod, degree, deg_prod_update)             # <<<<<<<<<<<<<<
  *     cdef double[:] cum_prod = cum_prod_np
  *     cum_sum_np = np.ndarray(len(parent), np.float64)
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_prod_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 186, __pyx_L1_error)
-  __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__pyx_v_parent, __pyx_t_9, __pyx_v_root_prod, __pyx_v_degree, __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 186, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_prod_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__pyx_v_parent, __pyx_t_9, __pyx_v_root_prod, __pyx_v_degree, __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 187, __pyx_L1_error)
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_9, 1);
   __pyx_t_9.memview = NULL; __pyx_t_9.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":187
+  /* "py_raccoon/balance_sampling.pyx":188
  *     root_prod = deg_prod_update(tree_root, -1, 0, degree)
  *     calc_property_fast(parent, cum_prod_np, root_prod, degree, deg_prod_update)
  *     cdef double[:] cum_prod = cum_prod_np             # <<<<<<<<<<<<<<
  *     cum_sum_np = np.ndarray(len(parent), np.float64)
  *     calc_property_fast(parent, cum_sum_np, 0, degree, deg_sum_update)
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_prod_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 187, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_prod_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 188, __pyx_L1_error)
   __pyx_v_cum_prod = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":188
+  /* "py_raccoon/balance_sampling.pyx":189
  *     calc_property_fast(parent, cum_prod_np, root_prod, degree, deg_prod_update)
  *     cdef double[:] cum_prod = cum_prod_np
  *     cum_sum_np = np.ndarray(len(parent), np.float64)             # <<<<<<<<<<<<<<
  *     calc_property_fast(parent, cum_sum_np, 0, degree, deg_sum_update)
  *     cdef double[:] cum_sum = cum_sum_np
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
   __pyx_t_2 = __Pyx_MemoryView_Len(__pyx_v_parent); 
-  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __pyx_t_4 = PyInt_FromSsize_t(__pyx_t_2); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_3, __pyx_n_s_np); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_3);
-  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 188, __pyx_L1_error)
+  __pyx_t_5 = __Pyx_PyObject_GetAttrStr(__pyx_t_3, __pyx_n_s_float64); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 189, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
   __pyx_t_3 = NULL;
@@ -21258,38 +21286,38 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __Pyx_XDECREF(__pyx_t_3); __pyx_t_3 = 0;
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
-    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 188, __pyx_L1_error)
+    if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 189, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   }
   __pyx_v_cum_sum_np = __pyx_t_1;
   __pyx_t_1 = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":189
+  /* "py_raccoon/balance_sampling.pyx":190
  *     cdef double[:] cum_prod = cum_prod_np
  *     cum_sum_np = np.ndarray(len(parent), np.float64)
  *     calc_property_fast(parent, cum_sum_np, 0, degree, deg_sum_update)             # <<<<<<<<<<<<<<
  *     cdef double[:] cum_sum = cum_sum_np
  * 
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_sum_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 189, __pyx_L1_error)
-  __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__pyx_v_parent, __pyx_t_9, 0.0, __pyx_v_degree, __pyx_f_10py_raccoon_16balance_sampling_deg_sum_update); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 189, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_sum_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_f_10py_raccoon_22balance_spanning_trees_calc_property_fast(__pyx_v_parent, __pyx_t_9, 0.0, __pyx_v_degree, __pyx_f_10py_raccoon_16balance_sampling_deg_sum_update); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 190, __pyx_L1_error)
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_9, 1);
   __pyx_t_9.memview = NULL; __pyx_t_9.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":190
+  /* "py_raccoon/balance_sampling.pyx":191
  *     cum_sum_np = np.ndarray(len(parent), np.float64)
  *     calc_property_fast(parent, cum_sum_np, 0, degree, deg_sum_update)
  *     cdef double[:] cum_sum = cum_sum_np             # <<<<<<<<<<<<<<
  * 
  *     cdef int i
  */
-  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_sum_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 190, __pyx_L1_error)
+  __pyx_t_9 = __Pyx_PyObject_to_MemoryviewSlice_ds_double(__pyx_v_cum_sum_np, PyBUF_WRITABLE); if (unlikely(!__pyx_t_9.memview)) __PYX_ERR(0, 191, __pyx_L1_error)
   __pyx_v_cum_sum = __pyx_t_9;
   __pyx_t_9.memview = NULL;
   __pyx_t_9.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":193
+  /* "py_raccoon/balance_sampling.pyx":194
  * 
  *     cdef int i
  *     cdef int num_candidates = len(edges) - n + 1             # <<<<<<<<<<<<<<
@@ -21299,32 +21327,32 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   __pyx_t_2 = __Pyx_MemoryView_Len(__pyx_v_edges); 
   __pyx_v_num_candidates = ((__pyx_t_2 - __pyx_v_n) + 1);
 
-  /* "py_raccoon/balance_sampling.pyx":194
+  /* "py_raccoon/balance_sampling.pyx":195
  *     cdef int i
  *     cdef int num_candidates = len(edges) - n + 1
  *     np_candidate_edges = np.empty(num_candidates, dtype=NP_EDGE)             # <<<<<<<<<<<<<<
  *     cdef Edge[:] candidate_edges = np_candidate_edges
  *     cdef Edge e
  */
-  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_1, __pyx_n_s_np); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_6 = __Pyx_PyObject_GetAttrStr(__pyx_t_1, __pyx_n_s_empty); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_6);
   __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_num_candidates); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyInt_From_int(__pyx_v_num_candidates); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_5);
   __Pyx_GIVEREF(__pyx_t_1);
-  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error);
+  if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error);
   __pyx_t_1 = 0;
-  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_1 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_1);
-  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_NP_EDGE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_NP_EDGE); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
-  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 194, __pyx_L1_error)
+  if (PyDict_SetItem(__pyx_t_1, __pyx_n_s_dtype, __pyx_t_4) < 0) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 194, __pyx_L1_error)
+  __pyx_t_4 = __Pyx_PyObject_Call(__pyx_t_6, __pyx_t_5, __pyx_t_1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 195, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_t_4);
   __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
   __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -21332,19 +21360,19 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   __pyx_v_np_candidate_edges = __pyx_t_4;
   __pyx_t_4 = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":195
+  /* "py_raccoon/balance_sampling.pyx":196
  *     cdef int num_candidates = len(edges) - n + 1
  *     np_candidate_edges = np.empty(num_candidates, dtype=NP_EDGE)
  *     cdef Edge[:] candidate_edges = np_candidate_edges             # <<<<<<<<<<<<<<
  *     cdef Edge e
  *     i = 0
  */
-  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(__pyx_v_np_candidate_edges, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 195, __pyx_L1_error)
+  __pyx_t_10 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_22balance_spanning_trees_Edge(__pyx_v_np_candidate_edges, PyBUF_WRITABLE); if (unlikely(!__pyx_t_10.memview)) __PYX_ERR(0, 196, __pyx_L1_error)
   __pyx_v_candidate_edges = __pyx_t_10;
   __pyx_t_10.memview = NULL;
   __pyx_t_10.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":197
+  /* "py_raccoon/balance_sampling.pyx":198
  *     cdef Edge[:] candidate_edges = np_candidate_edges
  *     cdef Edge e
  *     i = 0             # <<<<<<<<<<<<<<
@@ -21353,7 +21381,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
   __pyx_v_i = 0;
 
-  /* "py_raccoon/balance_sampling.pyx":199
+  /* "py_raccoon/balance_sampling.pyx":200
  *     i = 0
  * 
  *     for e in edges:             # <<<<<<<<<<<<<<
@@ -21362,7 +21390,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
   if (unlikely(((PyObject *) __pyx_v_edges.memview) == Py_None)) {
     PyErr_SetString(PyExc_TypeError, "'NoneType' is not iterable");
-    __PYX_ERR(0, 199, __pyx_L1_error)
+    __PYX_ERR(0, 200, __pyx_L1_error)
   }
   __PYX_INC_MEMVIEW(&__pyx_v_edges, 1);
   __pyx_t_10 = __pyx_v_edges;
@@ -21372,7 +21400,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __pyx_t_13 = __pyx_t_11;
     __pyx_v_e = (*((struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge *) ( /* dim=0 */ (__pyx_t_10.data + __pyx_t_13 * __pyx_t_10.strides[0]) )));
 
-    /* "py_raccoon/balance_sampling.pyx":200
+    /* "py_raccoon/balance_sampling.pyx":201
  * 
  *     for e in edges:
  *         if parent[e.a] != e.b and parent[e.b] != e.a:             # <<<<<<<<<<<<<<
@@ -21392,7 +21420,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __pyx_L6_bool_binop_done:;
     if (__pyx_t_14) {
 
-      /* "py_raccoon/balance_sampling.pyx":201
+      /* "py_raccoon/balance_sampling.pyx":202
  *     for e in edges:
  *         if parent[e.a] != e.b and parent[e.b] != e.a:
  *             candidate_edges[i] = e             # <<<<<<<<<<<<<<
@@ -21402,7 +21430,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_13 = __pyx_v_i;
       *((struct __pyx_t_10py_raccoon_22balance_spanning_trees_Edge *) ( /* dim=0 */ (__pyx_v_candidate_edges.data + __pyx_t_13 * __pyx_v_candidate_edges.strides[0]) )) = __pyx_v_e;
 
-      /* "py_raccoon/balance_sampling.pyx":202
+      /* "py_raccoon/balance_sampling.pyx":203
  *         if parent[e.a] != e.b and parent[e.b] != e.a:
  *             candidate_edges[i] = e
  *             i += 1             # <<<<<<<<<<<<<<
@@ -21411,7 +21439,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
       __pyx_v_i = (__pyx_v_i + 1);
 
-      /* "py_raccoon/balance_sampling.pyx":200
+      /* "py_raccoon/balance_sampling.pyx":201
  * 
  *     for e in edges:
  *         if parent[e.a] != e.b and parent[e.b] != e.a:             # <<<<<<<<<<<<<<
@@ -21423,17 +21451,17 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   __PYX_XCLEAR_MEMVIEW(&__pyx_t_10, 1);
   __pyx_t_10.memview = NULL; __pyx_t_10.data = NULL;
 
-  /* "py_raccoon/balance_sampling.pyx":206
+  /* "py_raccoon/balance_sampling.pyx":207
  *     cdef int u, v, lca, l
  *     cdef double deg_sum, deg_prod, p_c
  *     cdef LcaResult* lca_result = lowest_common_ancestor(parent, parent_weight, candidate_edges)             # <<<<<<<<<<<<<<
  *     cdef int res_count = candidate_edges.shape[0]
  *     cdef OccurenceProb[:] result
  */
-  __pyx_t_16 = __pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__pyx_v_parent, __pyx_v_parent_weight, __pyx_v_candidate_edges); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 206, __pyx_L1_error)
+  __pyx_t_16 = __pyx_f_10py_raccoon_22balance_spanning_trees_lowest_common_ancestor(__pyx_v_parent, __pyx_v_parent_weight, __pyx_v_candidate_edges); if (unlikely(PyErr_Occurred())) __PYX_ERR(0, 207, __pyx_L1_error)
   __pyx_v_lca_result = __pyx_t_16;
 
-  /* "py_raccoon/balance_sampling.pyx":207
+  /* "py_raccoon/balance_sampling.pyx":208
  *     cdef double deg_sum, deg_prod, p_c
  *     cdef LcaResult* lca_result = lowest_common_ancestor(parent, parent_weight, candidate_edges)
  *     cdef int res_count = candidate_edges.shape[0]             # <<<<<<<<<<<<<<
@@ -21442,7 +21470,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
   __pyx_v_res_count = (__pyx_v_candidate_edges.shape[0]);
 
-  /* "py_raccoon/balance_sampling.pyx":209
+  /* "py_raccoon/balance_sampling.pyx":210
  *     cdef int res_count = candidate_edges.shape[0]
  *     cdef OccurenceProb[:] result
  *     try:             # <<<<<<<<<<<<<<
@@ -21451,32 +21479,32 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
   /*try:*/ {
 
-    /* "py_raccoon/balance_sampling.pyx":210
+    /* "py_raccoon/balance_sampling.pyx":211
  *     cdef OccurenceProb[:] result
  *     try:
  *         np_result = np.ndarray(res_count, dtype=NP_OCCURENCE_PROB)             # <<<<<<<<<<<<<<
  *         result = np_result
  *         for i in range(res_count):
  */
-    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_4, __pyx_n_s_np); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __pyx_t_1 = __Pyx_PyObject_GetAttrStr(__pyx_t_4, __pyx_n_s_ndarray); if (unlikely(!__pyx_t_1)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_1);
     __Pyx_DECREF(__pyx_t_4); __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_res_count); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __pyx_t_4 = __Pyx_PyInt_From_int(__pyx_v_res_count); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __pyx_t_5 = PyTuple_New(1); if (unlikely(!__pyx_t_5)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_5);
     __Pyx_GIVEREF(__pyx_t_4);
-    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4)) __PYX_ERR(0, 210, __pyx_L9_error);
+    if (__Pyx_PyTuple_SET_ITEM(__pyx_t_5, 0, __pyx_t_4)) __PYX_ERR(0, 211, __pyx_L9_error);
     __pyx_t_4 = 0;
-    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __pyx_t_4 = __Pyx_PyDict_NewPresized(1); if (unlikely(!__pyx_t_4)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_4);
-    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_NP_OCCURENCE_PROB); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __Pyx_GetModuleGlobalName(__pyx_t_6, __pyx_n_s_NP_OCCURENCE_PROB); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_6);
-    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 210, __pyx_L9_error)
+    if (PyDict_SetItem(__pyx_t_4, __pyx_n_s_dtype, __pyx_t_6) < 0) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_DECREF(__pyx_t_6); __pyx_t_6 = 0;
-    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 210, __pyx_L9_error)
+    __pyx_t_6 = __Pyx_PyObject_Call(__pyx_t_1, __pyx_t_5, __pyx_t_4); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 211, __pyx_L9_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_1); __pyx_t_1 = 0;
     __Pyx_DECREF(__pyx_t_5); __pyx_t_5 = 0;
@@ -21484,19 +21512,19 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __pyx_v_np_result = __pyx_t_6;
     __pyx_t_6 = 0;
 
-    /* "py_raccoon/balance_sampling.pyx":211
+    /* "py_raccoon/balance_sampling.pyx":212
  *     try:
  *         np_result = np.ndarray(res_count, dtype=NP_OCCURENCE_PROB)
  *         result = np_result             # <<<<<<<<<<<<<<
  *         for i in range(res_count):
  *             lca_res = lca_result[i]
  */
-    __pyx_t_17 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_16balance_sampling_OccurenceProb(__pyx_v_np_result, PyBUF_WRITABLE); if (unlikely(!__pyx_t_17.memview)) __PYX_ERR(0, 211, __pyx_L9_error)
+    __pyx_t_17 = __Pyx_PyObject_to_MemoryviewSlice_ds_nn_struct____pyx_t_10py_raccoon_16balance_sampling_OccurenceProb(__pyx_v_np_result, PyBUF_WRITABLE); if (unlikely(!__pyx_t_17.memview)) __PYX_ERR(0, 212, __pyx_L9_error)
     __pyx_v_result = __pyx_t_17;
     __pyx_t_17.memview = NULL;
     __pyx_t_17.data = NULL;
 
-    /* "py_raccoon/balance_sampling.pyx":212
+    /* "py_raccoon/balance_sampling.pyx":213
  *         np_result = np.ndarray(res_count, dtype=NP_OCCURENCE_PROB)
  *         result = np_result
  *         for i in range(res_count):             # <<<<<<<<<<<<<<
@@ -21508,7 +21536,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     for (__pyx_t_20 = 0; __pyx_t_20 < __pyx_t_19; __pyx_t_20+=1) {
       __pyx_v_i = __pyx_t_20;
 
-      /* "py_raccoon/balance_sampling.pyx":213
+      /* "py_raccoon/balance_sampling.pyx":214
  *         result = np_result
  *         for i in range(res_count):
  *             lca_res = lca_result[i]             # <<<<<<<<<<<<<<
@@ -21517,7 +21545,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
       __pyx_v_lca_res = (__pyx_v_lca_result[__pyx_v_i]);
 
-      /* "py_raccoon/balance_sampling.pyx":214
+      /* "py_raccoon/balance_sampling.pyx":215
  *         for i in range(res_count):
  *             lca_res = lca_result[i]
  *             u = lca_res.a             # <<<<<<<<<<<<<<
@@ -21527,7 +21555,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_21 = __pyx_v_lca_res.a;
       __pyx_v_u = __pyx_t_21;
 
-      /* "py_raccoon/balance_sampling.pyx":215
+      /* "py_raccoon/balance_sampling.pyx":216
  *             lca_res = lca_result[i]
  *             u = lca_res.a
  *             v = lca_res.b             # <<<<<<<<<<<<<<
@@ -21537,7 +21565,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_21 = __pyx_v_lca_res.b;
       __pyx_v_v = __pyx_t_21;
 
-      /* "py_raccoon/balance_sampling.pyx":216
+      /* "py_raccoon/balance_sampling.pyx":217
  *             u = lca_res.a
  *             v = lca_res.b
  *             lca = lca_res.lca             # <<<<<<<<<<<<<<
@@ -21547,7 +21575,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_21 = __pyx_v_lca_res.lca;
       __pyx_v_lca = __pyx_t_21;
 
-      /* "py_raccoon/balance_sampling.pyx":217
+      /* "py_raccoon/balance_sampling.pyx":218
  *             v = lca_res.b
  *             lca = lca_res.lca
  *             bal = lca_res.bal             # <<<<<<<<<<<<<<
@@ -21557,7 +21585,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_22 = __pyx_v_lca_res.bal;
       __pyx_v_bal = __pyx_t_22;
 
-      /* "py_raccoon/balance_sampling.pyx":219
+      /* "py_raccoon/balance_sampling.pyx":220
  *             bal = lca_res.bal
  * 
  *             l = depth[u] + depth[v] - 2*depth[lca] + 1             # <<<<<<<<<<<<<<
@@ -21569,7 +21597,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_24 = __pyx_v_lca;
       __pyx_v_l = ((((*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_13 * __pyx_v_depth.strides[0]) ))) + (*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_23 * __pyx_v_depth.strides[0]) )))) - (2 * (*((int *) ( /* dim=0 */ (__pyx_v_depth.data + __pyx_t_24 * __pyx_v_depth.strides[0]) ))))) + 1);
 
-      /* "py_raccoon/balance_sampling.pyx":222
+      /* "py_raccoon/balance_sampling.pyx":223
  * 
  *             # $\sigma(u,v) = \sigma(r,u) + \sigma(r,v) - 2 \sigma(r,lca(u,v)) + (d(v) - 1)(d(u) - 1)
  *             deg_sum = cum_sum[u] + cum_sum[v] - 2*cum_sum[lca]             # <<<<<<<<<<<<<<
@@ -21581,7 +21609,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_13 = __pyx_v_lca;
       __pyx_v_deg_sum = (((*((double *) ( /* dim=0 */ (__pyx_v_cum_sum.data + __pyx_t_24 * __pyx_v_cum_sum.strides[0]) ))) + (*((double *) ( /* dim=0 */ (__pyx_v_cum_sum.data + __pyx_t_23 * __pyx_v_cum_sum.strides[0]) )))) - (2.0 * (*((double *) ( /* dim=0 */ (__pyx_v_cum_sum.data + __pyx_t_13 * __pyx_v_cum_sum.strides[0]) )))));
 
-      /* "py_raccoon/balance_sampling.pyx":223
+      /* "py_raccoon/balance_sampling.pyx":224
  *             # $\sigma(u,v) = \sigma(r,u) + \sigma(r,v) - 2 \sigma(r,lca(u,v)) + (d(v) - 1)(d(u) - 1)
  *             deg_sum = cum_sum[u] + cum_sum[v] - 2*cum_sum[lca]
  *             deg_sum = deg_sum + (degree[v]-1) * (degree[u]-1)             # <<<<<<<<<<<<<<
@@ -21592,7 +21620,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_23 = __pyx_v_u;
       __pyx_v_deg_sum = (__pyx_v_deg_sum + (((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_13 * __pyx_v_degree.strides[0]) ))) - 1) * ((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_23 * __pyx_v_degree.strides[0]) ))) - 1)));
 
-      /* "py_raccoon/balance_sampling.pyx":226
+      /* "py_raccoon/balance_sampling.pyx":227
  * 
  *             # $p'_{l-1} = \frac{1}{1 + \frac{(n-1)p - 2}{n-3}\frac{n-l}{l}}$
  *             deg_sum = deg_sum / (1 + ((n-1) * c_prob - 2) * (n - l) / (n - 3) / l)             # <<<<<<<<<<<<<<
@@ -21603,21 +21631,21 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_25 = (__pyx_v_n - 3);
       if (unlikely(__pyx_t_25 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 226, __pyx_L9_error)
+        __PYX_ERR(0, 227, __pyx_L9_error)
       }
       __pyx_t_26 = (__pyx_t_8 / ((double)__pyx_t_25));
       if (unlikely(__pyx_v_l == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 226, __pyx_L9_error)
+        __PYX_ERR(0, 227, __pyx_L9_error)
       }
       __pyx_t_8 = (1.0 + (__pyx_t_26 / ((double)__pyx_v_l)));
       if (unlikely(__pyx_t_8 == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 226, __pyx_L9_error)
+        __PYX_ERR(0, 227, __pyx_L9_error)
       }
       __pyx_v_deg_sum = (__pyx_v_deg_sum / __pyx_t_8);
 
-      /* "py_raccoon/balance_sampling.pyx":229
+      /* "py_raccoon/balance_sampling.pyx":230
  * 
  *             # $\pi(u,v) = (d(lca(u,v)) - 1) * \pi(r,u) * \pi(r,v) / \pi(r,lca(u,v))^2
  *             deg_prod = cum_prod[u] + cum_prod[v] + clog2(degree[lca] - 1) - (2*cum_prod[lca])             # <<<<<<<<<<<<<<
@@ -21630,7 +21658,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_27 = __pyx_v_lca;
       __pyx_v_deg_prod = ((((*((double *) ( /* dim=0 */ (__pyx_v_cum_prod.data + __pyx_t_23 * __pyx_v_cum_prod.strides[0]) ))) + (*((double *) ( /* dim=0 */ (__pyx_v_cum_prod.data + __pyx_t_13 * __pyx_v_cum_prod.strides[0]) )))) + log2(((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_24 * __pyx_v_degree.strides[0]) ))) - 1))) - (2.0 * (*((double *) ( /* dim=0 */ (__pyx_v_cum_prod.data + __pyx_t_27 * __pyx_v_cum_prod.strides[0]) )))));
 
-      /* "py_raccoon/balance_sampling.pyx":233
+      /* "py_raccoon/balance_sampling.pyx":234
  *             # mod is the remaining part of the equation
  *             # [...] ((n-2)/n)^(l-3) (n-1)/n * ((n-1)p-1)/(n-1)p
  *             mod = clog2(n-1) - clog2(n) + clog2((n-2)/n)*(l-3) + clog2((n-1)*c_prob-1) - clog2((n-1)*c_prob)             # <<<<<<<<<<<<<<
@@ -21640,11 +21668,11 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_25 = (__pyx_v_n - 2);
       if (unlikely(__pyx_v_n == 0)) {
         PyErr_SetString(PyExc_ZeroDivisionError, "float division");
-        __PYX_ERR(0, 233, __pyx_L9_error)
+        __PYX_ERR(0, 234, __pyx_L9_error)
       }
       __pyx_v_mod = ((((log2((__pyx_v_n - 1)) - log2(__pyx_v_n)) + (log2((((double)__pyx_t_25) / ((double)__pyx_v_n))) * (__pyx_v_l - 3))) + log2((((__pyx_v_n - 1) * __pyx_v_c_prob) - 1.0))) - log2(((__pyx_v_n - 1) * __pyx_v_c_prob)));
 
-      /* "py_raccoon/balance_sampling.pyx":234
+      /* "py_raccoon/balance_sampling.pyx":235
  *             # [...] ((n-2)/n)^(l-3) (n-1)/n * ((n-1)p-1)/(n-1)p
  *             mod = clog2(n-1) - clog2(n) + clog2((n-2)/n)*(l-3) + clog2((n-1)*c_prob-1) - clog2((n-1)*c_prob)
  *             p_c = clog2(deg_sum) - deg_prod + mod             # <<<<<<<<<<<<<<
@@ -21653,7 +21681,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
       __pyx_v_p_c = ((log2(__pyx_v_deg_sum) - __pyx_v_deg_prod) + __pyx_v_mod);
 
-      /* "py_raccoon/balance_sampling.pyx":236
+      /* "py_raccoon/balance_sampling.pyx":237
  *             p_c = clog2(deg_sum) - deg_prod + mod
  * 
  *             if p_c > 0: #logarithmic -> actual p_c > 1             # <<<<<<<<<<<<<<
@@ -21663,7 +21691,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
       __pyx_t_14 = (__pyx_v_p_c > 0.0);
       if (__pyx_t_14) {
 
-        /* "py_raccoon/balance_sampling.pyx":237
+        /* "py_raccoon/balance_sampling.pyx":238
  * 
  *             if p_c > 0: #logarithmic -> actual p_c > 1
  *                 p_c = 0             # <<<<<<<<<<<<<<
@@ -21672,7 +21700,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
         __pyx_v_p_c = 0.0;
 
-        /* "py_raccoon/balance_sampling.pyx":236
+        /* "py_raccoon/balance_sampling.pyx":237
  *             p_c = clog2(deg_sum) - deg_prod + mod
  * 
  *             if p_c > 0: #logarithmic -> actual p_c > 1             # <<<<<<<<<<<<<<
@@ -21681,7 +21709,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
  */
       }
 
-      /* "py_raccoon/balance_sampling.pyx":239
+      /* "py_raccoon/balance_sampling.pyx":240
  *                 p_c = 0
  * 
  *             result[i] = OccurenceProb(u, v, lca, p_c, bal)             # <<<<<<<<<<<<<<
@@ -21698,7 +21726,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     }
   }
 
-  /* "py_raccoon/balance_sampling.pyx":241
+  /* "py_raccoon/balance_sampling.pyx":242
  *             result[i] = OccurenceProb(u, v, lca, p_c, bal)
  *     finally:
  *         free(lca_result)             # <<<<<<<<<<<<<<
@@ -21755,7 +21783,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
     __pyx_L10:;
   }
 
-  /* "py_raccoon/balance_sampling.pyx":243
+  /* "py_raccoon/balance_sampling.pyx":244
  *         free(lca_result)
  * 
  *     return result             # <<<<<<<<<<<<<<
@@ -21766,7 +21794,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   __pyx_r = __pyx_v_result;
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_sampling.pyx":166
+  /* "py_raccoon/balance_sampling.pyx":167
  * @cython.boundscheck(False)
  * @cython.wraparound(False)
  * cdef OccurenceProb[:] occurence_probability_fast(G: nx.Graph, Edge[:] edges, double p, int[:] parent, signed char[:] parent_weight, int tree_root, int[:] depth, int[:] degree):             # <<<<<<<<<<<<<<
@@ -21806,7 +21834,7 @@ static __Pyx_memviewslice __pyx_f_10py_raccoon_16balance_sampling_occurence_prob
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_sampling.pyx":246
+/* "py_raccoon/balance_sampling.pyx":247
  * 
  * @cython.wraparound(False)
  * cdef double deg_prod_update(int node, int p, double parent_val, int[:] degree):             # <<<<<<<<<<<<<<
@@ -21824,9 +21852,9 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(int __pyx_
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceCall("deg_prod_update", __pyx_f[0], 246, 0, __PYX_ERR(0, 246, __pyx_L1_error));
+  __Pyx_TraceCall("deg_prod_update", __pyx_f[0], 247, 0, __PYX_ERR(0, 247, __pyx_L1_error));
 
-  /* "py_raccoon/balance_sampling.pyx":252
+  /* "py_raccoon/balance_sampling.pyx":253
  *     deg_prod_update = lambda _, p, parent_val: parent_val + (log2(degree_np[p] - 1) if degree_np[p] > 1 else 0) # if the degree is 1 we can ignore the node -- should only happen if the root has degree 1
  *     """
  *     return parent_val + (clog2(degree[node] - 1) if degree[node] > 1 else 0)             # <<<<<<<<<<<<<<
@@ -21840,7 +21868,7 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(int __pyx_
   } else if (unlikely(__pyx_t_2 >= __pyx_v_degree.shape[0])) __pyx_t_3 = 0;
   if (unlikely(__pyx_t_3 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_3);
-    __PYX_ERR(0, 252, __pyx_L1_error)
+    __PYX_ERR(0, 253, __pyx_L1_error)
   }
   __pyx_t_4 = ((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_2 * __pyx_v_degree.strides[0]) ))) > 1);
   if (__pyx_t_4) {
@@ -21851,7 +21879,7 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(int __pyx_
     } else if (unlikely(__pyx_t_2 >= __pyx_v_degree.shape[0])) __pyx_t_3 = 0;
     if (unlikely(__pyx_t_3 != -1)) {
       __Pyx_RaiseBufferIndexError(__pyx_t_3);
-      __PYX_ERR(0, 252, __pyx_L1_error)
+      __PYX_ERR(0, 253, __pyx_L1_error)
     }
     __pyx_t_1 = log2(((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_2 * __pyx_v_degree.strides[0]) ))) - 1));
   } else {
@@ -21860,7 +21888,7 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(int __pyx_
   __pyx_r = (__pyx_v_parent_val + __pyx_t_1);
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_sampling.pyx":246
+  /* "py_raccoon/balance_sampling.pyx":247
  * 
  * @cython.wraparound(False)
  * cdef double deg_prod_update(int node, int p, double parent_val, int[:] degree):             # <<<<<<<<<<<<<<
@@ -21877,7 +21905,7 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_prod_update(int __pyx_
   return __pyx_r;
 }
 
-/* "py_raccoon/balance_sampling.pyx":255
+/* "py_raccoon/balance_sampling.pyx":256
  * 
  * @cython.wraparound(False)
  * cdef double deg_sum_update(int u, int v, double parent_val, int[:] degree):             # <<<<<<<<<<<<<<
@@ -21894,9 +21922,9 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_sum_update(int __pyx_v
   int __pyx_lineno = 0;
   const char *__pyx_filename = NULL;
   int __pyx_clineno = 0;
-  __Pyx_TraceCall("deg_sum_update", __pyx_f[0], 255, 0, __PYX_ERR(0, 255, __pyx_L1_error));
+  __Pyx_TraceCall("deg_sum_update", __pyx_f[0], 256, 0, __PYX_ERR(0, 256, __pyx_L1_error));
 
-  /* "py_raccoon/balance_sampling.pyx":260
+  /* "py_raccoon/balance_sampling.pyx":261
  *     deg_sum_update = lambda u, v, parent_val: parent_val + (degree_np[u]-1) * (degree_np[v]-1)
  *     """
  *     return parent_val + (degree[u]-1) * (degree[v]-1)             # <<<<<<<<<<<<<<
@@ -21908,7 +21936,7 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_sum_update(int __pyx_v
   } else if (unlikely(__pyx_t_1 >= __pyx_v_degree.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 260, __pyx_L1_error)
+    __PYX_ERR(0, 261, __pyx_L1_error)
   }
   __pyx_t_3 = __pyx_v_v;
   __pyx_t_2 = -1;
@@ -21917,12 +21945,12 @@ static double __pyx_f_10py_raccoon_16balance_sampling_deg_sum_update(int __pyx_v
   } else if (unlikely(__pyx_t_3 >= __pyx_v_degree.shape[0])) __pyx_t_2 = 0;
   if (unlikely(__pyx_t_2 != -1)) {
     __Pyx_RaiseBufferIndexError(__pyx_t_2);
-    __PYX_ERR(0, 260, __pyx_L1_error)
+    __PYX_ERR(0, 261, __pyx_L1_error)
   }
   __pyx_r = (__pyx_v_parent_val + (((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_1 * __pyx_v_degree.strides[0]) ))) - 1) * ((*((int *) ( /* dim=0 */ (__pyx_v_degree.data + __pyx_t_3 * __pyx_v_degree.strides[0]) ))) - 1)));
   goto __pyx_L0;
 
-  /* "py_raccoon/balance_sampling.pyx":255
+  /* "py_raccoon/balance_sampling.pyx":256
  * 
  * @cython.wraparound(False)
  * cdef double deg_sum_update(int u, int v, double parent_val, int[:] degree):             # <<<<<<<<<<<<<<
@@ -23086,6 +23114,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_pickle, __pyx_k_pickle, sizeof(__pyx_k_pickle), 0, 0, 1, 1},
     {&__pyx_n_s_positive_expected_counts, __pyx_k_positive_expected_counts, sizeof(__pyx_k_positive_expected_counts), 0, 0, 1, 1},
     {&__pyx_n_s_positive_occurred, __pyx_k_positive_occurred, sizeof(__pyx_k_positive_occurred), 0, 0, 1, 1},
+    {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
     {&__pyx_n_s_py_raccoon_balance_sampling, __pyx_k_py_raccoon_balance_sampling, sizeof(__pyx_k_py_raccoon_balance_sampling), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
@@ -23101,6 +23130,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
     {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
     {&__pyx_n_s_return, __pyx_k_return, sizeof(__pyx_k_return), 0, 0, 1, 1},
+    {&__pyx_kp_u_sample, __pyx_k_sample, sizeof(__pyx_k_sample), 0, 1, 0, 0},
     {&__pyx_n_s_samples, __pyx_k_samples, sizeof(__pyx_k_samples), 0, 0, 1, 1},
     {&__pyx_n_s_seed, __pyx_k_seed, sizeof(__pyx_k_seed), 0, 0, 1, 1},
     {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
@@ -23143,6 +23173,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
 /* #### Code section: cached_builtins ### */
 static CYTHON_SMALL_CODE int __Pyx_InitCachedBuiltins(void) {
   __pyx_builtin_range = __Pyx_GetBuiltinName(__pyx_n_s_range); if (!__pyx_builtin_range) __PYX_ERR(0, 109, __pyx_L1_error)
+  __pyx_builtin_print = __Pyx_GetBuiltinName(__pyx_n_s_print); if (!__pyx_builtin_print) __PYX_ERR(0, 122, __pyx_L1_error)
   __pyx_builtin_KeyError = __Pyx_GetBuiltinName(__pyx_n_s_KeyError); if (!__pyx_builtin_KeyError) __PYX_ERR(1, 19, __pyx_L1_error)
   __pyx_builtin_ValueError = __Pyx_GetBuiltinName(__pyx_n_s_ValueError); if (!__pyx_builtin_ValueError) __PYX_ERR(1, 20, __pyx_L1_error)
   __pyx_builtin___import__ = __Pyx_GetBuiltinName(__pyx_n_s_import); if (!__pyx_builtin___import__) __PYX_ERR(1, 100, __pyx_L1_error)
@@ -23246,14 +23277,14 @@ static CYTHON_SMALL_CODE int __Pyx_InitCachedConstants(void) {
   __Pyx_GOTREF(__pyx_tuple__15);
   __Pyx_GIVEREF(__pyx_tuple__15);
 
-  /* "py_raccoon/balance_sampling.pyx":157
+  /* "py_raccoon/balance_sampling.pyx":158
  *     np_total_expected_counts = np_positive_expected_counts + np_negative_expected_counts
  * 
  *     with np.errstate(divide='ignore'):             # <<<<<<<<<<<<<<
  *         np_positive_est_counts = np.exp2(np.log2(np_positive_expected_counts) - np_P)
  *         np_negative_est_counts = np.exp2(np.log2(np_negative_expected_counts) - np_P)
  */
-  __pyx_tuple__16 = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 157, __pyx_L1_error)
+  __pyx_tuple__16 = PyTuple_Pack(3, Py_None, Py_None, Py_None); if (unlikely(!__pyx_tuple__16)) __PYX_ERR(0, 158, __pyx_L1_error)
   __Pyx_GOTREF(__pyx_tuple__16);
   __Pyx_GIVEREF(__pyx_tuple__16);
 

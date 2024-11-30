@@ -1,0 +1,54 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+cythonize           1
+epinions_exp        1
+epinions_pyr        1
+total               4
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov 29 12:44:40 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__; Code has changed since last execution
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Fri Nov 29 12:44:41 2024]
+Finished job 3.
+1 of 4 steps (25%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov 29 12:44:41 2024]
+localrule epinions_pyr:
+    input: results/__cythonized__
+    output: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_samples=1, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 94:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpe9t51sot.experiment.py' returned non-zero exit status 1.
+[Fri Nov 29 12:44:44 2024]
+Error in rule epinions_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-29T124439.959685.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

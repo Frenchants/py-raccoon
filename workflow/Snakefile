@@ -14,6 +14,10 @@ pyr_path = "pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
 cx_path = "cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
 
 
+dataset_path = "results/real/"
+epinions_path = dataset_path + "epinions/test/"
+
+
 random_path = "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
 er_path = "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
 complete_path = "results/synthetic/complete/n={n_nodes} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
@@ -56,21 +60,14 @@ rule all:
 
         "results/synthetic/sbm/exp=2 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
 
-rule complete_exp:
-    input:
-        expand("results/synthetic/complete/n={n} r={r} re=True d=False/{rest}", n=range(4, 31), r=[0.1, 0.3, 0.5, 0.7, 0.9], rest=["cx/e=True p=False l=10 s=1/cx_0_combined.csv", "cx/e=False p=False l=10 s=1000/cx_0_combined.csv", "pyr/s=1000 sp=None/pyr_0_combined.csv"]),
 
-rule complete_exp_cx_true:
+rule complete_exp: 
     input:
-        expand("results/synthetic/complete/n={n} r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n=range(4, 31), r=[0.1, 0.3, 0.5, 0.7, 0.9]),
+        "results/synthetic/er/n=10000 p=0.5 r=0.5 re=False d=False/pyr/s=1 sp=None/pyr_0_combined.csv"
 
-rule complete_exp_cx_false:
+rule epinions_exp:
     input:
-        expand("results/synthetic/complete/n={n} r={r} re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv", n=range(4, 31), r=[0.1, 0.3, 0.5, 0.7, 0.9]),
-
-rule error_exp:
-    input:
-        "results/synthetic/complete/n=21 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv"
+        "results/real/epinions/test/pyr/s=1 sp=None/pyr_0_combined.csv"
 
 rule cythonize:
     # Cythonizes the required files.
@@ -91,6 +88,19 @@ rule combine_exps:
     run:
         df_data = pd.concat([pd.read_csv(file) for file in input])
         df_data.to_csv(output[0])
+
+rule epinions_pyr:
+    #threads: 1 
+    input:
+        "results/__cythonized__"
+    output:
+        epinions_path + pyr_path,
+    params:
+        kind = "dataset",
+        dataset = 'epinions',
+        alg = "pyr",
+    script:
+        "scripts/experiment.py"
 
 rule random_pyr:
     threads: 1 

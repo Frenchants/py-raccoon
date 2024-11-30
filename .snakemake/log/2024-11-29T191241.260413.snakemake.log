@@ -1,0 +1,39 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+epinions_exp        1
+epinions_pyr        1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov 29 19:12:41 2024]
+localrule epinions_pyr:
+    input: results/__cythonized__
+    output: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+    wildcards: n_samples=1, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 99:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpd15vr7rt.experiment.py' returned non-zero exit status 1.
+[Fri Nov 29 19:13:25 2024]
+Error in rule epinions_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-11-29T191241.260413.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

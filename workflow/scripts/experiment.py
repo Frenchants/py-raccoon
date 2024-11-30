@@ -163,11 +163,42 @@ if __name__ == "__main__":
     rnd = np.random.default_rng(seed)
 
     kind_params = {}
-    if kind == 'er':
+
+    if kind == 'dataset':
+        kind_params['dataset'] = snakemake.params['dataset']
+        #kind_params['null_model'] = snakemake.wildcards.get('null_model', 'false').lower() == 'true'
+
+        #edges = [(i, i + 1, random.choice([-1, 1])) for i in range(50000 - 1)]
+
+        #G = nx.Graph()
+        #G.add_weighted_edges_from(edges)
+        #n_pos_edges = n_neg_edges = "test"
+
+        if kind_params['dataset'] == 'epinions':
+            directed = False
+            n_pos_edges  = n_neg_edges = "Test"
+            G = nx.Graph()
+            with open("workflow/scripts/datasets/soc-sign-epinions.txt", "r") as file:
+                for line in file:
+                    x, y, z = line.split()
+                    G.add_edge(int(x), int(y), weight=float(z))
+            
+            connected_components = list(nx.connected_components(G))
+            nodes_to_remove = set(G.nodes) - connected_components[1]
+            G.remove_nodes_from(nodes_to_remove)
+            node_mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes)}
+
+            # Relabel the nodes in the graph
+            G = nx.relabel_nodes(G, node_mapping)
+            print("Finished init")
+        
+    elif kind == 'er':
         kind_params['prob_p'] = float(snakemake.wildcards['prob_p'])
         G = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
         while not is_connected(G):
             G  = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
+            print("hi")
+        print("Finished init")
 
     elif kind == 'complete':
         G = nx.complete_graph(n_nodes)
@@ -233,7 +264,7 @@ if __name__ == "__main__":
     n_nodes = G.number_of_nodes()
     n_edges = G.number_of_edges()
 
-    if kind != 'sbm':
+    if kind != 'sbm' and kind != 'dataset':
         n_pos_edges = n_neg_edges = 0
 
         if neg_edge_dist_exact:

@@ -1,0 +1,38 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+complete_exp        1
+er_pyr              1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Fri Nov 29 19:35:21 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10000 p=0.5 r=0.5 re=False d=False/pyr/s=1 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/n=10000 p=0.5 r=0.5 re=False d=False/pyr/s=1 sp=None/run/pyr_0.csv
+    wildcards: n_nodes=10000, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, n_samples=1, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 163:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp91w2_rvm.experiment.py' died with <Signals.SIGINT: 2>.
+[Sat Nov 30 03:32:33 2024]
+Error in rule er_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10000 p=0.5 r=0.5 re=False d=False/pyr/s=1 sp=None/run/pyr_0.csv
+
+Complete log: .snakemake/log/2024-11-29T193521.186347.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
