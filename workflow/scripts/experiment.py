@@ -382,6 +382,7 @@ if __name__ == "__main__":
         results = cx.balance_ratio(clean_matrix, length=min(alg_params['max_length'], clean_matrix.shape[0]), exact=alg_params['exact'], n_samples=n_samples, parallel=alg_params['parallel'])
         alg_end_time = time.time()
         _, alg_peak_mem = tracemalloc.get_traced_memory()
+        alg_total_time = alg_end_time - alg_start_time
         data = save_cx_results(*results)
     else:
         raise ValueError("Unknown algorithm: ", alg)

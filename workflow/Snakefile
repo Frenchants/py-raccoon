@@ -82,6 +82,8 @@ rule combine_exps:
 
 # ----- EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
+# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
+
 rule complete_exp_all_negative_graph:
     input:
         expand("results/synthetic/complete/n={n} r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 26)),
@@ -102,8 +104,6 @@ rule complete_time_exp_samples_pyr:
 rule complete_time_exp_lengths_cx_approx:
     input:
         expand("results/synthetic/complete/n=15 r=0.5 re=False d=False/cx/e=False p=False l={l} s=100/cx_0_combined.csv", l=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 
-
-# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
 rule test: 
     input:
