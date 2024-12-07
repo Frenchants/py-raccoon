@@ -213,6 +213,10 @@ if __name__ == "__main__":
         while not is_connected(G):
             G  = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
 
+        G = nx.Graph()
+        G.add_edges_from([(1, 2), (2, 3), (1, 3)])
+        G.add_edges_from([(4, 5), (5, 6), (4, 6)])
+
     elif kind == 'complete':
         G = nx.complete_graph(n_nodes)
 
@@ -311,13 +315,54 @@ if __name__ == "__main__":
         else:
             alg_params['pyr_spec_edge_prob'] = float(snakemake.wildcards['pyr_spec_edge_prob'])
         
-        init_mem, _ = tracemalloc.get_traced_memory()
-        tracemalloc.reset_peak()
-        alg_start_time = time.time()
-        results = pyr.estimate_balance(G, samples=n_samples, p=alg_params['pyr_spec_edge_prob'], seed=rnd)
-        alg_end_time = time.time()
-        _, alg_peak_mem = tracemalloc.get_traced_memory()
-        data = save_pyr_results(*results)
+        if nx.is_connected(G):
+            init_mem, _ = tracemalloc.get_traced_memory()
+            tracemalloc.reset_peak()
+            alg_start_time = time.time()
+            results = pyr.estimate_balance(G, samples=n_samples, p=alg_params['pyr_spec_edge_prob'], seed=rnd)
+            alg_end_time = time.time()
+            _, alg_peak_mem = tracemalloc.get_traced_memory()
+            data = save_pyr_results(*results)
+            alg_total_time = alg_end_time - alg_start_time
+        else:
+            init_mem, _ = tracemalloc.get_traced_memory()
+            alg_peak_mem = 0
+            alg_total_time = 0
+            total_est_sum = np.zeros(len(G.nodes) + 1, np.float64)
+            pos_est_sum = np.zeros(len(G.nodes) + 1, np.float64)
+            neg_est_sum = np.zeros(len(G.nodes) + 1, np.float64) 
+            total_occurred_sum = np.zeros(len(G.nodes) + 1, np.float64)
+            pos_occurred_sum = np.zeros(len(G.nodes) + 1, np.float64)
+            neg_occurred_sum = np.zeros(len(G.nodes) + 1, np.float64)
+
+            components = [G.subgraph(nodes).copy() for nodes in nx.connected_components(G)]
+            for H in components:
+                nodes_of_H = len(H.nodes)
+                if nodes_of_H < 3:
+                    continue
+
+                mapping = {old_label: new_label for new_label, old_label in enumerate(H.nodes())}
+                H_relabel = nx.relabel_nodes(H, mapping)
+                if nodes_of_H == 3: 
+                    H_relabel.add_edge(0, 3, weight=1)
+                tracemalloc.reset_peak()
+                alg_start_time = time.time()
+                total_est, pos_est, neg_est, total_occurred, pos_occurred, neg_occurred = pyr.estimate_balance(H_relabel, samples=n_samples, p=alg_params['pyr_spec_edge_prob'], seed=rnd)
+                alg_end_time = time.time()
+                _, connected_comp_peak_mem = tracemalloc.get_traced_memory()
+                if connected_comp_peak_mem > alg_peak_mem:
+                    alg_peak_mem = connected_comp_peak_mem
+                alg_total_time += alg_end_time - alg_start_time 
+                
+                total_est_sum += np.pad(total_est, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+                pos_est_sum += np.pad(pos_est, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+                neg_est_sum += np.pad(neg_est, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+                total_occurred_sum += np.pad(total_occurred, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+                pos_occurred_sum += np.pad(pos_occurred, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+                neg_occurred_sum += np.pad(neg_occurred, (0, max(0, len(G.nodes) - len(H_relabel.nodes))), constant_values=0)
+            
+            data = save_pyr_results(total_est_sum, pos_est_sum, neg_est_sum, total_occurred_sum, pos_occurred_sum, neg_occurred_sum)
+
     elif alg == 'cx':
         alg_params['max_length'] = int(snakemake.wildcards['max_length'])
         alg_params['exact'] = snakemake.wildcards['exact'].lower() == 'true'
@@ -358,7 +403,7 @@ if __name__ == "__main__":
     params['alg'] = alg
     params['n_samples'] = n_samples
     params.update(alg_params)
-    params['alg_run_time'] = alg_end_time - alg_start_time 
+    params['alg_run_time'] = alg_total_time
     params['alg_peak_mem'] = alg_peak_mem
     params['alg_only_mem'] = alg_peak_mem - init_mem
     params['init_mem'] = init_mem
@@ -369,3 +414,9 @@ if __name__ == "__main__":
 
     df_data = pd.DataFrame(data)
     df_data.to_csv(snakemake.output[0])
+
+
+    edge_colors = ['blue' if G[u][v]['weight'] == 1 else 'red' for u, v in G.edges]
+    pos = nx.spring_layout(G, k=1.0)  # Layout for visualization
+    nx.draw(G, pos, with_labels=True, node_color="lightblue", node_size=500, edge_color=edge_colors, width=2)
+    plt.show()

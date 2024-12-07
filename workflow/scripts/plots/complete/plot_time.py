@@ -76,18 +76,18 @@ for i in range(5, 401, 5):
 
 plt.figure(figsize=(10, 6))
 
-plt.plot(n_values, pyr_times, label="FBE algorithm", marker='o', linestyle='', color='blue')
+plt.plot(n_values, pyr_times, label="FBE s=1000", marker='o', linestyle='', color='blue')
 
-plt.plot(n_values, cx_times, label="CX algorithm l=10 s=1000", marker='o', linestyle='', color='red')
+plt.plot(n_values, cx_times, label="Approx. CX l=10 s=1000", marker='o', linestyle='', color='red')
 
-plt.plot(n_l_values, cx_l11_times, label="CX algorithm l=11 s=100", marker='o', linestyle='', color='yellow')
+plt.plot(n_l_values, cx_l11_times, label="Approx. CX l=11 s=100", marker='o', linestyle='', color='yellow')
 
 print(cx_l11_times)
 
-plt.plot(n_l_values, cx_l12_times, label="CX algorithm l=12 s=10", marker='o', linestyle='', color='orange')
+plt.plot(n_l_values, cx_l12_times, label="Approx. CX l=12 s=10", marker='o', linestyle='', color='orange')
 
 # Customize the plot
-plt.xlabel("n")
+plt.xlabel("Number of vertices n")
 plt.ylabel("Runtime in seconds")
 #plt.title("")
 plt.legend()

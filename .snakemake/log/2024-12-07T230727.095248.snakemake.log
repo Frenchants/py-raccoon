@@ -1,0 +1,57 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+er_pyr              1
+test                1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 23:07:27 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    wildcards: n_nodes=10, prob_p=0.2, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 23:07:45 2024]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 23:07:45 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    output: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv
+    jobid: 1
+    reason: Missing output files: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv; Input files updated by another job: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    wildcards: path=results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None, alg=pyr, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 23:07:47 2024]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 23:07:47 2024]
+localrule test:
+    input: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.2 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 23:07:47 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2024-12-07T230727.095248.snakemake.log
