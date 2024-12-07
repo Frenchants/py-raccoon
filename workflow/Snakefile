@@ -84,7 +84,7 @@ rule combine_exps:
 
 rule complete_exp_all_negative_graph:
     input:
-        expand("results/synthetic/complete/n={n} r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 21)),
+        expand("results/synthetic/complete/n={n} r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 26)),
 
 rule complete_exp_negative_edges:
     input:
