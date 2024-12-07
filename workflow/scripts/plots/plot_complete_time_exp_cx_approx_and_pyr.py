@@ -8,7 +8,7 @@ pyr_times = []
 cx_times = []
 
 # Base folder containing the "n=i" directories
-base_dir = "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/plots/complete_run_time_results"
+base_dir = "/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/plots/complete_time_exp_cx_approx_and_pyr"
 
 # Iterate over the "n=i" directories
 for i in range(4, 401):
