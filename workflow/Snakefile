@@ -82,6 +82,9 @@ rule combine_exps:
 
 # ----- EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
+rule complete_exp_cx_exact:
+    expand("results/synthetic/complete/n={n} r={r} re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], n = [5, 10, 15, 20, 25, 30]),
+
 # ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
 rule complete_exp_all_negative_graph:
