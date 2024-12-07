@@ -82,7 +82,12 @@ rule combine_exps:
 
 # ----- EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
-rule complete_exp_all_negative:
+rule complete_exp_all_negative_graph:
+    input:
+        "results/synthetic/complete/n=20 r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv"
+        #expand("results/synthetic/complete/n={n} r=1 re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 21)),
+
+rule complete_exp_negative_edges:
     input:
         expand("results/synthetic/complete/n=11 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.0181818181818)),
         expand("results/synthetic/complete/n=10 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.022222222222)),
@@ -99,12 +104,12 @@ rule complete_time_exp_lengths_cx_approx:
     input:
         expand("results/synthetic/complete/n=15 r=0.5 re=False d=False/cx/e=False p=False l={l} s=100/cx_0_combined.csv", l=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 
 
+# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
+
 rule complete_time_exp_cx_approx:
     input:
-        expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/cx/e=False p=False l=11 s=100/cx_0_combined.csv", n=range(5, 401, 5)),
-        expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/cx/e=False p=False l=12 s=10/cx_0_combined.csv", n=range(5, 401, 5)),
-
-# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
+        expand("results/synthetic/complete/n={n} r=0.5 re=False d=False/cx/e=False p=False l=11 s=100/cx_0_combined.csv", n=range(5, 401, 5)),
+        expand("results/synthetic/complete/n={n} r=0.5 re=False d=False/cx/e=False p=False l=12 s=10/cx_0_combined.csv", n=range(5, 401, 5)),
 
 rule complete_time_exp_cx_approx_and_pyr:
     input:

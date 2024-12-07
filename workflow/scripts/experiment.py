@@ -81,7 +81,7 @@ def save_cx_results(plus_minus, plus_plus):
 
     if not directed:
          # if the graph is not directed, there are no cycles with length 2 and every cycle was counted twice 
-        if len(plus_plus) >= 1:
+        if plus_plus.shape[1] >= 2:
             plus_plus[:, 1] = 0
             plus_minus[:, 1] = 0
         plus_plus /= 2
