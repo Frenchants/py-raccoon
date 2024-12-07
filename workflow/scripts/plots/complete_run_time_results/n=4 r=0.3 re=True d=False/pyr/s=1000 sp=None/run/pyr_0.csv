@@ -1,0 +1,6 @@
+,l,pos_degree_of_bal,neg_degree_of_bal,rel_signed_clust_coeff,pos_to_neg_ratio,neg_to_pos_ratio,total_est,pos_est,neg_est,total_zeros,pos_zeros,neg_zeros,total_occurred,pos_occurred,neg_occurred,pos_degree_of_bal_graph,neg_degree_of_bal_graph,run,kind,directed,neg_edge_dist_exact,neg_edge_prob,n_nodes,n_edges,n_pos_edges,n_neg_edges,alg,n_samples,pyr_spec_edge_prob,alg_run_time,alg_peak_mem,alg_only_mem,init_mem,seed,script_run_time,exp_date
+0,0,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,0.4393700787401527,0.5606299212598473,0.0,complete,False,True,0.3,4.0,6.0,4.0,2.0,pyr,1000.0,,0.7871780395507812,31613.0,7247.0,24366.0,130250193.0,0.7911787033081055,2024-11-14 18:05:41.555740
+1,1,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,,,,,,,,,,,,,,,,,,,,,
+2,2,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,,,,,,,,,,,,,,,,,,,,,
+3,3,0.0,1.0,-1.0,0.0,,3.9555555555556334,0.0,3.9555555555556334,False,True,False,2225,0,2225,,,,,,,,,,,,,,,,,,,,,
+4,4,1.0,0.0,1.0,,0.0,3.100000000000001,3.100000000000001,0.0,False,False,True,775,775,0,,,,,,,,,,,,,,,,,,,,,

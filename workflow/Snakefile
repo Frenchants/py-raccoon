@@ -60,16 +60,6 @@ rule all:
 
         "results/synthetic/sbm/exp=2 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
 
-
-rule test_exp:
-    input:
-        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv",
-        #"results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv",
-        #"results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
-        #"results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
-        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
-        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
-
 rule cythonize:
     # Cythonizes the required files.
     input:
@@ -89,6 +79,42 @@ rule combine_exps:
     run:
         df_data = pd.concat([pd.read_csv(file) for file in input])
         df_data.to_csv(output[0])
+
+# ----- EXPERIMENTS ON COMPLETE GRAPHS ----- 
+
+rule complete_exp_all_negative:
+    input:
+        expand("results/synthetic/complete/n=11 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.0181818181818)),
+        expand("results/synthetic/complete/n=10 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.022222222222)),
+
+rule complete_time_exp_samples_cx_approx:
+    input: 
+        expand("results/synthetic/complete/n=20 r=0.5 re=False d=False/cx/e=False p=False l=10 s={s}/cx_0_combined.csv", s=[1, 10, 100, 200, 300, 400, 500, 600, 700, 800, 900, 1000]),
+
+rule complete_time_exp_samples_pyr:
+    input:
+        expand("results/synthetic/complete/n=20 r=0.5 re=False d=False/pyr/s={s} sp=None/pyr_0_combined.csv", s=[1, 10, 100, 1000, 10000, 20000, 30000, 40000, 50000, 60000, 70000, 80000, 90000, 100000]),
+
+rule complete_time_exp_lengths_cx_approx:
+    input:
+        expand("results/synthetic/complete/n=15 r=0.5 re=False d=False/cx/e=False p=False l={l} s=100/cx_0_combined.csv", l=[1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20]), 
+
+rule complete_time_exp_cx_approx:
+    input:
+        expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/cx/e=False p=False l=11 s=100/cx_0_combined.csv", n=range(5, 401, 5)),
+        expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/cx/e=False p=False l=12 s=10/cx_0_combined.csv", n=range(5, 401, 5)),
+
+# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
+
+rule complete_time_exp_cx_approx_and_pyr:
+    input:
+     expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/cx/e=False p=False l=10 s=1000/cx_0_combined.csv", n=range(4, 401)),
+     expand("results/synthetic/complete/n={n} r=0.5 re=True d=False/pyr/s=1000 sp=None/pyr_0_combined.csv", n=range(4, 401)),
+
+
+
+
+# RULES 
 
 rule random_pyr:
     #threads: 1 

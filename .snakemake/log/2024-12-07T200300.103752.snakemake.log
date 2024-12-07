@@ -1,0 +1,38 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                          count
+-------------------------  -------
+combine_exps                     1
+complete_cx                      1
+complete_exp_all_negative        1
+total                            3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 20:03:00 2024]
+localrule complete_cx:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=20 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/complete/n=20 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: n_nodes=20, neg_edge_prob=0.1, neg_edge_dist_exact=True, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 165:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpmcvm7qg3.experiment.py' died with <Signals.SIGINT: 2>.
+[Sat Dec  7 20:03:58 2024]
+Error in rule complete_cx:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=20 r=0.1 re=True d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+Complete log: .snakemake/log/2024-12-07T200300.103752.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
