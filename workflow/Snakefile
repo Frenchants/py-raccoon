@@ -14,8 +14,8 @@ pyr_path = "pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
 cx_path = "cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
 
 
-dataset_path = "results/real/"
-epinions_path = dataset_path + "epinions/test/"
+#dataset_path = "results/real/"
+#epinions_path = dataset_path + "epinions/test/"
 
 
 random_path = "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
@@ -61,13 +61,14 @@ rule all:
         "results/synthetic/sbm/exp=2 re=True d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv",
 
 
-rule complete_exp: 
+rule test_exp:
     input:
-        "results/synthetic/er/n=10000 p=0.5 r=0.5 re=False d=False/pyr/s=1 sp=None/pyr_0_combined.csv"
-
-rule epinions_exp:
-    input:
-        "results/real/epinions/test/pyr/s=1 sp=None/pyr_0_combined.csv"
+        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv",
+        #"results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv",
+        #"results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
+        #"results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
+        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
+        "results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
 
 rule cythonize:
     # Cythonizes the required files.
@@ -89,21 +90,8 @@ rule combine_exps:
         df_data = pd.concat([pd.read_csv(file) for file in input])
         df_data.to_csv(output[0])
 
-rule epinions_pyr:
-    #threads: 1 
-    input:
-        "results/__cythonized__"
-    output:
-        epinions_path + pyr_path,
-    params:
-        kind = "dataset",
-        dataset = 'epinions',
-        alg = "pyr",
-    script:
-        "scripts/experiment.py"
-
 rule random_pyr:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -115,7 +103,7 @@ rule random_pyr:
         "scripts/experiment.py"
 
 rule random_cx:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -127,7 +115,7 @@ rule random_cx:
         "scripts/experiment.py"
 
 rule complete_pyr:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -139,7 +127,7 @@ rule complete_pyr:
         "scripts/experiment.py"
 
 rule complete_cx:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -151,7 +139,7 @@ rule complete_cx:
         "scripts/experiment.py"
 
 rule er_pyr:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -163,7 +151,7 @@ rule er_pyr:
         "scripts/experiment.py"
 
 rule er_cx:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -175,7 +163,7 @@ rule er_cx:
         "scripts/experiment.py"
     
 rule sbm_pyr:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:
@@ -190,7 +178,7 @@ rule sbm_pyr:
         "scripts/experiment.py"
 
 rule sbm_cx:
-    threads: 1 
+    #threads: 1 
     input:
         "results/__cythonized__"
     output:

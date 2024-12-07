@@ -1,3 +1,6 @@
+######## snakemake preamble start (automatically inserted, do not edit) ########
+import sys;sys.path.extend(['/Users/fredericbusch/miniforge3/envs/py-raccoon/lib/python3.12/site-packages', '/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow', '/Users/fredericbusch/miniforge3/envs/py-raccoon/bin', '/Users/fredericbusch/miniforge3/envs/py-raccoon/lib/python3.12', '/Users/fredericbusch/miniforge3/envs/py-raccoon/lib/python3.12/lib-dynload', '/Users/fredericbusch/miniforge3/envs/py-raccoon/lib/python3.12/site-packages', '/Users/fredericbusch/Library/Caches/snakemake/snakemake/source-cache/runtime-cache/tmpjsfuu6lq/file/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts', '/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts']);import pickle;from snakemake import script;script.snakemake = pickle.loads(b'\x80\x04\x95\xaf\x05\x00\x00\x00\x00\x00\x00\x8c\x10snakemake.script\x94\x8c\tSnakemake\x94\x93\x94)\x81\x94}\x94(\x8c\x05input\x94\x8c\x0csnakemake.io\x94\x8c\nInputFiles\x94\x93\x94)\x81\x94\x8c\x16results/__cythonized__\x94a}\x94(\x8c\x06_names\x94}\x94\x8c\x12_allowed_overrides\x94]\x94(\x8c\x05index\x94\x8c\x04sort\x94eh\x10h\x06\x8c\x0eAttributeGuard\x94\x93\x94)\x81\x94}\x94\x8c\x04name\x94h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbub\x8c\x06output\x94h\x06\x8c\x0bOutputFiles\x94\x93\x94)\x81\x94\x8c8results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv\x94a}\x94(h\x0c}\x94h\x0e]\x94(h\x10h\x11eh\x10h\x13)\x81\x94}\x94h\x16h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbub\x8c\x06params\x94h\x06\x8c\x06Params\x94\x93\x94)\x81\x94(\x8c\x07dataset\x94\x8c\x08epinions\x94\x8c\x03pyr\x94e}\x94(h\x0c}\x94(\x8c\x04kind\x94K\x00N\x86\x94h)K\x01N\x86\x94\x8c\x03alg\x94K\x02N\x86\x94uh\x0e]\x94(h\x10h\x11eh\x10h\x13)\x81\x94}\x94h\x16h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbh.h)h)h*h1h+ub\x8c\twildcards\x94h\x06\x8c\tWildcards\x94\x93\x94)\x81\x94(\x8c\x011\x94\x8c\x04None\x94\x8c\x010\x94e}\x94(h\x0c}\x94(\x8c\tn_samples\x94K\x00N\x86\x94\x8c\x12pyr_spec_edge_prob\x94K\x01N\x86\x94\x8c\x03run\x94K\x02N\x86\x94uh\x0e]\x94(h\x10h\x11eh\x10h\x13)\x81\x94}\x94h\x16h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbhAh<hCh=\x8c\x03run\x94h>ub\x8c\x07threads\x94K\x01\x8c\tresources\x94h\x06\x8c\tResources\x94\x93\x94)\x81\x94(K\x01K\x01\x8c0/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T\x94e}\x94(h\x0c}\x94(\x8c\x06_cores\x94K\x00N\x86\x94\x8c\x06_nodes\x94K\x01N\x86\x94\x8c\x06tmpdir\x94K\x02N\x86\x94uh\x0e]\x94(h\x10h\x11eh\x10h\x13)\x81\x94}\x94h\x16h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbhUK\x01hWK\x01hYhRub\x8c\x03log\x94h\x06\x8c\x03Log\x94\x93\x94)\x81\x94}\x94(h\x0c}\x94h\x0e]\x94(h\x10h\x11eh\x10h\x13)\x81\x94}\x94h\x16h\x10sbh\x11h\x13)\x81\x94}\x94h\x16h\x11sbub\x8c\x06config\x94}\x94\x8c\x08sbm-exps\x94}\x94(K\x00}\x94(\x8c\x05sizes\x94]\x94(K\nK\ne\x8c\x01p\x94]\x94(]\x94(G?\xe0\x00\x00\x00\x00\x00\x00G?\xc9\x99\x99\x99\x99\x99\x9ae]\x94(G?\xc9\x99\x99\x99\x99\x99\x9aG?\xe0\x00\x00\x00\x00\x00\x00ee\x8c\x01r\x94]\x94(]\x94(G?\xe0\x00\x00\x00\x00\x00\x00G?\xe0\x00\x00\x00\x00\x00\x00e]\x94(G?\xe0\x00\x00\x00\x00\x00\x00G?\xe0\x00\x00\x00\x00\x00\x00eeuK\x01}\x94(\x8c\x05sizes\x94]\x94(K\nK\x14ehr]\x94(]\x94(G?\xd9\x99\x99\x99\x99\x99\x9aG?\xd3333333e]\x94(G?\xd3333333G?\xd9\x99\x99\x99\x99\x99\x9aeehv]\x94(]\x94(G?\xd9\x99\x99\x99\x99\x99\x9aG?\xd3333333e]\x94(G?\xd3333333G?\xd9\x99\x99\x99\x99\x99\x9aeeuK\x02}\x94(\x8c\x05sizes\x94]\x94(K\x05K\x05ehr]\x94(]\x94(K\x01G?\xb9\x99\x99\x99\x99\x99\x9ae]\x94(G?\xb9\x99\x99\x99\x99\x99\x9aK\x01eehv]\x94(]\x94(G?\xe0\x00\x00\x00\x00\x00\x00G\x00\x00\x00\x00\x00\x00\x00\x00e]\x94(G?\xb9\x99\x99\x99\x99\x99\x9aG?\xe0\x00\x00\x00\x00\x00\x00eeuus\x8c\x04rule\x94\x8c\x0cepinions_pyr\x94\x8c\x0fbench_iteration\x94N\x8c\tscriptdir\x94\x8cE/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts\x94ub.');del script;from snakemake.logging import logger;from snakemake.script import snakemake; logger.printshellcmds = False;__real_file__ = __file__; __file__ = '/Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/scripts/experiment.py';
+######## snakemake preamble end #########
 import networkx as nx 
 from matplotlib import pyplot as plt
 import numpy as np
@@ -7,8 +10,6 @@ import time
 import datetime
 import tracemalloc
 import warnings
-import math
-import scipy
 
 import utils
 from snakemake.script import Snakemake # type: ignore
@@ -24,8 +25,8 @@ def fix_smk() -> Snakemake:
 
 def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, neg_occurred):
     
-    pos_k_bal = np.nan_to_num(pos_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
-    neg_k_bal = np.nan_to_num(neg_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
+    pos_degree_of_bal = np.nan_to_num(pos_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
+    neg_degree_of_bal = np.nan_to_num(neg_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     rel_signed_clust_coeff = np.nan_to_num((pos_est - neg_est) / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     pos_to_neg_ratio = np.nan_to_num(pos_est / neg_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     neg_to_pos_ratio = np.nan_to_num(neg_est / pos_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
@@ -36,34 +37,17 @@ def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, 
 
     data = []
     for l in range(len(total_est)):
-            data.append({'l': l, 'pos_k_bal': pos_k_bal[l], 'neg_k_bal': neg_k_bal[l], 'rel_signed_clust_coeff': rel_signed_clust_coeff[l], 'pos_to_neg_ratio': pos_to_neg_ratio[l], 'neg_to_pos_ratio': neg_to_pos_ratio[l], 'total_est': total_est[l], 'pos_est': pos_est[l], 'neg_est': neg_est[l], 'total_zeros': total_zeros[l], 'pos_zeros': pos_zeros[l], 'neg_zeros': neg_zeros[l], 'total_occurred': total_occurred[l], 'pos_occurred': pos_occurred[l], 'neg_occurred': neg_occurred[l]})
+            data.append({'l': l, 'pos_degree_of_bal': pos_degree_of_bal[l], 'neg_degree_of_bal': neg_degree_of_bal[l], 'rel_signed_clust_coeff': rel_signed_clust_coeff[l], 'pos_to_neg_ratio': pos_to_neg_ratio[l], 'neg_to_pos_ratio': neg_to_pos_ratio[l], 'total_est': total_est[l], 'pos_est': pos_est[l], 'neg_est': neg_est[l], 'total_zeros': total_zeros[l], 'pos_zeros': pos_zeros[l], 'neg_zeros': neg_zeros[l], 'total_occurred': total_occurred[l], 'pos_occurred': pos_occurred[l], 'neg_occurred': neg_occurred[l]})
     
+    total_sum_cycles = np.nansum(total_est)
+    pos_sum_cycles = np.nansum(pos_est)
+    neg_sum_cycles = np.nansum(neg_est)
 
-    avg_pos_k_balance = np.nanmean(pos_k_bal)
-    avg_neg_k_balance = np.nanmean(neg_k_bal)
+    pos_degree_of_bal_graph = pos_sum_cycles / total_sum_cycles
+    neg_degree_of_bal_graph = neg_sum_cycles / total_sum_cycles
 
-    data[0]['avg_pos_k_balance'] = avg_pos_k_balance
-    data[0]['avg_neg_k_balance'] = avg_neg_k_balance
-
-
-    k = np.arange(1, len(total_est) + 1)
-
-    weight_names = ["degree_of_bal", "weighted_1_k_bal", "weighted_1_k_2_bal", "weighted_1_k_3_bal", "weighted_1_k_4_bal", "weighted_1_k_fac_bal"]
-    weight_functions = [1, 1 / k, 1 / k**2, 1 / k**3, 1 / k**4, 1 / scipy.special.factorial(k)]
-
-    for i, weights in enumerate(weight_functions):
-        weighted_total_sum_cycles = np.nansum(total_est * weights)
-        weighted_pos_sum_cycles = np.nansum(pos_est * weights)
-        weighted_neg_sum_cycles = np.nansum(neg_est * weights)
-
-        pos_weighted_degree = np.nan_to_num(weighted_pos_sum_cycles / weighted_total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
-        neg_weighted_degree = np.nan_to_num(weighted_neg_sum_cycles / weighted_total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
-        
-        measure_name_pos = f"pos_{weight_names[i]}"
-        measure_name_neg = f"neg_{weight_names[i]}"
-
-        data[0][measure_name_pos] = pos_weighted_degree
-        data[0][measure_name_neg] = neg_weighted_degree
+    data[0]['pos_degree_of_bal_graph'] = pos_degree_of_bal_graph
+    data[0]['neg_degree_of_bal_graph'] = neg_degree_of_bal_graph
 
     return data
 
@@ -81,11 +65,10 @@ def save_cx_results(plus_minus, plus_plus):
 
     if not directed:
          # if the graph is not directed, there are no cycles with length 2 and every cycle was counted twice 
-        if len(plus_plus) >= 1:
-            plus_plus[:, 1] = 0
-            plus_minus[:, 1] = 0
-        plus_plus /= 2
-        plus_minus /= 2
+         if len(plus_plus) >= 2:
+            plus_plus[:, 1] = plus_minus[:, 1] = 0
+         plus_plus /= 2
+         plus_minus /= 2
     
     # insert zeros for cycle length 0 because these are included in the 'pyr' alg as well
     plus_plus = np.array([np.insert(arr, 0, 0) for arr in plus_plus])
@@ -93,36 +76,28 @@ def save_cx_results(plus_minus, plus_plus):
 
     pos = (plus_plus + plus_minus) / 2
     neg = plus_plus - pos
-    neg_k_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
-    pos_k_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
+    neg_degree_of_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
+    pos_degree_of_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     neg_to_pos_ratio = np.nan_to_num(neg / pos, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     pos_to_neg_ratio = np.nan_to_num(pos / neg, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     rel_signed_clust_coeff = np.nan_to_num(plus_minus / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     
     std_total = np.nanstd(plus_plus, axis=0)
     avg_total = np.nanmean(plus_plus, axis=0)
-    std_total_perc = np.abs(np.nan_to_num(std_total / avg_total, nan=0.0))
     std_pos = np.nanstd(pos, axis=0)
     avg_pos = np.nanmean(pos, axis=0)
-    std_pos_perc = np.abs(np.nan_to_num(std_pos / avg_pos, nan=0.0))
     std_neg = np.nanstd(neg, axis=0)
     avg_neg = np.nanmean(neg, axis=0)
-    std_neg_perc = np.abs(np.nan_to_num(std_neg / avg_neg, nan=0.0))
-    std_pos_k_bal = np.nanstd(pos_k_bal, axis=0)
-    avg_pos_k_bal = np.nanmean(pos_k_bal, axis=0)
-    std_pos_k_bal_perc = np.abs(np.nan_to_num(std_pos_k_bal / avg_pos_k_bal, nan=0.0))
-    std_neg_k_bal = np.nanstd(neg_k_bal, axis=0)
-    avg_neg_k_bal = np.nanmean(neg_k_bal, axis=0)
-    std_neg_k_bal_perc = np.abs(np.nan_to_num(std_neg_k_bal / avg_neg_k_bal, nan=0.0))
+    std_pos_degree_of_bal = np.nanstd(pos_degree_of_bal, axis=0)
+    avg_pos_degree_of_bal = np.nanmean(pos_degree_of_bal, axis=0)
+    std_neg_degree_of_bal = np.nanstd(neg_degree_of_bal, axis=0)
+    avg_neg_degree_of_bal = np.nanmean(neg_degree_of_bal, axis=0)
     std_pos_to_neg_ratio = np.nanstd(pos_to_neg_ratio, axis=0)
     avg_pos_to_neg_ratio = np.nanmean(pos_to_neg_ratio, axis=0)
-    std_pos_to_neg_ratio_perc = np.abs(np.nan_to_num(std_pos_to_neg_ratio / avg_pos_to_neg_ratio, nan=0.0))
     std_neg_to_pos_ratio = np.nanstd(neg_to_pos_ratio, axis=0)
     avg_neg_to_pos_ratio = np.nanmean(neg_to_pos_ratio, axis=0)
-    std_neg_to_pos_ratio_perc = np.abs(np.nan_to_num(std_neg_to_pos_ratio / avg_neg_to_pos_ratio, nan=0.0))
     std_rel_signed_clust_coeff = np.nanstd(rel_signed_clust_coeff, axis=0)
     avg_rel_signed_clust_coeff = np.nanmean(rel_signed_clust_coeff, axis=0)
-    std_rel_signed_clust_coeff_perc = np.abs(np.nan_to_num(std_rel_signed_clust_coeff / avg_rel_signed_clust_coeff, nan=0.0))
 
     zeros_total = avg_total == 0
     zeros_pos = avg_pos == 0
@@ -130,32 +105,17 @@ def save_cx_results(plus_minus, plus_plus):
 
     data = []
     for l in range(len(avg_total)):
-            data.append({'l': l, 'avg_pos_k_bal': avg_pos_k_bal[l], 'avg_neg_k_bal': avg_neg_k_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_k_bal': std_pos_k_bal[l], 'std_pos_k_bal_perc': std_pos_k_bal_perc[l], 'std_neg_k_bal': std_neg_k_bal[l], 'std_neg_k_bal_perc': std_neg_k_bal_perc[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_rel_signed_clust_coeff_perc': std_rel_signed_clust_coeff_perc[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_pos_to_neg_ratio_perc': std_pos_to_neg_ratio_perc[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_neg_to_pos_ratio_perc': std_neg_to_pos_ratio_perc[l], 'std_total': std_total[l], 'std_total_perc': std_total_perc[l], 'std_pos': std_pos[l], 'std_pos_perc': std_pos_perc[l], 'std_neg': std_neg[l], 'std_neg_perc': std_neg_perc[l]})
+            data.append({'l': l, 'avg_pos_degree_of_bal': avg_pos_degree_of_bal[l], 'avg_neg_degree_of_bal': avg_neg_degree_of_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_degree_of_bal': std_pos_degree_of_bal[l], 'std_neg_degree_of_bal': std_neg_degree_of_bal[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_total': std_total[l], 'std_pos': std_pos[l], 'std_neg': std_neg[l]})
     
-    avg_of_all_pos_k_balance = np.nanmean(avg_pos_k_bal)
-    avg_of_all_neg_k_balance = np.nanmean(avg_neg_k_bal)
+    total_sum_cycles = np.nansum(plus_plus, axis=1)
+    pos_sum_cycles = np.nansum(pos, axis=1)
+    neg_sum_cycles = np.nansum(neg, axis=1)
+    
+    avg_pos_degree_of_bal_graph = np.nanmean(np.nan_to_num(pos_sum_cycles / total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan), axis=0)
+    avg_neg_degree_of_bal_graph = np.nanmean(np.nan_to_num(neg_sum_cycles / total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan), axis=0)
 
-    data[0]['avg_of_all_pos_k_balance'] = avg_of_all_pos_k_balance
-    data[0]['avg_of_all_neg_k_balance'] = avg_of_all_neg_k_balance
-
-    k = np.arange(1, plus_plus.shape[1] + 1)
-
-    weight_names = ["degree_of_bal", "weighted_1_k_bal", "weighted_1_k_2_bal", "weighted_1_k_3_bal", "weighted_1_k_4_bal", "weighted_1_k_fac_bal"]
-    weight_functions = [1, 1 / k, 1 / k**2, 1 / k**3, 1 / k**4, 1 / scipy.special.factorial(k)]
-
-    for i, weights in enumerate(weight_functions):
-        weighted_total_sum_cycles = np.nansum(plus_plus * weights, axis=1)
-        weighted_pos_sum_cycles = np.nansum(pos * weights, axis=1)
-        weighted_neg_sum_cycles = np.nansum(neg * weights, axis=1)
-
-        pos_weighted_degree = np.nanmean(np.nan_to_num(weighted_pos_sum_cycles / weighted_total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan), axis=0)
-        neg_weighted_degree = np.nanmean(np.nan_to_num(weighted_neg_sum_cycles / weighted_total_sum_cycles, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan), axis=0)
-        
-        measure_name_pos = f"pos_{weight_names[i]}"
-        measure_name_neg = f"neg_{weight_names[i]}"
-
-        data[0][measure_name_pos] = pos_weighted_degree
-        data[0][measure_name_neg] = neg_weighted_degree
+    data[0]['avg_pos_degree_of_bal_graph'] = avg_pos_degree_of_bal_graph
+    data[0]['avg_neg_degree_of_bal_graph'] = avg_neg_degree_of_bal_graph
     
     return data
 
@@ -207,11 +167,42 @@ if __name__ == "__main__":
 
     kind_params = {}
 
-    if kind == 'er':
+    if kind == 'dataset':
+        kind_params['dataset'] = snakemake.params['dataset']
+        #kind_params['null_model'] = snakemake.wildcards.get('null_model', 'false').lower() == 'true'
+
+        #edges = [(i, i + 1, random.choice([-1, 1])) for i in range(20000 - 1)]
+
+        #G = nx.Graph()
+        #G.add_weighted_edges_from(edges)
+        #n_pos_edges = n_neg_edges = "test"
+
+        if kind_params['dataset'] == 'epinions':
+            directed = False
+            n_pos_edges  = n_neg_edges = "Test"
+            G = nx.Graph()
+            with open("workflow/scripts/datasets/soc-sign-epinions.txt", "r") as file:
+                for line in file:
+                    x, y, z = line.split()
+                    G.add_edge(int(x), int(y), weight=float(z))
+            
+            connected_components = list(nx.connected_components(G))
+            nodes_to_remove = set(G.nodes) - connected_components[1]
+            G.remove_nodes_from(nodes_to_remove)
+            G.remove_nodes_from(range(0, 25000))
+            node_mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes)}
+
+            # Relabel the nodes in the graph
+            G = nx.relabel_nodes(G, node_mapping)
+            print("Finished init")
+        
+    elif kind == 'er':
         kind_params['prob_p'] = float(snakemake.wildcards['prob_p'])
         G = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
         while not is_connected(G):
             G  = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
+            print("hi")
+        print("Finished init")
 
     elif kind == 'complete':
         G = nx.complete_graph(n_nodes)

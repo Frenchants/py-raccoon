@@ -1,0 +1,39 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+er_cx               1
+test_exp            1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 11:42:01 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csvresults/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/cx/e=False p=False l=20 s=100/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csvresults/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/cx/e=False p=False l=20 s=100/run/cx_0.csv
+    wildcards: n_nodes=100 p=0.5 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csvresults/synthetic/er/n=100, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=20, n_samples=100, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 159:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpfezi__ti.experiment.py' returned non-zero exit status 1.
+[Sat Dec  7 11:42:04 2024]
+Error in rule er_cx:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/pyr/s=100 sp=None/pyr_0_combined.csvresults/synthetic/er/n=100 p=0.5 r=0.5 re=False d=False/cx/e=False p=False l=20 s=100/run/cx_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-07T114201.523554.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

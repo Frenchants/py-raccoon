@@ -119,7 +119,7 @@ def estimate_len_count_fast(G: nx.Graph, edges: np.ndarray[NP_EDGE], p: float, s
     cdef OccurenceProb op
     cdef int tree_root
     for i in range(samples):
-        print(f"sample: {i}")
+        print(f"pyr sample: {i}")
         np_parent = np.ndarray(n, np.int32)
         parent = np_parent
         np_parent_weight = np.ndarray(n, np.int8)

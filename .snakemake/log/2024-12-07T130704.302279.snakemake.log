@@ -1,0 +1,138 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        4
+er_cx               4
+test_exp            1
+total               9
+
+Select jobs to execute...
+Execute 4 jobs...
+
+[Sat Dec  7 13:07:04 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    jobid: 9
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=10, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:04 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 7
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:04 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    jobid: 13
+    reason: Code has changed since last execution
+    wildcards: n_nodes=11, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=10, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:04 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 11
+    reason: Code has changed since last execution
+    wildcards: n_nodes=11, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:07 2024]
+Finished job 7.
+1 of 9 steps (11%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:07:07 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 6
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:08 2024]
+Finished job 11.
+2 of 9 steps (22%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:07:08 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    jobid: 10
+    reason: Input files updated by another job: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    wildcards: path=results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:09 2024]
+Finished job 6.
+3 of 9 steps (33%) done
+[Sat Dec  7 13:07:09 2024]
+Finished job 10.
+4 of 9 steps (44%) done
+[Sat Dec  7 13:07:12 2024]
+Finished job 9.
+5 of 9 steps (56%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:07:12 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv
+    jobid: 8
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    wildcards: path=results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:12 2024]
+Finished job 13.
+6 of 9 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:07:12 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv
+    jobid: 12
+    reason: Input files updated by another job: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    wildcards: path=results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:13 2024]
+Finished job 8.
+7 of 9 steps (78%) done
+[Sat Dec  7 13:07:14 2024]
+Finished job 12.
+8 of 9 steps (89%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:07:14 2024]
+localrule test_exp:
+    input: results/synthetic/er/n=100 p=0.5 r=0.7 re=False d=False/pyr/s=10 sp=None/pyr_0_combined.csv, results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv, results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv, results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv, results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv, results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv, results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:07:14 2024]
+Finished job 0.
+9 of 9 steps (100%) done
+Complete log: .snakemake/log/2024-12-07T130704.302279.snakemake.log

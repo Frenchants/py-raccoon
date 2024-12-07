@@ -1,0 +1,26 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+epinions_exp        1
+epinions_pyr        1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Nov 30 04:05:33 2024]
+localrule epinions_pyr:
+    input: results/__cythonized__
+    output: results/real/epinions/test/pyr/s=1 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Code has changed since last execution
+    wildcards: n_samples=1, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.

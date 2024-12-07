@@ -1,0 +1,57 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+er_cx               1
+test_exp            1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 12:51:51 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+    wildcards: n_nodes=100, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=5, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:51:59 2024]
+Finished job 5.
+1 of 3 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 12:51:59 2024]
+localrule combine_exps:
+    input: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+    output: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv
+    jobid: 4
+    reason: Missing output files: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv; Input files updated by another job: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+    wildcards: path=results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:52:00 2024]
+Finished job 4.
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 12:52:00 2024]
+localrule test_exp:
+    input: results/synthetic/er/n=100 p=0.5 r=0.7 re=False d=False/pyr/s=10 sp=None/pyr_0_combined.csv, results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv
+    jobid: 0
+    reason: Input files updated by another job: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/cx_0_combined.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:52:00 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2024-12-07T125151.885916.snakemake.log

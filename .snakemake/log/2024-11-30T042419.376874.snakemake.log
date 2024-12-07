@@ -1,0 +1,8 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+MissingInputException in rule combine_exps in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 84:
+Missing input files for rule combine_exps:
+    output: results/real/epinions/test/cx/e=False p=False l=10 s=1/cx_0_combined.csv
+    wildcards: path=results/real/epinions/test/cx/e=False p=False l=10 s=1, alg=cx, runs=0
+    affected files:
+        results/real/epinions/test/cx/e=False p=False l=10 s=1/run/cx_0.csv

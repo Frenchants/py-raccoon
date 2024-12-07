@@ -1,0 +1,94 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        4
+er_cx               3
+er_pyr              1
+test_exp            1
+total               9
+
+Select jobs to execute...
+Execute 4 jobs...
+
+[Sat Dec  7 12:57:47 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+    jobid: 9
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=10, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:57:47 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 7
+    reason: Code has changed since last execution
+    wildcards: n_nodes=10, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:57:47 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+    jobid: 5
+    reason: Code has changed since last execution
+    wildcards: n_nodes=100, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=5, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 12:57:47 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.7 re=False d=False/pyr/s=10 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Code has changed since last execution
+    wildcards: n_nodes=100, prob_p=0.5, neg_edge_prob=0.7, neg_edge_dist_exact=False, directed=False, n_samples=10, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 161:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp4mhuf6yn.experiment.py' returned non-zero exit status 1.
+[Sat Dec  7 12:57:47 2024]
+Error in rule er_cx:
+    jobid: 5
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 149:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpycaz70z3.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 161:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpeh75rdtg.experiment.py' returned non-zero exit status 1.
+[Sat Dec  7 12:57:47 2024]
+[Sat Dec  7 12:57:47 2024]
+Error in rule er_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/er/n=100 p=0.5 r=0.7 re=False d=False/pyr/s=10 sp=None/run/pyr_0.csv
+
+Error in rule er_cx:
+    jobid: 9
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=False p=False l=10 s=10/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 161:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpwikl4wd9.experiment.py' returned non-zero exit status 1.
+[Sat Dec  7 12:57:47 2024]
+Error in rule er_cx:
+    jobid: 7
+    input: results/__cythonized__
+    output: results/synthetic/er/n=10 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-07T125747.348408.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

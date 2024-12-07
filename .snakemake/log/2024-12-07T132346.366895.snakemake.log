@@ -1,0 +1,67 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+cythonize           1
+er_cx               1
+er_pyr              1
+test_exp            1
+total               6
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sat Dec  7 13:23:46 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:23:47 2024]
+Finished job 3.
+1 of 6 steps (17%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sat Dec  7 13:23:47 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=10 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=11, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=10, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sat Dec  7 13:23:47 2024]
+localrule er_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=11, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 151:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpzoz94u4e.experiment.py' returned non-zero exit status 1.
+[Sat Dec  7 13:23:51 2024]
+Error in rule er_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/synthetic/er/n=11 p=0.5 r=0.9 re=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+
+[Sat Dec  7 13:23:52 2024]
+Finished job 5.
+2 of 6 steps (33%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-07T132346.366895.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

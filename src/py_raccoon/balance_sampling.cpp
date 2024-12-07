@@ -3336,7 +3336,6 @@ static const char __pyx_k_pickle[] = "pickle";
 static const char __pyx_k_random[] = "random";
 static const char __pyx_k_reduce[] = "__reduce__";
 static const char __pyx_k_return[] = "return";
-static const char __pyx_k_sample[] = "sample: ";
 static const char __pyx_k_struct[] = "struct";
 static const char __pyx_k_unpack[] = "unpack";
 static const char __pyx_k_update[] = "update";
@@ -3379,6 +3378,7 @@ static const char __pyx_k_IndexError[] = "IndexError";
 static const char __pyx_k_ValueError[] = "ValueError";
 static const char __pyx_k_calc_depth[] = "calc_depth";
 static const char __pyx_k_float_None[] = "float | None";
+static const char __pyx_k_pyr_sample[] = "pyr sample: ";
 static const char __pyx_k_pyx_result[] = "__pyx_result";
 static const char __pyx_k_pyx_vtable[] = "__pyx_vtable__";
 static const char __pyx_k_MemoryError[] = "MemoryError";
@@ -3738,6 +3738,7 @@ typedef struct {
   PyObject *__pyx_n_s_positive_occurred;
   PyObject *__pyx_n_s_print;
   PyObject *__pyx_n_s_py_raccoon_balance_sampling;
+  PyObject *__pyx_kp_u_pyr_sample;
   PyObject *__pyx_n_s_pyx_PickleError;
   PyObject *__pyx_n_s_pyx_checksum;
   PyObject *__pyx_n_s_pyx_result;
@@ -3752,7 +3753,6 @@ typedef struct {
   PyObject *__pyx_n_s_reduce_ex;
   PyObject *__pyx_n_s_register;
   PyObject *__pyx_n_s_return;
-  PyObject *__pyx_kp_u_sample;
   PyObject *__pyx_n_s_samples;
   PyObject *__pyx_n_s_seed;
   PyObject *__pyx_n_s_setstate;
@@ -4044,6 +4044,7 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_positive_occurred);
   Py_CLEAR(clear_module_state->__pyx_n_s_print);
   Py_CLEAR(clear_module_state->__pyx_n_s_py_raccoon_balance_sampling);
+  Py_CLEAR(clear_module_state->__pyx_kp_u_pyr_sample);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_PickleError);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_checksum);
   Py_CLEAR(clear_module_state->__pyx_n_s_pyx_result);
@@ -4058,7 +4059,6 @@ static int __pyx_m_clear(PyObject *m) {
   Py_CLEAR(clear_module_state->__pyx_n_s_reduce_ex);
   Py_CLEAR(clear_module_state->__pyx_n_s_register);
   Py_CLEAR(clear_module_state->__pyx_n_s_return);
-  Py_CLEAR(clear_module_state->__pyx_kp_u_sample);
   Py_CLEAR(clear_module_state->__pyx_n_s_samples);
   Py_CLEAR(clear_module_state->__pyx_n_s_seed);
   Py_CLEAR(clear_module_state->__pyx_n_s_setstate);
@@ -4328,6 +4328,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_positive_occurred);
   Py_VISIT(traverse_module_state->__pyx_n_s_print);
   Py_VISIT(traverse_module_state->__pyx_n_s_py_raccoon_balance_sampling);
+  Py_VISIT(traverse_module_state->__pyx_kp_u_pyr_sample);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_PickleError);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_checksum);
   Py_VISIT(traverse_module_state->__pyx_n_s_pyx_result);
@@ -4342,7 +4343,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
   Py_VISIT(traverse_module_state->__pyx_n_s_reduce_ex);
   Py_VISIT(traverse_module_state->__pyx_n_s_register);
   Py_VISIT(traverse_module_state->__pyx_n_s_return);
-  Py_VISIT(traverse_module_state->__pyx_kp_u_sample);
   Py_VISIT(traverse_module_state->__pyx_n_s_samples);
   Py_VISIT(traverse_module_state->__pyx_n_s_seed);
   Py_VISIT(traverse_module_state->__pyx_n_s_setstate);
@@ -4636,6 +4636,7 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_positive_occurred __pyx_mstate_global->__pyx_n_s_positive_occurred
 #define __pyx_n_s_print __pyx_mstate_global->__pyx_n_s_print
 #define __pyx_n_s_py_raccoon_balance_sampling __pyx_mstate_global->__pyx_n_s_py_raccoon_balance_sampling
+#define __pyx_kp_u_pyr_sample __pyx_mstate_global->__pyx_kp_u_pyr_sample
 #define __pyx_n_s_pyx_PickleError __pyx_mstate_global->__pyx_n_s_pyx_PickleError
 #define __pyx_n_s_pyx_checksum __pyx_mstate_global->__pyx_n_s_pyx_checksum
 #define __pyx_n_s_pyx_result __pyx_mstate_global->__pyx_n_s_pyx_result
@@ -4650,7 +4651,6 @@ static int __pyx_m_traverse(PyObject *m, visitproc visit, void *arg) {
 #define __pyx_n_s_reduce_ex __pyx_mstate_global->__pyx_n_s_reduce_ex
 #define __pyx_n_s_register __pyx_mstate_global->__pyx_n_s_register
 #define __pyx_n_s_return __pyx_mstate_global->__pyx_n_s_return
-#define __pyx_kp_u_sample __pyx_mstate_global->__pyx_kp_u_sample
 #define __pyx_n_s_samples __pyx_mstate_global->__pyx_n_s_samples
 #define __pyx_n_s_seed __pyx_mstate_global->__pyx_n_s_seed
 #define __pyx_n_s_setstate __pyx_mstate_global->__pyx_n_s_setstate
@@ -20202,7 +20202,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
  *     cdef OccurenceProb op
  *     cdef int tree_root
  *     for i in range(samples):             # <<<<<<<<<<<<<<
- *         print(f"sample: {i}")
+ *         print(f"pyr sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)
  */
   __pyx_t_13 = __Pyx_PyInt_As_long(__pyx_v_samples); if (unlikely((__pyx_t_13 == (long)-1) && PyErr_Occurred())) __PYX_ERR(0, 121, __pyx_L1_error)
@@ -20213,13 +20213,13 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     /* "py_raccoon/balance_sampling.pyx":122
  *     cdef int tree_root
  *     for i in range(samples):
- *         print(f"sample: {i}")             # <<<<<<<<<<<<<<
+ *         print(f"pyr sample: {i}")             # <<<<<<<<<<<<<<
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent
  */
     __pyx_t_3 = __Pyx_PyUnicode_From_int(__pyx_v_i, 0, ' ', 'd'); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_3);
-    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_kp_u_sample, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
+    __pyx_t_6 = __Pyx_PyUnicode_Concat(__pyx_kp_u_pyr_sample, __pyx_t_3); if (unlikely(!__pyx_t_6)) __PYX_ERR(0, 122, __pyx_L1_error)
     __Pyx_GOTREF(__pyx_t_6);
     __Pyx_DECREF(__pyx_t_3); __pyx_t_3 = 0;
     __pyx_t_3 = __Pyx_PyObject_CallOneArg(__pyx_builtin_print, __pyx_t_6); if (unlikely(!__pyx_t_3)) __PYX_ERR(0, 122, __pyx_L1_error)
@@ -20229,7 +20229,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
 
     /* "py_raccoon/balance_sampling.pyx":123
  *     for i in range(samples):
- *         print(f"sample: {i}")
+ *         print(f"pyr sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)             # <<<<<<<<<<<<<<
  *         parent = np_parent
  *         np_parent_weight = np.ndarray(n, np.int8)
@@ -20274,7 +20274,7 @@ static PyObject *__pyx_pf_10py_raccoon_16balance_sampling_2estimate_len_count_fa
     __pyx_t_3 = 0;
 
     /* "py_raccoon/balance_sampling.pyx":124
- *         print(f"sample: {i}")
+ *         print(f"pyr sample: {i}")
  *         np_parent = np.ndarray(n, np.int32)
  *         parent = np_parent             # <<<<<<<<<<<<<<
  *         np_parent_weight = np.ndarray(n, np.int8)
@@ -23116,6 +23116,7 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_positive_occurred, __pyx_k_positive_occurred, sizeof(__pyx_k_positive_occurred), 0, 0, 1, 1},
     {&__pyx_n_s_print, __pyx_k_print, sizeof(__pyx_k_print), 0, 0, 1, 1},
     {&__pyx_n_s_py_raccoon_balance_sampling, __pyx_k_py_raccoon_balance_sampling, sizeof(__pyx_k_py_raccoon_balance_sampling), 0, 0, 1, 1},
+    {&__pyx_kp_u_pyr_sample, __pyx_k_pyr_sample, sizeof(__pyx_k_pyr_sample), 0, 1, 0, 0},
     {&__pyx_n_s_pyx_PickleError, __pyx_k_pyx_PickleError, sizeof(__pyx_k_pyx_PickleError), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_checksum, __pyx_k_pyx_checksum, sizeof(__pyx_k_pyx_checksum), 0, 0, 1, 1},
     {&__pyx_n_s_pyx_result, __pyx_k_pyx_result, sizeof(__pyx_k_pyx_result), 0, 0, 1, 1},
@@ -23130,7 +23131,6 @@ static int __Pyx_CreateStringTabAndInitStrings(void) {
     {&__pyx_n_s_reduce_ex, __pyx_k_reduce_ex, sizeof(__pyx_k_reduce_ex), 0, 0, 1, 1},
     {&__pyx_n_s_register, __pyx_k_register, sizeof(__pyx_k_register), 0, 0, 1, 1},
     {&__pyx_n_s_return, __pyx_k_return, sizeof(__pyx_k_return), 0, 0, 1, 1},
-    {&__pyx_kp_u_sample, __pyx_k_sample, sizeof(__pyx_k_sample), 0, 1, 0, 0},
     {&__pyx_n_s_samples, __pyx_k_samples, sizeof(__pyx_k_samples), 0, 0, 1, 1},
     {&__pyx_n_s_seed, __pyx_k_seed, sizeof(__pyx_k_seed), 0, 0, 1, 1},
     {&__pyx_n_s_setstate, __pyx_k_setstate, sizeof(__pyx_k_setstate), 0, 0, 1, 1},
