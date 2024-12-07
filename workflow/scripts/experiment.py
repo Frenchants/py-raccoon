@@ -417,7 +417,9 @@ if __name__ == "__main__":
     df_data.to_csv(snakemake.output[0])
 
 
+"""
     edge_colors = ['blue' if G[u][v]['weight'] == 1 else 'red' for u, v in G.edges]
     pos = nx.spring_layout(G, k=1.0)  # Layout for visualization
     nx.draw(G, pos, with_labels=True, node_color="lightblue", node_size=500, edge_color=edge_colors, width=2)
     plt.show()
+"""
