@@ -1,0 +1,52 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+dataset_cx          1
+dataset_pyr         1
+test_rule           1
+total               5
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Dec  8 02:04:12 2024]
+localrule dataset_cx:
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/cx/e=False p=False l=10 s=50/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/real/wikielections/null_model=False d=False/cx/e=False p=False l=10 s=50/run/cx_0.csv
+    wildcards: dataset=wikielections, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=50, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 02:04:12 2024]
+localrule dataset_pyr:
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/pyr/s=50 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/wikielections/null_model=False d=False/pyr/s=50 sp=None/run/pyr_0.csv
+    wildcards: dataset=wikielections, null_model=False, directed=False, n_samples=50, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpw_h9v28p.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 02:04:43 2024]
+Error in rule dataset_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/pyr/s=50 sp=None/run/pyr_0.csv
+
+[Sun Dec  8 02:05:33 2024]
+Finished job 5.
+1 of 5 steps (20%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-08T020412.482060.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

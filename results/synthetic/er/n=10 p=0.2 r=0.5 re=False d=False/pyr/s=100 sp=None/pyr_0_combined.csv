@@ -1,8 +1,0 @@
-,Unnamed: 0,l,pos_k_bal,neg_k_bal,rel_signed_clust_coeff,pos_to_neg_ratio,neg_to_pos_ratio,total_est,pos_est,neg_est,total_zeros,pos_zeros,neg_zeros,total_occurred,pos_occurred,neg_occurred,avg_pos_k_balance,avg_neg_k_balance,pos_degree_of_bal,neg_degree_of_bal,pos_weighted_1_k_bal,neg_weighted_1_k_bal,pos_weighted_1_k_2_bal,neg_weighted_1_k_2_bal,pos_weighted_1_k_3_bal,neg_weighted_1_k_3_bal,pos_weighted_1_k_4_bal,neg_weighted_1_k_4_bal,pos_weighted_1_k_fac_bal,neg_weighted_1_k_fac_bal,run,kind,directed,prob_p,neg_edge_dist_exact,neg_edge_prob,n_nodes,n_edges,n_pos_edges,n_neg_edges,alg,n_samples,pyr_spec_edge_prob,alg_run_time,alg_peak_mem,alg_only_mem,init_mem,seed,script_run_time,exp_date
-0,0,0,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,1.0,0.0,0.0,er,False,0.2,False,0.5,6.0,6.0,4.0,2.0,pyr,100.0,,0.3779582977294922,60414.0,33668.0,26746.0,130250193.0,0.9707210063934326,2024-12-07 23:24:36.373862
-1,1,1,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-2,2,2,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-3,3,3,1.0,0.0,1.0,,0.0,2.1333333333333293,2.1333333333333293,0.0,False,False,True,200.0,200.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-4,4,4,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-5,5,5,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
-6,6,6,,,,,,0.0,0.0,0.0,True,True,True,0.0,0.0,0.0,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

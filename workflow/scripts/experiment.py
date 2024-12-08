@@ -9,6 +9,7 @@ import tracemalloc
 import warnings
 import math
 import scipy
+import os
 
 import utils
 from snakemake.script import Snakemake # type: ignore
@@ -124,13 +125,16 @@ def save_cx_results(plus_minus, plus_plus):
     avg_rel_signed_clust_coeff = np.nanmean(rel_signed_clust_coeff, axis=0)
     std_rel_signed_clust_coeff_perc = np.abs(np.nan_to_num(std_rel_signed_clust_coeff / avg_rel_signed_clust_coeff, nan=0.0))
 
+    k_pos_bal = np.nan_to_num(avg_pos / avg_total, nan=0.0)
+    k_neg_bal = np.nan_to_num(avg_neg / avg_total, nan=0.0)
+
     zeros_total = avg_total == 0
     zeros_pos = avg_pos == 0
     zeros_neg = avg_neg == 0
 
     data = []
     for l in range(len(avg_total)):
-            data.append({'l': l, 'avg_pos_k_bal': avg_pos_k_bal[l], 'avg_neg_k_bal': avg_neg_k_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_k_bal': std_pos_k_bal[l], 'std_pos_k_bal_perc': std_pos_k_bal_perc[l], 'std_neg_k_bal': std_neg_k_bal[l], 'std_neg_k_bal_perc': std_neg_k_bal_perc[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_rel_signed_clust_coeff_perc': std_rel_signed_clust_coeff_perc[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_pos_to_neg_ratio_perc': std_pos_to_neg_ratio_perc[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_neg_to_pos_ratio_perc': std_neg_to_pos_ratio_perc[l], 'std_total': std_total[l], 'std_total_perc': std_total_perc[l], 'std_pos': std_pos[l], 'std_pos_perc': std_pos_perc[l], 'std_neg': std_neg[l], 'std_neg_perc': std_neg_perc[l]})
+            data.append({'l': l, 'k_pos_bal': k_pos_bal[l], 'k_neg_bal': k_neg_bal[l], 'avg_pos_k_bal': avg_pos_k_bal[l], 'avg_neg_k_bal': avg_neg_k_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_k_bal': std_pos_k_bal[l], 'std_pos_k_bal_perc': std_pos_k_bal_perc[l], 'std_neg_k_bal': std_neg_k_bal[l], 'std_neg_k_bal_perc': std_neg_k_bal_perc[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_rel_signed_clust_coeff_perc': std_rel_signed_clust_coeff_perc[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_pos_to_neg_ratio_perc': std_pos_to_neg_ratio_perc[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_neg_to_pos_ratio_perc': std_neg_to_pos_ratio_perc[l], 'std_total': std_total[l], 'std_total_perc': std_total_perc[l], 'std_pos': std_pos[l], 'std_pos_perc': std_pos_perc[l], 'std_neg': std_neg[l], 'std_neg_perc': std_neg_perc[l]})
     
     avg_of_all_pos_k_balance = np.nanmean(avg_pos_k_bal)
     avg_of_all_neg_k_balance = np.nanmean(avg_neg_k_bal)
@@ -207,7 +211,54 @@ if __name__ == "__main__":
 
     kind_params = {}
 
-    if kind == 'er':
+    if kind == 'dataset':
+        kind_params['dataset'] = snakemake.wildcards['dataset']
+        kind_params['null_model'] = snakemake.wildcards.get('null_model', 'false').lower() == 'true'
+
+        if directed: 
+            G = nx.DiGraph()
+        else:
+            G = nx.Graph()
+        
+        base_dir = "workflow/scripts/datasets/"
+        n_pos_edges = n_neg_edges = 0
+        if kind_params['dataset'] == 'epinions':
+            file_name = "epinions.txt"
+        elif kind_params['dataset'] == 'gahuku':
+            file_name = "gahuku.txt"
+        elif kind_params['dataset'] == 'slashdot':
+            file_name = "slashdot.txt"
+        elif kind_params['dataset'] == 'wikielections':
+            file_name = "wikielections.txt"
+        else:
+            raise ValueError("There is no dataset of name " , kind_params['dataset'])
+        
+        print("Loading dataset...")
+        with open(os.path.join(base_dir, file_name), "r") as file:
+                for line in file:
+                    x, y, z = line.split() 
+                    G.add_edge(int(x), int(y), weight=int(z))
+                    if int(z) > 0:
+                        n_pos_edges += 1
+                    else:
+                        n_neg_edges += 1
+        
+        neg_edge_prob = n_neg_edges / (n_pos_edges + n_neg_edges)
+        mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes())}
+        G = nx.relabel_nodes(G, mapping)
+        print("Finished loading dataset")
+        if kind_params['null_model']:
+            print("Preparing null model...")
+            n_pos_edges = n_neg_edges = 0
+            for u, v in G.edges():
+                weight = rnd.choice([-1, 1], p=[neg_edge_prob, 1-neg_edge_prob])
+                G[u][v]['weight'] = weight
+                if weight > 0:
+                    n_pos_edges += 1
+                else: 
+                    n_neg_edges += 1
+
+    elif kind == 'er':
         kind_params['prob_p'] = float(snakemake.wildcards['prob_p'])
         G = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
         while not is_connected(G):
@@ -397,6 +448,7 @@ if __name__ == "__main__":
     params.update(kind_params)
     params['neg_edge_dist_exact'] = neg_edge_dist_exact
     if kind != 'sbm': params['neg_edge_prob'] = neg_edge_prob
+    if kind == 'dataset': params['null_model'] = kind_params['null_model']
     params['n_nodes'] = n_nodes
     params['n_edges'] = n_edges
     params['n_pos_edges'] = n_pos_edges

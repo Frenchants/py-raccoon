@@ -1,0 +1,39 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+dataset_cx          1
+test_rule           1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 01:52:44 2024]
+localrule dataset_cx:
+    input: results/__cythonized__
+    output: results/real/gahuku/null_model=False d=False/cx/e=True p=False l=10 s=1000/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/real/gahuku/null_model=False d=False/cx/e=True p=False l=10 s=1000/run/cx_0.csv
+    wildcards: dataset=gahuku, null_model=False, directed=False, exact=True, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 125:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpa1kicysf.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 01:52:47 2024]
+Error in rule dataset_cx:
+    jobid: 5
+    input: results/__cythonized__
+    output: results/real/gahuku/null_model=False d=False/cx/e=True p=False l=10 s=1000/run/cx_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-08T015244.824616.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

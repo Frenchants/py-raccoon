@@ -1,0 +1,72 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        2
+cythonize           1
+dataset_cx          1
+dataset_pyr         1
+test_rule           1
+total               6
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 01:58:02 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 01:58:03 2024]
+Finished job 3.
+1 of 6 steps (17%) done
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Dec  8 01:58:03 2024]
+localrule dataset_cx:
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/real/wikielections/null_model=False d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=wikielections, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=1000, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 01:58:03 2024]
+localrule dataset_pyr:
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/wikielections/null_model=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=wikielections, null_model=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 126:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpau42pmei.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 01:59:59 2024]
+Error in rule dataset_cx:
+    jobid: 5
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/cx/e=False p=False l=10 s=1000/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 115:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpqaoa4056.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 02:00:01 2024]
+Error in rule dataset_pyr:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/wikielections/null_model=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+
+Complete log: .snakemake/log/2024-12-08T015801.989656.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

@@ -1,0 +1,33 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+dataset_pyr         1
+test_rule           1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 01:05:49 2024]
+localrule dataset_pyr:
+    input: results/__cythonized__
+    output: results/real/epinions/null_model=False/pyr/s=1 sp=None/run/pyr_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/epinions/null_model=False/pyr/s=1 sp=None/run/pyr_0.csv
+    wildcards: dataset=epinions, null_model=False, n_samples=1, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Waiting at most 5 seconds for missing files.
+MissingOutputException in rule dataset_pyr in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 107:
+Job 2  completed successfully, but some output files are missing. Missing files after 5 seconds. This might be due to filesystem latency. If that is the case, consider to increase the wait time with --latency-wait:
+results/real/epinions/null_model=False/pyr/s=1 sp=None/run/pyr_0.csv (missing locally, parent dir not present)
+Terminating processes on user request, this might take some time.
+Complete log: .snakemake/log/2024-12-08T010549.759279.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
