@@ -1,0 +1,179 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+combine_exps         394
+cow_dataset_pyr        1
+cow_pyr              394
+cythonize              1
+total                790
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:13:02 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+Finished job 3.
+1 of 790 steps (0.1%) done
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1853/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 471
+    reason: Missing output files: results/real/cow/year=1853/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1853, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1934/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 239
+    reason: Missing output files: results/real/cow/year=1934/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1934, null_model=True, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1913/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 591
+    reason: Missing output files: results/real/cow/year=1913/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1913, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1973/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 711
+    reason: Missing output files: results/real/cow/year=1973/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1973, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1989/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 349
+    reason: Missing output files: results/real/cow/year=1989/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1989, null_model=True, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1990/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 745
+    reason: Missing output files: results/real/cow/year=1990/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1990, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1930/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 625
+    reason: Missing output files: results/real/cow/year=1930/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1930, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:13:04 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1986/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+    jobid: 737
+    reason: Missing output files: results/real/cow/year=1986/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1986, null_model=False, directed=False, n_samples=10000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpemh0tpb_.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:13:18 2024]
+Error in rule cow_pyr:
+    jobid: 471
+    input: results/__cythonized__
+    output: results/real/cow/year=1853/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmprdreloop.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp15f0t9s8.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmppfrtzsfy.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:13:18 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmprud0hmxl.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:13:18 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp8z5m_s89.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpokcuzq7j.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:13:18 2024]
+Error in rule cow_pyr:
+    jobid: 711
+    input: results/__cythonized__
+    output: results/real/cow/year=1973/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 127:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmprgdoyxdh.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:13:18 2024]
+Error in rule cow_pyr:
+    jobid: 239
+    input: results/__cythonized__
+    output: results/real/cow/year=1934/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+[Sun Dec  8 16:13:18 2024]
+[Sun Dec  8 16:13:18 2024]
+Error in rule cow_pyr:
+    jobid: 625
+    input: results/__cythonized__
+    output: results/real/cow/year=1930/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+[Sun Dec  8 16:13:18 2024]
+Error in rule cow_pyr:
+    jobid: 591
+    input: results/__cythonized__
+    output: results/real/cow/year=1913/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+Error in rule cow_pyr:
+    jobid: 737
+    input: results/__cythonized__
+    output: results/real/cow/year=1986/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+Error in rule cow_pyr:
+    jobid: 349
+    input: results/__cythonized__
+    output: results/real/cow/year=1989/null_model_cow=True d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+Error in rule cow_pyr:
+    jobid: 745
+    input: results/__cythonized__
+    output: results/real/cow/year=1990/null_model_cow=False d=False/pyr/s=10000 sp=None/run/pyr_0.csv
+
+Complete log: .snakemake/log/2024-12-08T161302.140515.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

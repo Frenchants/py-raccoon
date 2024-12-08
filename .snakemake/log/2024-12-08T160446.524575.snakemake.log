@@ -1,0 +1,39 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+cow_cx              1
+test_cow            1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:04:46 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=5/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=5/run/cx_0.csv
+    wildcards: dataset=cow, year=1816, null_model=False, directed=False, exact=True, parallel=False, max_length=220, n_samples=5, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 134:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpjdapyz84.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 16:04:48 2024]
+Error in rule cow_cx:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=5/run/cx_0.csv
+
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-08T160446.524575.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

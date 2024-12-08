@@ -1,7 +1,0 @@
-,l,pos_degree_of_bal,neg_degree_of_bal,rel_signed_clust_coeff,pos_to_neg_ratio,neg_to_pos_ratio,total_est,pos_est,neg_est,total_zeros,pos_zeros,neg_zeros,total_occurred,pos_occurred,neg_occurred,pos_degree_of_bal_graph,neg_degree_of_bal_graph,run,kind,directed,neg_edge_dist_exact,neg_edge_prob,n_nodes,n_edges,n_pos_edges,n_neg_edges,alg,n_samples,pyr_spec_edge_prob,alg_run_time,alg_peak_mem,alg_only_mem,init_mem,seed,script_run_time,exp_date
-0,0,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,0.573421664342166,0.42657833565783415,0.0,complete,False,True,0.1,5.0,10.0,9.0,1.0,pyr,1000.0,,0.8411891460418701,33167.0,7761.0,25406.0,130250193.0,0.8451902866363525,2024-11-14 18:05:21.773266
-1,1,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,,,,,,,,,,,,,,,,,,,,,
-2,2,,,,,,0.0,0.0,0.0,True,True,True,0,0,0,,,,,,,,,,,,,,,,,,,,,
-3,3,0.6952777777777776,0.3047222222222222,0.3905555555555553,2.2816773017319956,0.43827407111466254,10.000000000000009,6.952777777777782,3.047222222222225,False,False,False,3600,2503,1097,,,,,,,,,,,,,,,,,,,,,
-4,4,0.5868421052631576,0.41315789473684317,0.17368421052631444,1.4203821656050912,0.704035874439464,14.843749999999746,8.710937499999847,6.132812499999911,False,False,False,1900,1115,785,,,,,,,,,,,,,,,,,,,,,
-5,5,0.4599999999999999,0.5399999999999999,-0.08,0.8518518518518519,1.173913043478261,12.500000000000044,5.7500000000000195,6.750000000000023,False,False,False,500,230,270,,,,,,,,,,,,,,,,,,,,,

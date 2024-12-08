@@ -1,0 +1,14 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+AmbiguousRuleException:
+Rules dataset_cx and cow_cx are ambiguous for the file results/real/cow/1816/null_model=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv.
+Consider starting rule output with a unique prefix, constrain your wildcards, or use the ruleorder directive.
+Wildcards:
+	dataset_cx: dataset=cow/1816,directed=False,exact=False,max_length=10,n_samples=5,null_model=False,parallel=False,run=0
+	cow_cx: cow_year=1816,dataset=cow,directed=False,exact=False,max_length=10,n_samples=5,null_model=False,parallel=False,run=0
+Expected input files:
+	dataset_cx: results/__cythonized__
+	cow_cx: results/__cythonized__
+Expected output files:
+	dataset_cx: results/real/cow/1816/null_model=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv
+	cow_cx: results/real/cow/1816/null_model=False d=False/cx/e=False p=False l=10 s=5/run/cx_0.csv

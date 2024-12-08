@@ -13,7 +13,7 @@ wildcard_constraints:
 pyr_path = "pyr/s={n_samples} sp={pyr_spec_edge_prob}/run/pyr_{run}.csv"
 cx_path = "cx/e={exact} p={parallel} l={max_length} s={n_samples}/run/cx_{run}.csv"
 
-
+cow_path = "results/real/{dataset}/year={year}/null_model_cow={null_model} d={directed}/"
 dataset_path = "results/real/{dataset}/null_model={null_model} d={directed}/"
 random_path = "results/synthetic/random/n={n_nodes} m={n_edges} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
 er_path = "results/synthetic/er/n={n_nodes} p={prob_p} r={neg_edge_prob} re={neg_edge_dist_exact} d={directed}/"
@@ -49,23 +49,11 @@ rule combine_exps:
 
 # ----- TEST EXPERIMENTS -----
 
-rule test_rule:
-    input:
-        #"results/real/epinions/null_model=False d=False/pyr/s=1 sp=None/pyr_0_combined.csv", 
-        #"results/real/epinions/null_model=False d=False/cx/e=False p=False l=10 s=1/cx_0_combined.csv",
-        #"results/real/gahuku/null_model=False d=False/pyr/s=1000 sp=None/pyr_0_combined.csv",
-        #"results/real/gahuku/null_model=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv",
-        #"results/real/wikielections/null_model=False d=False/pyr/s=50 sp=None/pyr_0_combined.csv",
-        "results/real/wikielections/null_model=False d=False/cx/e=False p=False l=15 s=1500/cx_0_combined.csv",
-
-
-# ----- EXPERIMENTS ON COMPLETE GRAPHS ----- 
+# ----- TO DO EXPERIMENTS -----
 
 rule complete_exp_cx_exact:
     input:
         expand("results/synthetic/complete/n={n} r={r} re=False d=False/cx/e=True p=False l=20 s=1/cx_0_combined.csv", r = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], n = range(1, 21)),
-
-# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
 rule complete_exp_all_negative_graph:
     input:
@@ -75,6 +63,29 @@ rule complete_exp_negative_edges:
     input:
         expand("results/synthetic/complete/n=11 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.0181818181818)),
         expand("results/synthetic/complete/n=10 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.022222222222)),
+
+rule wikielections_exp_cx:
+    input:
+        "results/real/wikielections/null_model=True d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
+        "results/real/wikielections/null_model=False d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
+
+rule wikielections_exp_pyr:
+    input:
+        "results/real/wikielections/null_model=True d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
+        "results/real/wikielections/null_model=False d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
+
+rule cow_exp_cx_approx:
+    input:
+        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv", null_model = ["True", "False"], range(1816, 2013)),
+
+rule cow_exp_pyr:
+    input:
+        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/pyr/s=100 sp=None/pyr_0_combined.csv", null_model = ["True", "False"], range(1816, 2013)),
+
+# ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
+
+
+# ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
 rule complete_time_exp_samples_cx_approx:
     input: 
@@ -102,6 +113,29 @@ rule complete_time_exp_cx_approx_and_pyr:
 
 
 # RULES 
+
+rule cow_pyr:
+    input: 
+        "results/__cythonized__"
+    output:
+        cow_path + pyr_path,
+    params:
+        kind = "dataset",
+        alg = "pyr"
+    script:
+        "scripts/experiment.py"
+
+rule cow_cx:
+    input: 
+        "results/__cythonized__"
+    output:
+        cow_path + cx_path,
+    params:
+        kind = "dataset",
+        alg = "cx"
+    script:
+        "scripts/experiment.py"
+
 
 rule dataset_pyr:
     input: 

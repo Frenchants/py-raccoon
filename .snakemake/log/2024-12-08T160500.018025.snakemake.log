@@ -1,0 +1,57 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job             count
+------------  -------
+combine_exps        1
+cow_cx              1
+test_cow            1
+total               3
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:05:00 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/run/cx_0.csv
+    wildcards: dataset=cow, year=1816, null_model=False, directed=False, exact=True, parallel=False, max_length=220, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:05:08 2024]
+Finished job 2.
+1 of 3 steps (33%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:05:08 2024]
+localrule combine_exps:
+    input: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/run/cx_0.csv
+    output: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/cx_0_combined.csv
+    jobid: 1
+    reason: Missing output files: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/cx_0_combined.csv; Input files updated by another job: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/run/cx_0.csv
+    wildcards: path=results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1, alg=cx, runs=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:05:10 2024]
+Finished job 1.
+2 of 3 steps (67%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:05:10 2024]
+localrule test_cow:
+    input: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/cx_0_combined.csv
+    jobid: 0
+    reason: Input files updated by another job: results/real/cow/year=1816/null_model_cow=False d=False/cx/e=True p=False l=220 s=1/cx_0_combined.csv
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:05:10 2024]
+Finished job 0.
+3 of 3 steps (100%) done
+Complete log: .snakemake/log/2024-12-08T160500.018025.snakemake.log

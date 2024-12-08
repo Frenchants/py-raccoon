@@ -94,6 +94,13 @@ def save_cx_results(plus_minus, plus_plus):
 
     pos = (plus_plus + plus_minus) / 2
     neg = plus_plus - pos
+
+    threshold = 1e-5
+    plus_plus[np.abs(plus_plus) < threshold] = 0
+    plus_minus[np.abs(plus_minus) < threshold] = 0
+    pos[np.abs(pos) < threshold] = 0
+    neg[np.abs(neg) < threshold] = 0
+
     neg_k_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     pos_k_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     neg_to_pos_ratio = np.nan_to_num(neg / pos, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
@@ -230,6 +237,9 @@ if __name__ == "__main__":
             file_name = "slashdot.txt"
         elif kind_params['dataset'] == 'wikielections':
             file_name = "wikielections.txt"
+        elif kind_params['dataset'] == 'cow':
+            cow_year = snakemake.wildcards['year']
+            file_name = f"correlates_of_war/combined_graphs/{cow_year}.txt"
         else:
             raise ValueError("There is no dataset of name " , kind_params['dataset'])
         
@@ -246,7 +256,7 @@ if __name__ == "__main__":
         neg_edge_prob = n_neg_edges / (n_pos_edges + n_neg_edges)
         mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes())}
         G = nx.relabel_nodes(G, mapping)
-        print("Finished loading dataset")
+        print("Finished loading dataset.")
         if kind_params['null_model']:
             print("Preparing null model...")
             n_pos_edges = n_neg_edges = 0
@@ -257,6 +267,7 @@ if __name__ == "__main__":
                     n_pos_edges += 1
                 else: 
                     n_neg_edges += 1
+            print("Finished initialising null model.")
 
     elif kind == 'er':
         kind_params['prob_p'] = float(snakemake.wildcards['prob_p'])
@@ -426,6 +437,11 @@ if __name__ == "__main__":
         alg_params['full_matrix_mem'] = full_matrix.nbytes
         clean_matrix = cx.clean_matrix(full_matrix)
         alg_params['clean_matrix_mem'] = clean_matrix.nbytes
+
+        if kind == "dataset" and kind_params['dataset'] == 'cow':
+            largest_cc_size = max(len(component) for component in nx.connected_components(G))
+            if largest_cc_size < alg_params['max_length']:
+                alg_params['max_length'] = largest_cc_size
         
         init_mem, _ = tracemalloc.get_traced_memory()
         tracemalloc.reset_peak()
@@ -444,11 +460,12 @@ if __name__ == "__main__":
     params = {}
     params['run'] = run
     params['kind'] = kind
+    if kind == 'dataset': params['null_model'] = kind_params['null_model']
+    if kind == 'dataset' and kind_params['dataset'] == 'cow': params['cow_year'] = cow_year
     params['directed'] = directed
     params.update(kind_params)
     params['neg_edge_dist_exact'] = neg_edge_dist_exact
     if kind != 'sbm': params['neg_edge_prob'] = neg_edge_prob
-    if kind == 'dataset': params['null_model'] = kind_params['null_model']
     params['n_nodes'] = n_nodes
     params['n_edges'] = n_edges
     params['n_pos_edges'] = n_pos_edges

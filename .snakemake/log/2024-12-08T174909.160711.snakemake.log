@@ -1,0 +1,56 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                  count
+-----------------  -------
+combine_exps             2
+cow_cx                   2
+cow_exp_cx_approx        1
+total                    5
+
+Select jobs to execute...
+Execute 2 jobs...
+
+[Sun Dec  8 17:49:09 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1940/null_model_cow=False d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+    jobid: 5
+    reason: Missing output files: results/real/cow/year=1940/null_model_cow=False d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+    wildcards: dataset=cow, year=1940, null_model=False, directed=False, exact=False, parallel=False, max_length=15, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 17:49:09 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1940/null_model_cow=True d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+    jobid: 2
+    reason: Missing output files: results/real/cow/year=1940/null_model_cow=True d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+    wildcards: dataset=cow, year=1940, null_model=True, directed=False, exact=False, parallel=False, max_length=15, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 138:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp2gl7u4v0.experiment.py' returned non-zero exit status 1.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 138:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp7x_2qlew.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 17:50:15 2024]
+[Sun Dec  8 17:50:15 2024]
+Error in rule cow_cx:
+    jobid: 2
+    input: results/__cythonized__
+    output: results/real/cow/year=1940/null_model_cow=True d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+
+Error in rule cow_cx:
+    jobid: 5
+    input: results/__cythonized__
+    output: results/real/cow/year=1940/null_model_cow=False d=False/cx/e=False p=False l=15 s=20/run/cx_0.csv
+
+Complete log: .snakemake/log/2024-12-08T174909.160711.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

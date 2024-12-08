@@ -1,0 +1,476 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                     count
+--------------------  -------
+combine_exps              788
+cow_cx                    394
+cow_cx_exact_and_pyr        1
+cow_pyr                   394
+cythonize                   1
+total                    1578
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:13 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+Finished job 3.
+1 of 1578 steps (0.1%) done
+Select jobs to execute...
+Execute 8 jobs...
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1836/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 831
+    reason: Missing output files: results/real/cow/year=1836/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1836, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1854/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 867
+    reason: Missing output files: results/real/cow/year=1854/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1854, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1958/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1075
+    reason: Missing output files: results/real/cow/year=1958/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1958, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1838/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 835
+    reason: Missing output files: results/real/cow/year=1838/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1838, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1898/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 955
+    reason: Missing output files: results/real/cow/year=1898/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1898, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1819/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 797
+    reason: Missing output files: results/real/cow/year=1819/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1819, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1821/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1195
+    reason: Missing output files: results/real/cow/year=1821/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1821, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:15 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=2001/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1555
+    reason: Missing output files: results/real/cow/year=2001/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=2001, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:22 2024]
+Finished job 955.
+2 of 1578 steps (0.1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:22 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1880/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1313
+    reason: Missing output files: results/real/cow/year=1880/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1880, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:22 2024]
+Finished job 1195.
+3 of 1578 steps (0.2%) done
+[Sun Dec  8 16:49:22 2024]
+Finished job 797.
+4 of 1578 steps (0.3%) done
+[Sun Dec  8 16:49:22 2024]
+Finished job 867.
+5 of 1578 steps (0.3%) done
+Select jobs to execute...
+Execute 3 jobs...
+
+[Sun Dec  8 16:49:22 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1957/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1467
+    reason: Missing output files: results/real/cow/year=1957/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1957, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:22 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1990/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 351
+    reason: Missing output files: results/real/cow/year=1990/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1990, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:22 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1999/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1157
+    reason: Missing output files: results/real/cow/year=1999/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1999, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Select jobs to execute...
+Waiting for more resources.
+Waiting for more resources.
+[Sun Dec  8 16:49:23 2024]
+Finished job 831.
+6 of 1578 steps (0.4%) done
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:23 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1914/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 199
+    reason: Missing output files: results/real/cow/year=1914/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1914, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:23 2024]
+Finished job 835.
+7 of 1578 steps (0.4%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:23 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1940/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1433
+    reason: Missing output files: results/real/cow/year=1940/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1940, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:24 2024]
+Finished job 1075.
+8 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:25 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1914/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 593
+    reason: Missing output files: results/real/cow/year=1914/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1914, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:28 2024]
+Finished job 1313.
+9 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:28 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1931/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 233
+    reason: Missing output files: results/real/cow/year=1931/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1931, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:28 2024]
+Finished job 1555.
+10 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:28 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1974/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 319
+    reason: Missing output files: results/real/cow/year=1974/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1974, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:29 2024]
+Finished job 1467.
+11 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:29 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1837/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1227
+    reason: Missing output files: results/real/cow/year=1837/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1837, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:29 2024]
+Finished job 1433.
+12 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:30 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1991/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 747
+    reason: Missing output files: results/real/cow/year=1991/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1991, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:34 2024]
+Finished job 1157.
+13 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:35 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1837/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 439
+    reason: Missing output files: results/real/cow/year=1837/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1837, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:35 2024]
+Finished job 1227.
+14 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:35 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1871/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 507
+    reason: Missing output files: results/real/cow/year=1871/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1871, null_model=False, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:39 2024]
+Finished job 199.
+15 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:39 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=2008/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 387
+    reason: Missing output files: results/real/cow/year=2008/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=2008, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:40 2024]
+Finished job 593.
+16 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:41 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1888/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 147
+    reason: Missing output files: results/real/cow/year=1888/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1888, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:41 2024]
+Finished job 233.
+17 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:41 2024]
+localrule cow_cx:
+    input: results/__cythonized__
+    output: results/real/cow/year=1828/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+    jobid: 27
+    reason: Missing output files: results/real/cow/year=1828/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1828, null_model=True, directed=False, exact=False, parallel=False, max_length=10, n_samples=20, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:42 2024]
+Finished job 351.
+18 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:42 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1974/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1501
+    reason: Missing output files: results/real/cow/year=1974/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1974, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:48 2024]
+Finished job 747.
+19 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:48 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1914/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1381
+    reason: Missing output files: results/real/cow/year=1914/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1914, null_model=False, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:50 2024]
+Finished job 1501.
+20 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:50 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1991/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 1141
+    reason: Missing output files: results/real/cow/year=1991/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1991, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Sun Dec  8 16:49:51 2024]
+Finished job 319.
+21 of 1578 steps (1%) done
+Select jobs to execute...
+Execute 1 jobs...
+
+[Sun Dec  8 16:49:51 2024]
+localrule cow_pyr:
+    input: results/__cythonized__
+    output: results/real/cow/year=1871/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+    jobid: 901
+    reason: Missing output files: results/real/cow/year=1871/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: dataset=cow, year=1871, null_model=True, directed=False, n_samples=100, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 124:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpj3s8mbt4.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_pyr:
+    jobid: 901
+    input: results/__cythonized__
+    output: results/real/cow/year=1871/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 124:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp31hmjalm.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_pyr:
+    jobid: 1141
+    input: results/__cythonized__
+    output: results/real/cow/year=1991/null_model_cow=True d=False/pyr/s=100 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 135:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpa19rl_er.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_cx:
+    jobid: 27
+    input: results/__cythonized__
+    output: results/real/cow/year=1828/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 124:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp8dtk45tl.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_pyr:
+    jobid: 1381
+    input: results/__cythonized__
+    output: results/real/cow/year=1914/null_model_cow=False d=False/pyr/s=100 sp=None/run/pyr_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 135:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmplpejzqn3.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_cx:
+    jobid: 507
+    input: results/__cythonized__
+    output: results/real/cow/year=1871/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 135:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp_b829oz5.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_cx:
+    jobid: 147
+    input: results/__cythonized__
+    output: results/real/cow/year=1888/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 135:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpjh7v68e6.experiment.py' returned non-zero exit status 1.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_cx:
+    jobid: 387
+    input: results/__cythonized__
+    output: results/real/cow/year=2008/null_model_cow=True d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 135:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmp9jbntp2j.experiment.py' died with <Signals.SIGINT: 2>.
+[Sun Dec  8 16:49:52 2024]
+Error in rule cow_cx:
+    jobid: 439
+    input: results/__cythonized__
+    output: results/real/cow/year=1837/null_model_cow=False d=False/cx/e=False p=False l=10 s=20/run/cx_0.csv
+
+Complete log: .snakemake/log/2024-12-08T164912.100073.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
