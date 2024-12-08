@@ -76,11 +76,11 @@ rule wikielections_exp_pyr:
 
 rule cow_exp_cx_approx:
     input:
-        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv", null_model = ["True", "False"], range(1816, 2013)),
+        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv", null_model = ["True", "False"], year= range(1816, 2013)),
 
 rule cow_exp_pyr:
     input:
-        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/pyr/s=100 sp=None/pyr_0_combined.csv", null_model = ["True", "False"], range(1816, 2013)),
+        expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/pyr/s=100 sp=None/pyr_0_combined.csv", null_model = ["True", "False"], year = range(1816, 2013)),
 
 # ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
 
