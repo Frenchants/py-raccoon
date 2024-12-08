@@ -74,6 +74,13 @@ rule wikielections_exp_pyr:
         "results/real/wikielections/null_model=True d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
         "results/real/wikielections/null_model=False d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
 
+# ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
+
+rule slashdot_exp_pyr:
+    input:
+        "results/real/slashdot/null_model=True d=False/pyr/s=100 sp=None/pyr_0_combined.csv",
+        "results/real/slashdot/null_model=False d=False/pyr/s=100 sp=None/pyr_0_combined.csv",
+
 rule cow_exp_cx_approx:
     input:
         expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/cx/e=False p=False l=10 s=20/cx_0_combined.csv", null_model = ["True", "False"], year= range(1816, 2013)),
@@ -81,9 +88,6 @@ rule cow_exp_cx_approx:
 rule cow_exp_pyr:
     input:
         expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/pyr/s=100 sp=None/pyr_0_combined.csv", null_model = ["True", "False"], year = range(1816, 2013)),
-
-# ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
-
 
 # ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
 
