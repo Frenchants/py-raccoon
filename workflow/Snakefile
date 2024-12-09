@@ -55,6 +55,8 @@ rule er_exp_cx_exact:
     input:
         expand("results/synthetic/er/n={n} p={p} r={r} re=False d=False/cx/e=True p=False l=20 s=1/cx_{runs}_combined.csv", r = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], n = range(4, 26), p = [0.25, 0.5], runs=0),
 
+rule complete_exp_pyr:
+    expand("results/synthetic/complete/n={n} r={r} re=False d=False/pyr/s=1000 sp=None/pyr_0_combined.csv", r = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], n = range(1, 21)),
 
 # ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
 
