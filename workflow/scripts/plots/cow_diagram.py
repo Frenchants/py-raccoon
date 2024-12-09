@@ -80,16 +80,13 @@ for k in range(1, 218):
     null_avg = np.nanmean(null_model_values)
     pyr_null_avg = np.nanmean(pyr_null_model_values)
 
-    # Step 2: Compute the standard deviations of cx_values and pyr_values
     cx_std = np.nanstd(cx_values)
     pyr_std = np.nanstd(pyr_values)
     null_std = np.nanstd(null_model_values)
     pyr_null_std = np.nanstd(pyr_null_model_values)
 
-    # Step 3: Compute the Mean Absolute Error (MAE)
     mae = np.nanmean(np.abs(pyr_values - cx_values))
 
-    # Step 4: Compute the Mean Absolute Percentage Error (MAPE)
     mape = np.nanmean(np.abs((pyr_values - cx_values) / cx_values))
 
     results = {
@@ -100,7 +97,6 @@ for k in range(1, 218):
 
     df = pd.DataFrame(results)
 
-    # Step 6: Save the DataFrame to a CSV file
     output_file = os.path.join(output_folder, "cow_results", f'cow_results_{k}.csv')
     df.to_csv(output_file, index=False)
 

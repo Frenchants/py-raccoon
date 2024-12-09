@@ -5,7 +5,6 @@ import os
 
 until_value = 50
 
-# Path to the specific folder where the CSV file is located
 dataset_folder = "/Users/fredericbusch/Desktop/Thesis/forks/collection_of_results/gahuku_exp_cx_exact_and_pyr/real/gahuku"
 
 real_folder = os.path.join(dataset_folder, "null_model=False d=False")

@@ -23,8 +23,10 @@ def fix_smk() -> Snakemake:
     """
     return snakemake
 
+# function which accounts for the postprocessing part after the execution of the pyr (FBE) algorithm
 def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, neg_occurred):
     
+    # compute measures
     pos_k_bal = np.nan_to_num(pos_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     neg_k_bal = np.nan_to_num(neg_est / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     rel_signed_clust_coeff = np.nan_to_num((pos_est - neg_est) / total_est, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
@@ -35,11 +37,13 @@ def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, 
     pos_zeros = pos_est == 0
     neg_zeros = neg_est == 0
 
+    # save estimated measures
     data = []
     for l in range(len(total_est)):
             data.append({'l': l, 'pos_k_bal': pos_k_bal[l], 'neg_k_bal': neg_k_bal[l], 'rel_signed_clust_coeff': rel_signed_clust_coeff[l], 'pos_to_neg_ratio': pos_to_neg_ratio[l], 'neg_to_pos_ratio': neg_to_pos_ratio[l], 'total_est': total_est[l], 'pos_est': pos_est[l], 'neg_est': neg_est[l], 'total_zeros': total_zeros[l], 'pos_zeros': pos_zeros[l], 'neg_zeros': neg_zeros[l], 'total_occurred': total_occurred[l], 'pos_occurred': pos_occurred[l], 'neg_occurred': neg_occurred[l]})
     
 
+    # calculate the avgs of all obtained k_balance values
     avg_pos_k_balance = np.nanmean(pos_k_bal)
     avg_neg_k_balance = np.nanmean(neg_k_bal)
 
@@ -47,6 +51,7 @@ def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, 
     data[0]['avg_neg_k_balance'] = avg_neg_k_balance
 
 
+    # compute other cycle-based measures
     k = np.arange(1, len(total_est) + 1)
 
     weight_names = ["degree_of_bal", "weighted_1_k_bal", "weighted_1_k_2_bal", "weighted_1_k_3_bal", "weighted_1_k_4_bal", "weighted_1_k_fac_bal"]
@@ -68,11 +73,15 @@ def save_pyr_results(total_est, pos_est, neg_est, total_occurred, pos_occurred, 
 
     return data
 
+# postprocessing of the CX algorithm
 def save_cx_results(plus_minus, plus_plus):
    
+   # the arrays returned by the algorithm are estimates for the total number of cycles, that is the sum of the positive and negative cylces (plus_plus), and estimates for the difference between the numbers of the positive and negative cycles (minus_minus)
+
     plus_plus = np.asarray(plus_plus, dtype=np.float64)
     plus_minus = np.asarray(plus_minus, dtype=np.float64)
     
+    # this was originally part of the cycleindex code
     if plus_minus.ndim == 1:
         plus_minus = np.expand_dims(plus_minus, 0)
         plus_plus = np.expand_dims(plus_plus, 0)
@@ -80,6 +89,8 @@ def save_cx_results(plus_minus, plus_plus):
         plus_minus = np.concatenate(plus_minus)
         plus_plus = np.concatenate(plus_plus)
 
+
+    # the CX algorithms always assumes that the input graph is directed, that is it treats undirected networks as directed networks as well. Therefore, the algorithm counts cycles twice, and additionally it may find cycles of length 2. Here, this undone by dividing the cycle counts by two and by setting the cycle counts for length 2 to 0. 
     if not directed:
          # if the graph is not directed, there are no cycles with length 2 and every cycle was counted twice 
         if plus_plus.shape[1] >= 2:
@@ -92,21 +103,26 @@ def save_cx_results(plus_minus, plus_plus):
     plus_plus = np.array([np.insert(arr, 0, 0) for arr in plus_plus])
     plus_minus = np.array([np.insert(arr, 0, 0) for arr in plus_minus])
 
+    # from the plus_plus and plus_minus arrays returned by the CX algorithm, the pos and neg cycle counts are derived
     pos = (plus_plus + plus_minus) / 2
     neg = plus_plus - pos
 
+    # the values of the CX algorithm are sometimes distorted and adopt small values near 0. Here, this is undone by treating such values as 0. 
     threshold = 1e-5
     plus_plus[np.abs(plus_plus) < threshold] = 0
     plus_minus[np.abs(plus_minus) < threshold] = 0
     pos[np.abs(pos) < threshold] = 0
     neg[np.abs(neg) < threshold] = 0
 
+
+    # compute measures for every sample
     neg_k_bal = np.nan_to_num(neg / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     pos_k_bal = np.nan_to_num(pos / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     neg_to_pos_ratio = np.nan_to_num(neg / pos, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     pos_to_neg_ratio = np.nan_to_num(pos / neg, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     rel_signed_clust_coeff = np.nan_to_num(plus_minus / plus_plus, copy=False, nan=np.nan, posinf=np.nan, neginf=np.nan)
     
+    # compute the averages of the measures across all samples 
     std_total = np.nanstd(plus_plus, axis=0)
     avg_total = np.nanmean(plus_plus, axis=0)
     std_total_perc = np.abs(np.nan_to_num(std_total / avg_total, nan=0.0))
@@ -139,10 +155,13 @@ def save_cx_results(plus_minus, plus_plus):
     zeros_pos = avg_pos == 0
     zeros_neg = avg_neg == 0
 
+    # save data
     data = []
     for l in range(len(avg_total)):
             data.append({'l': l, 'k_pos_bal': k_pos_bal[l], 'k_neg_bal': k_neg_bal[l], 'avg_pos_k_bal': avg_pos_k_bal[l], 'avg_neg_k_bal': avg_neg_k_bal[l], 'avg_rel_signed_clust_coeff': avg_rel_signed_clust_coeff[l], 'avg_pos_to_neg_ratio': avg_pos_to_neg_ratio[l], 'avg_neg_to_pos_ratio': avg_neg_to_pos_ratio[l], 'avg_total': avg_total[l], 'avg_pos': avg_pos[l], 'avg_neg': avg_neg[l], 'zeros_total': zeros_total[l], 'zeros_pos': zeros_pos[l], 'zeros_neg': zeros_neg[l], 'std_pos_k_bal': std_pos_k_bal[l], 'std_pos_k_bal_perc': std_pos_k_bal_perc[l], 'std_neg_k_bal': std_neg_k_bal[l], 'std_neg_k_bal_perc': std_neg_k_bal_perc[l], 'std_rel_signed_clust_coeff': std_rel_signed_clust_coeff[l], 'std_rel_signed_clust_coeff_perc': std_rel_signed_clust_coeff_perc[l], 'std_pos_to_neg_ratio': std_pos_to_neg_ratio[l], 'std_pos_to_neg_ratio_perc': std_pos_to_neg_ratio_perc[l], 'std_neg_to_pos_ratio': std_neg_to_pos_ratio[l], 'std_neg_to_pos_ratio_perc': std_neg_to_pos_ratio_perc[l], 'std_total': std_total[l], 'std_total_perc': std_total_perc[l], 'std_pos': std_pos[l], 'std_pos_perc': std_pos_perc[l], 'std_neg': std_neg[l], 'std_neg_perc': std_neg_perc[l]})
     
+
+    # obtain average of all the k_balance values
     avg_of_all_pos_k_balance = np.nanmean(avg_pos_k_bal)
     avg_of_all_neg_k_balance = np.nanmean(avg_neg_k_bal)
 
@@ -150,6 +169,9 @@ def save_cx_results(plus_minus, plus_plus):
     data[0]['avg_of_all_neg_k_balance'] = avg_of_all_neg_k_balance
 
     k = np.arange(1, plus_plus.shape[1] + 1)
+
+
+    # compute weighted degree of balance 
 
     weight_names = ["degree_of_bal", "weighted_1_k_bal", "weighted_1_k_2_bal", "weighted_1_k_3_bal", "weighted_1_k_4_bal", "weighted_1_k_fac_bal"]
     weight_functions = [1, 1 / k, 1 / k**2, 1 / k**3, 1 / k**4, 1 / scipy.special.factorial(k)]
@@ -170,12 +192,14 @@ def save_cx_results(plus_minus, plus_plus):
     
     return data
 
+# check if a graph is either weakly connected if the graph is directed or if its connected if the graph is undirecte
 def is_connected(G):
     if directed:
         return nx.is_weakly_connected(G)
     else:
         return nx.is_connected(G)
 
+# helper function, not used in the experiments. 
 def get_group_sbm(u):
     group = 0
     upper = kind_params['com_sizes'][group]
@@ -184,8 +208,11 @@ def get_group_sbm(u):
         upper += kind_params['com_sizes'][group]
     return group
 
+
+# main method of the script 
 if __name__ == "__main__":
 
+    # start measuring script runtime and memory consumption
     script_start_time = time.time()
     tracemalloc.start()
     exp_date = datetime.datetime.now()
@@ -201,6 +228,7 @@ if __name__ == "__main__":
 
     snakemake = fix_smk()
 
+    # obtain snakemake wildcards 
     run = int(snakemake.wildcards['run'])
     kind = snakemake.params['kind']
     alg = snakemake.params['alg']
@@ -218,8 +246,11 @@ if __name__ == "__main__":
 
     kind_params = {}
 
+
+    # start preprocessing based on the experiment type
     if kind == 'dataset':
         kind_params['dataset'] = snakemake.wildcards['dataset']
+        # determines whether the null_model of the graph should be calculated 
         kind_params['null_model'] = snakemake.wildcards.get('null_model', 'false').lower() == 'true'
 
         if directed: 
@@ -257,6 +288,8 @@ if __name__ == "__main__":
         mapping = {old_label: new_label for new_label, old_label in enumerate(G.nodes())}
         G = nx.relabel_nodes(G, mapping)
         print("Finished loading dataset.")
+       
+        # calculate null_model. Each edge in G is assigned a negative weight with probability r (neg_edge_prob)
         if kind_params['null_model']:
             print("Preparing null model...")
             n_pos_edges = n_neg_edges = 0
@@ -339,9 +372,12 @@ if __name__ == "__main__":
     n_nodes = G.number_of_nodes()
     n_edges = G.number_of_edges()
 
+
+    # assign random weights based on probability neg_edge_prob to graph
     if kind != 'sbm' and kind != 'dataset':
         n_pos_edges = n_neg_edges = 0
 
+        # if neg_edge_dist_exact is set to true, an exact proportion of negative edges in the graph is tried to be achieved (the desired proportion then is indicated by neg_edge_prob) 
         if neg_edge_dist_exact:
             n_neg_edges = round(n_edges * neg_edge_prob)
             n_pos_edges = n_edges - n_neg_edges
@@ -362,6 +398,7 @@ if __name__ == "__main__":
 
     alg_params = {}
 
+    # run algs
     if alg == 'pyr':
         if directed: 
             raise ValueError("The 'pyr' algorithm does not work on directed graphs.")
@@ -374,6 +411,7 @@ if __name__ == "__main__":
             alg_params['pyr_spec_edge_prob'] = float(snakemake.wildcards['pyr_spec_edge_prob'])
         
         if nx.is_connected(G):
+            # start measuring algorithm runtime and memory usage
             init_mem, _ = tracemalloc.get_traced_memory()
             tracemalloc.reset_peak()
             alg_start_time = time.time()
@@ -383,6 +421,7 @@ if __name__ == "__main__":
             data = save_pyr_results(*results)
             alg_total_time = alg_end_time - alg_start_time
         else:
+            # if the graph is not connected, the algorithm is run on every connected component of the input graph. The values obtained in each run are added
             init_mem, _ = tracemalloc.get_traced_memory()
             alg_peak_mem = 0
             alg_total_time = 0
@@ -398,7 +437,8 @@ if __name__ == "__main__":
                 nodes_of_H = len(H.nodes)
                 if nodes_of_H < 3:
                     continue
-
+                
+                # the nodes need to be renumbered so that they start counting from 0. Otherwise, the algorithm fails
                 mapping = {old_label: new_label for new_label, old_label in enumerate(H.nodes())}
                 H_relabel = nx.relabel_nodes(H, mapping)
                 if nodes_of_H == 3: 
@@ -429,16 +469,20 @@ if __name__ == "__main__":
         if alg_params['exact'] and n_samples != 1:
             raise ValueError("An exact solution does not use more than 1 sample.")
         
+        # this is the computation intensive preprocessing part of the algorithm. The implementation is not efficient, the adj matrices are full n x n matrices. Depending on the dataset, this step might take hours
         full_matrix = cx.to_adj_matrix(G)
         alg_params['full_matrix_mem'] = full_matrix.nbytes
+        # the clean_matrix function is described in the cycleindex package
         clean_matrix = cx.clean_matrix(full_matrix)
         alg_params['clean_matrix_mem'] = clean_matrix.nbytes
 
+        # it may happen that the algorithm tries to sample induced subgraphs of a certain length. However, if the graph does not have any induced subgraphs of that length, the algorithm runs indefinitely. This is avoided here
         if (kind == "dataset" and kind_params['dataset'] == 'cow') or (kind=='er'):
             largest_cc_size = max(len(component) for component in nx.connected_components(G))
             if largest_cc_size < alg_params['max_length']:
                 alg_params['max_length'] = largest_cc_size
         
+        # measure time and memory
         init_mem, _ = tracemalloc.get_traced_memory()
         tracemalloc.reset_peak()
         alg_start_time = time.time()
@@ -453,6 +497,7 @@ if __name__ == "__main__":
     tracemalloc.stop()
     script_end_time = time.time()
 
+    # save all the parameters
     params = {}
     params['run'] = run
     params['kind'] = kind
@@ -471,6 +516,7 @@ if __name__ == "__main__":
     params.update(alg_params)
     params['alg_run_time'] = alg_total_time
     params['alg_peak_mem'] = alg_peak_mem
+    # the alg_only_mem is the peak memory observed during the execution of the algorithm, excluding any memory that is consumed in the preprocessing part (captured by the var init_mem here)
     params['alg_only_mem'] = alg_peak_mem - init_mem
     params['init_mem'] = init_mem
     params['seed'] = seed

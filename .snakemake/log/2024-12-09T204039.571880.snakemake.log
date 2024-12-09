@@ -1,0 +1,179 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                count
+---------------  -------
+combine_exps         440
+cythonize              1
+er_cx                440
+er_exp_cx_exact        1
+total                882
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Dec  9 20:40:40 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:42 2024]
+Finished job 3.
+1 of 882 steps (0.1%) done
+Select jobs to execute...
+Execute 8 jobs...
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=7 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 15
+    reason: Missing output files: results/synthetic/er/n=7 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=7, prob_p=0.25, neg_edge_prob=0.1, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=15 p=0.25 r=0.6 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 487
+    reason: Missing output files: results/synthetic/er/n=15 p=0.25 r=0.6 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=15, prob_p=0.25, neg_edge_prob=0.6, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=20 p=0.25 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 419
+    reason: Missing output files: results/synthetic/er/n=20 p=0.25 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=20, prob_p=0.25, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=23 p=0.5 r=0.2 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 169
+    reason: Missing output files: results/synthetic/er/n=23 p=0.5 r=0.2 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=23, prob_p=0.5, neg_edge_prob=0.2, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=17 p=0.5 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 409
+    reason: Missing output files: results/synthetic/er/n=17 p=0.5 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=17, prob_p=0.5, neg_edge_prob=0.5, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=19 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 769
+    reason: Missing output files: results/synthetic/er/n=19 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=19, prob_p=0.5, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=15 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 47
+    reason: Missing output files: results/synthetic/er/n=15 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=15, prob_p=0.25, neg_edge_prob=0.1, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 20:40:43 2024]
+localrule er_cx:
+    input: results/__cythonized__
+    output: results/synthetic/er/n=20 p=0.25 r=0.8 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+    jobid: 683
+    reason: Missing output files: results/synthetic/er/n=20 p=0.25 r=0.8 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=20, prob_p=0.25, neg_edge_prob=0.8, neg_edge_dist_exact=False, directed=False, exact=True, parallel=False, max_length=20, n_samples=1, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+Terminating processes on user request, this might take some time.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmprc6w3427.experiment.py' died with <Signals.SIGINT: 2>.
+[Mon Dec  9 20:40:45 2024]
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmplitr0ibl.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpivco0r34.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpkzl0d3n9.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmptwchqvrv.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpe6vs3wmp.experiment.py' died with <Signals.SIGINT: 2>.
+Error in rule er_cx:
+    jobid: 409
+    input: results/__cythonized__
+    output: results/synthetic/er/n=17 p=0.5 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmphtare94y.experiment.py' died with <Signals.SIGINT: 2>.
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 257:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpx8pdkhtg.experiment.py' died with <Signals.SIGINT: 2>.
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+[Mon Dec  9 20:40:45 2024]
+Error in rule er_cx:
+    jobid: 47
+    input: results/__cythonized__
+    output: results/synthetic/er/n=15 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 769
+    input: results/__cythonized__
+    output: results/synthetic/er/n=19 p=0.5 r=0.9 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 683
+    input: results/__cythonized__
+    output: results/synthetic/er/n=20 p=0.25 r=0.8 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 487
+    input: results/__cythonized__
+    output: results/synthetic/er/n=15 p=0.25 r=0.6 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 419
+    input: results/__cythonized__
+    output: results/synthetic/er/n=20 p=0.25 r=0.5 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 15
+    input: results/__cythonized__
+    output: results/synthetic/er/n=7 p=0.25 r=0.1 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Error in rule er_cx:
+    jobid: 169
+    input: results/__cythonized__
+    output: results/synthetic/er/n=23 p=0.5 r=0.2 re=False d=False/cx/e=True p=False l=20 s=1/run/cx_0.csv
+
+Complete log: .snakemake/log/2024-12-09T204039.571880.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.

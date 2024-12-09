@@ -13396,3 +13396,17 @@ Set parameter Username
 Set parameter LogFile to value "gurobi.log"
 Academic license - for non-commercial use only - expires 2025-09-17
 Using license file /Users/fredericbusch/gurobi.lic
+
+Gurobi 9.5.1 (mac64[x86], gurobi_cl) logging started Mon Dec  9 20:40:36 2024
+
+Set parameter Username
+Set parameter LogFile to value "gurobi.log"
+Academic license - for non-commercial use only - expires 2025-09-17
+Using license file /Users/fredericbusch/gurobi.lic
+
+Gurobi 9.5.1 (mac64[x86], gurobi_cl) logging started Mon Dec  9 20:40:56 2024
+
+Set parameter Username
+Set parameter LogFile to value "gurobi.log"
+Academic license - for non-commercial use only - expires 2025-09-17
+Using license file /Users/fredericbusch/gurobi.lic

@@ -4,7 +4,6 @@ import os
 
 until_value = 30
 
-# Path to the specific folder where the CSV file is located
 dataset_folder = "/Users/fredericbusch/Desktop/Thesis/forks/collection_of_results/slashdot_combined/real/slashdot"
 
 real_folder = os.path.join(dataset_folder, "null_model=False d=False")
