@@ -275,10 +275,6 @@ if __name__ == "__main__":
         while not is_connected(G):
             G  = nx.gnp_random_graph(n_nodes, kind_params['prob_p'], directed=directed, seed=rnd)
 
-        G = nx.Graph()
-        G.add_edges_from([(1, 2), (2, 3), (1, 3)])
-        G.add_edges_from([(4, 5), (5, 6), (4, 6)])
-
     elif kind == 'complete':
         G = nx.complete_graph(n_nodes)
 
@@ -438,7 +434,7 @@ if __name__ == "__main__":
         clean_matrix = cx.clean_matrix(full_matrix)
         alg_params['clean_matrix_mem'] = clean_matrix.nbytes
 
-        if kind == "dataset" and kind_params['dataset'] == 'cow':
+        if (kind == "dataset" and kind_params['dataset'] == 'cow') or (kind=='er'):
             largest_cc_size = max(len(component) for component in nx.connected_components(G))
             if largest_cc_size < alg_params['max_length']:
                 alg_params['max_length'] = largest_cc_size

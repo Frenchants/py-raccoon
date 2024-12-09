@@ -51,30 +51,35 @@ rule combine_exps:
 
 # ----- TO DO EXPERIMENTS -----
 
-rule complete_exp_cx_exact:
+rule er_exp_cx_exact:
     input:
-        expand("results/synthetic/complete/n={n} r={r} re=False d=False/cx/e=True p=False l=20 s=1/cx_0_combined.csv", r = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], n = range(1, 21)),
+        expand("results/synthetic/er/n={n} p={p} r={r} re=False d=False/cx/e=True p=False l=20 s=1/cx_{runs}_combined.csv", r = [0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1], n = range(4, 26), p = [0.25, 0.5], runs=0),
 
-rule complete_exp_all_negative_graph:
-    input:
-        expand("results/synthetic/complete/n={n} r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 26)),
 
-rule complete_exp_negative_edges:
-    input:
-        expand("results/synthetic/complete/n=11 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.0181818181818)),
-        expand("results/synthetic/complete/n=10 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.022222222222)),
-
-rule wikielections_exp_cx:
-    input:
-        "results/real/wikielections/null_model=True d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
-        "results/real/wikielections/null_model=False d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
+# ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
 
 rule wikielections_exp_pyr:
     input:
         "results/real/wikielections/null_model=True d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
         "results/real/wikielections/null_model=False d=False/pyr/s=1500 sp=None/pyr_0_combined.csv",
 
-# ----- COMPLETED EXPERIMENTS ON REAL-WORLD NETWORKS -----
+rule gahuku_exp_cx_exact:
+    input:
+        expand("results/real/gahuku/null_model={null_model} d=False/cx/e=True p=False l=15 s=1/cx_0_combined.csv", null_model=["True", "False"]),
+
+rule gahuku_exp_pyr:
+    input:
+        expand("results/real/gahuku/null_model={null_model} d=False/pyr/s=10000 sp=None/pyr_0_combined.csv", null_model=["True", "False"]),
+
+rule wikielections_exp_cx_approx:
+    input:
+        "results/real/wikielections/null_model=True d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
+        "results/real/wikielections/null_model=False d=False/cx/e=False p=False l=15 s=500/cx_0_combined.csv",
+
+rule slashdot_exp_cx_approx:
+    input:
+        "results/real/slashdot/null_model=True d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
+        "results/real/slashdot/null_model=False d=False/cx/e=False p=False l=10 s=10/cx_0_combined.csv",
 
 rule slashdot_exp_pyr:
     input:
@@ -90,6 +95,19 @@ rule cow_exp_pyr:
         expand("results/real/cow/year={year}/null_model_cow={null_model} d=False/pyr/s=100 sp=None/pyr_0_combined.csv", null_model = ["True", "False"], year = range(1816, 2013)),
 
 # ----- COMPLETED EXPERIMENTS ON COMPLETE GRAPHS ----- 
+
+rule complete_exp_cx_exact:
+    input:
+        expand("results/synthetic/complete/n={n} r={r} re=False d=False/cx/e=True p=False l=20 s=1/cx_0_combined.csv", r = [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0], n = range(1, 21)),
+
+rule complete_exp_negative_edges:
+    input:
+        expand("results/synthetic/complete/n=11 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.0181818181818)),
+        expand("results/synthetic/complete/n=10 r={r} re=True d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", r = np.arange(0, 1, 0.022222222222)),
+
+rule complete_exp_all_negative_graph:
+    input:
+        expand("results/synthetic/complete/n={n} r=1 re=False d=False/cx/e=True p=False l=10 s=1/cx_0_combined.csv", n = range(3, 26)),
 
 rule complete_time_exp_samples_cx_approx:
     input: 
