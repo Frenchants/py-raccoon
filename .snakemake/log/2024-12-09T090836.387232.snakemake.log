@@ -1,0 +1,138 @@
+host: MacBook-Pro-von-Frederic.local
+Building DAG of jobs...
+Using shell: /opt/local/bin/bash
+Provided cores: 8
+Rules claiming more threads will be scaled down.
+Job stats:
+job                 count
+----------------  -------
+combine_exps          220
+complete_exp_pyr        1
+complete_pyr          220
+cythonize               1
+total                 442
+
+Select jobs to execute...
+Execute 1 jobs...
+
+[Mon Dec  9 09:08:36 2024]
+localrule cythonize:
+    input: src/py_raccoon/balance_sampling.pyx, src/py_raccoon/balance_spanning_trees.pyx
+    output: results/__cythonized__
+    jobid: 3
+    reason: Missing output files: results/__cythonized__
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:38 2024]
+Finished job 3.
+1 of 442 steps (0.2%) done
+Select jobs to execute...
+Execute 8 jobs...
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=0.7 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 299
+    reason: Missing output files: results/synthetic/complete/n=9 r=0.7 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=9, neg_edge_prob=0.7, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=9 r=1.0 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 419
+    reason: Missing output files: results/synthetic/complete/n=9 r=1.0 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=9, neg_edge_prob=1.0, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=19 r=0.8 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 359
+    reason: Missing output files: results/synthetic/complete/n=19 r=0.8 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=19, neg_edge_prob=0.8, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=10 r=0.6 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 261
+    reason: Missing output files: results/synthetic/complete/n=10 r=0.6 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=10, neg_edge_prob=0.6, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=12 r=0 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 25
+    reason: Missing output files: results/synthetic/complete/n=12 r=0 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=12, neg_edge_prob=0, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=12 r=0.3 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 145
+    reason: Missing output files: results/synthetic/complete/n=12 r=0.3 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=12, neg_edge_prob=0.3, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 47
+    reason: Missing output files: results/synthetic/complete/n=3 r=0.1 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=3, neg_edge_prob=0.1, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+[Mon Dec  9 09:08:39 2024]
+localrule complete_pyr:
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=18 r=0.9 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+    jobid: 397
+    reason: Missing output files: results/synthetic/complete/n=18 r=0.9 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv; Input files updated by another job: results/__cythonized__
+    wildcards: n_nodes=18, neg_edge_prob=0.9, neg_edge_dist_exact=False, directed=False, n_samples=1000, pyr_spec_edge_prob=None, run=0
+    resources: tmpdir=/var/folders/dj/14c985vd1ng7gf0vvw_ytrpw0000gn/T
+
+RuleException:
+CalledProcessError in file /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/workflow/Snakefile, line 221:
+Command 'set -euo pipefail;  /Users/fredericbusch/miniforge3/envs/py-raccoon/bin/python3.12 /Users/fredericbusch/Desktop/Thesis/forks/py-raccoon/.snakemake/scripts/tmpjl10d4_c.experiment.py' returned non-zero exit status 1.
+[Mon Dec  9 09:08:44 2024]
+Error in rule complete_pyr:
+    jobid: 47
+    input: results/__cythonized__
+    output: results/synthetic/complete/n=3 r=0.1 re=False d=False/pyr/s=1000 sp=None/run/pyr_0.csv
+
+[Mon Dec  9 09:08:53 2024]
+Finished job 299.
+2 of 442 steps (0.5%) done
+[Mon Dec  9 09:08:53 2024]
+Finished job 261.
+3 of 442 steps (1%) done
+[Mon Dec  9 09:08:53 2024]
+Finished job 145.
+4 of 442 steps (1%) done
+[Mon Dec  9 09:08:53 2024]
+Finished job 25.
+5 of 442 steps (1%) done
+[Mon Dec  9 09:08:53 2024]
+Finished job 419.
+6 of 442 steps (1%) done
+[Mon Dec  9 09:08:54 2024]
+Finished job 397.
+7 of 442 steps (2%) done
+[Mon Dec  9 09:08:54 2024]
+Finished job 359.
+8 of 442 steps (2%) done
+Shutting down, this might take some time.
+Exiting because a job execution failed. Look above for error message
+Complete log: .snakemake/log/2024-12-09T090836.387232.snakemake.log
+WorkflowError:
+At least one job did not complete successfully.
